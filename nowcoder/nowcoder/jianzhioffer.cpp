@@ -14,6 +14,42 @@ struct ListNode {
 
 class Solution {
 public:
+	/*请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。
+	例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。
+	但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。*/
+	bool isNumeric(char* string)
+	{
+
+	}
+	/*///网上说用双端队列~~~~~~~....待优化
+	给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
+	例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，
+	他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个：
+	{[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}，
+	{2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。
+	*/
+	vector<int> maxInWindows(const vector<int>& num, unsigned int size)
+	{
+		vector<int> maxInWindow;
+		if (size > num.size()|| size == 0) return maxInWindow;
+		
+		for (int i = 0; i < num.size() + 1 - size;i++)
+		{
+			//在下标范围为[i  i+1 ...i+size-1]找最大值
+			int max = num[i];
+
+			for (int j = 0; j < size;j++)
+			{
+				if (max < num[i+j])
+				{
+					max = num[i+j];
+				}
+			}
+			maxInWindow.push_back(max);
+		}
+
+		return maxInWindow;
+	}
 	/*在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，
 	重复的结点不保留，返回链表头指针。 
 	例如，链表1->2->3->3->4->4->5 处理后为 1->2->5*/
@@ -453,21 +489,25 @@ int main()
 	node2.next = &node3;
 
 	vector<int> test, result;
-	for (int i = 1; i < 6; i++)
-	{
-		test.push_back(i);
-	}
-	test.push_back(1);
+	
 	test.push_back(2);
 	test.push_back(3);
-
+	test.push_back(4);
+	test.push_back(2);
+	test.push_back(6);
+	test.push_back(2);
+	test.push_back(5);
+	test.push_back(1);
 
 
 	Solution sl;
 
-	sl.deleteDuplication(&node0);
+	result = sl.maxInWindows(test,0);
 	
-
+	for (int i = 0; i < result.size();i++)
+	{
+		cout << result[i] << " ";
+	}
 	
 
 	getchar();
