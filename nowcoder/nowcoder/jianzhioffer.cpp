@@ -14,7 +14,45 @@ struct ListNode {
 
 class Solution {
 public:
-	/*统计一个数字在排序数组中出现的次数。*/
+	/*在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，
+	重复的结点不保留，返回链表头指针。 
+	例如，链表1->2->3->3->4->4->5 处理后为 1->2->5*/
+	ListNode* deleteDuplication(ListNode* pHead)
+	{//参考别人的思路改写的。。牛客网id ：Charles_Lee
+		
+		if (pHead == NULL) return NULL;
+
+		//定义一个临时头结点，防止头结点被删除
+		ListNode* pTempHead = new ListNode(0);
+		pTempHead->next = pHead;
+
+		
+		ListNode* pCur = pHead, *pLast = pTempHead;//ptemp
+		int toDeleteVal = 0;
+		while (pCur && pCur->next)
+		{
+			if (pCur->val == pCur->next->val)//当前值和下一个相等 往后移动 知道不相等或空
+			{
+				toDeleteVal = pCur->val;
+				while (pCur && pCur->val == toDeleteVal)
+				{													
+					pCur = pCur->next;
+				}
+				pLast->next = pCur;
+			}
+			else//当前和下一个不相等，则当前肯定不被删除 判断下一个
+			{
+				pLast = pCur;
+				pCur = pCur->next;
+			}
+
+		}
+		
+		return pTempHead->next;
+		
+		
+	}
+	/*统计一个数字在排序数组中出现的次数。网上好多二分查找 递归什么的。。。待优化*/
 	int GetNumberOfK(vector<int> data, int k)
 	{
 		int count = 0;
@@ -409,10 +447,10 @@ private:
 
 int main()
 {
-	//ListNode node0(0),node1(1),node2(2),node3(3);
-	//node0.next = &node1;
-	//node1.next = &node2;
-	//node2.next = &node3;
+	ListNode node0(1),node1(2),node2(2),node3(3);
+	node0.next = &node1;
+	node1.next = &node2;
+	node2.next = &node3;
 
 	vector<int> test, result;
 	for (int i = 1; i < 6; i++)
@@ -427,7 +465,10 @@ int main()
 
 	Solution sl;
 
-	cout << sl.StrToInt("1a33");
+	sl.deleteDuplication(&node0);
+	
+
+	
 
 	getchar();
 	return 0;
