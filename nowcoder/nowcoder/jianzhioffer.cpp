@@ -14,6 +14,13 @@ struct ListNode {
 
 class Solution {
 public:
+	/*数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+	例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。
+	由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。*/
+	int MoreThanHalfNum_Solution(vector<int> numbers)
+	{
+
+	}
 	/*牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，
 	写些句子在本子上。同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，
 	但却读不懂它的意思。例如，“student. a am I”。
