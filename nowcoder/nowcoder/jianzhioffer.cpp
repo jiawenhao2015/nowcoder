@@ -21,8 +21,68 @@ public:
 	正确的句子应该是“I am a student.”。
 	Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？*/
 	string ReverseSentence(string str)
-	{
-		//首先分词 然后统计单词个数 
+	{//下面6行是马克(Mark)的方法。。。够简洁。。学习了
+		/*string res = "", tmp = "";
+		for (unsigned int i = 0; i < str.size(); ++i){
+			if (str[i] == ' ') res = " " + tmp + res, tmp = "";
+			else tmp += str[i];
+		}
+		if (tmp.size()) res = tmp + res;
+		return res;*/
+		if (str.size() == 0) return str;///这块儿不能返回NULL 返回""就行
+		
+		//首先分出单词 然后统计单词个数 
+		string reverse = "";
+		const char *temp = str.c_str();
+		cout << temp << endl;
+
+		//split word
+		int i = 0,wordStart = 0,wordEnd = 0;	
+		vector<string> strVec;//保存所有单词
+		while (temp[i] != '\0')
+		{		
+			if (temp[i] ==' ')//先假设单词间都是1个空格 结尾没有空格
+			{
+				wordEnd = i - 1;
+				char word[128];
+				int k = 0;
+				for (int j = wordStart; j <= wordEnd;j++)//
+				{					
+					word[k] = temp[j];
+					k++;
+				}				
+				word[k] = '\0';				
+				strVec.push_back(word);				
+				wordStart = i + 1;
+			}			
+			i++;
+		}
+		wordEnd = i - 1;	
+		char word[128];
+		int k = 0;
+		for (int j = wordStart; j <= wordEnd; j++)//
+		{			
+			word[k] = temp[j];
+			k++;
+		}		
+		word[k] = '\0';		
+		strVec.push_back(word);		
+
+		for (int i = 0; i < strVec.size()/2;i++)
+		{
+			string temp = strVec[i];
+			strVec[i] = strVec[strVec.size() - 1 - i];
+			strVec[strVec.size() - 1 - i] = temp;
+		}
+
+		for (int i = 0; i < strVec.size();i++)
+		{
+			//cout << strVec[i].c_str() << " ";
+			if (i != strVec.size()-1)  reverse = reverse + strVec[i].c_str() + " ";
+			else	reverse = reverse + strVec[i].c_str();
+		}
+
+		return reverse;
 	}
 	/*请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。
 	例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。
@@ -498,7 +558,7 @@ int main()
 	node1.next = &node2;
 	node2.next = &node3;
 
-	vector<int> test, result;
+	vector<int> test;
 	
 	test.push_back(2);
 	test.push_back(3);
@@ -512,12 +572,9 @@ int main()
 
 	Solution sl;
 
-	result = sl.maxInWindows(test,0);
+	cout<<(sl.ReverseSentence("123 546 987 sdf dfs./,")).c_str();
 	
-	for (int i = 0; i < result.size();i++)
-	{
-		cout << result[i] << " ";
-	}
+	
 	
 
 	getchar();
