@@ -1,6 +1,8 @@
 #include <iostream>
 #include<vector>
 #include <stack>
+#include<map>
+#include <algorithm>//里边有好多现成的函数
 using namespace std;
 
 
@@ -14,11 +16,160 @@ struct ListNode {
 
 class Solution {
 public:
+
+	/*输入一个字符串,按字典序打印出该字符串中字符的所有排列。
+	例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串
+	abc,acb,bac,bca,cab和cba。输入一个字符串,长度不超过9(可能有字符重复),
+	字符只包括大小写字母。*/
+	void digui(char *sortStr, int begin, int end, vector<string>& result)
+	{
+		if (begin == end)
+		{
+			string str;
+			//for (int i = 0; i < end; i++) str += sortStr[i];
+			str = sortStr;
+			result.push_back(str);
+			//result.push_back(sortStr);//其实可以直接这样
+			return;
+		}
+		else
+		{
+			for (int i = begin; i < end;i++)
+			{	
+				swap(sortStr[begin],sortStr[i]);
+				digui(sortStr, begin+1, end, result);
+				swap(sortStr[begin], sortStr[i]);
+			}
+		}
+
+	}
+	vector<string> Permutation(string str)
+	{
+		vector<string> result;
+		if (str.size() == 0) return result;
+	//	const char* tempStr = new char[str.size() + 1];tempStr = str.c_str();		
+		char* sortStr = new char[str.size() + 1];//有了这个就可以啦
+		//for (int i = 0; i < str.size(); i++) sortStr[i] = tempStr[i];
+		str.copy(sortStr, str.size(),0);
+		sortStr[str.size()] = '\0';
+		cout << sortStr << endl;
+		//递归
+		digui(sortStr, 0, str.size(), result);
+		sort(result.begin(), result.end());
+		//for (int i = 0; i < str.size()-1;i++)//排序		
+		//	for (int j = 0; j<str.size()-i-1;j++)			
+		//		if (sortStr[j]>sortStr[j + 1]){ char temp = sortStr[j];	sortStr[j] = sortStr[j+1]; sortStr[j+1] = temp; }
+			
+		//去除重复项
+		for (auto  it = result.begin() + 1; it != result.end();)
+		{
+			if (*it == *(it - 1))
+				it = result.erase(it);
+			else
+				it++;
+		}	
+
+		return result;
+		
+	}
+	vector<string> Permutation2(string str) {//网上看别人写的 LuL
+		vector<string> out;
+		int len = str.length();
+		if (len == 0)
+			return out;
+		char* p = (char *)malloc((len + 1)*sizeof(char));
+		str.copy(p, len, 0);
+
+		//全排列，迭代
+		myPermutation(p, 0, len, out);
+		//字典序排序
+		sort(out.begin(), out.end());
+		//去除重复项
+		for (auto it = out.begin() + 1; it != out.end();){
+			if (*it == *(it - 1))
+				it = out.erase(it);
+			else
+				it++;
+		}
+		return out;
+	}
+
+	void myPermutation(char* p, int k, int m, vector<string>& out){
+		if (k == m){
+			//将结果存入out中
+			string s;
+			for (int i = 0; i < m; ++i)
+				s += p[i];
+			out.push_back(s);
+			return;
+		}
+		for (int i = k; i < m; ++i){
+			swap(p[k], p[i]);
+			myPermutation(p, k + 1, m, out);
+			swap(p[k], p[i]);
+		}
+	}
+	/*汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，就是用字符串模拟这个指令的运算结果。
+	对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。
+	例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。*/
+	string LeftRotateString(string str, int n)
+	{
+		if (str.size()==0 || n<0)	return "";
+		if (n>str.size()) n %= str.size();
+		const char*  sequence = str.c_str();
+		char* roateStr = new char[str.size() + 1];
+		char* doubleSeq = new char[2 * str.size()+1];  //建立一个双倍的字符串类似 abcXYZdefabcXYZdef可直接返回结果 
+		for (int i = 0; i < str.size();i++)
+		{
+			doubleSeq[i] = sequence[i];
+			doubleSeq[i+str.size()] = sequence[i];
+		}
+		doubleSeq[2 * str.size()] = '\0';
+		for (int i = 0; i < str.size(); i++)///这种情况不需要开辟一个双倍空间了 复杂度为O（n）
+		{
+			//roateStr[i] = doubleSeq[i+n];
+			if ((i+n)<str.size())
+			{
+				roateStr[i] = sequence[i + n];
+			}
+			else
+			{
+				roateStr[i] = sequence[i+n-str.size()];
+			}
+			
+		}
+		roateStr[str.size() + 1] = '\0';
+		//cout << doubleSeq << endl;
+		//cout << roateStr << endl;
+		return roateStr;
+	}
 	/*数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
 	例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。
 	由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。*/
 	int MoreThanHalfNum_Solution(vector<int> numbers)
-	{
+	{//用map hash存储关键字 统计出现次数  看到别人用 map.count() 作为查找 good~
+		if (numbers.size() == 0)
+		{
+			return 0;
+		}
+		map<int, int> mapValue;
+		map<int, int>::iterator iter;
+		for (int i = 0; i < numbers.size(); i++)
+		{
+			mapValue[numbers[i]] = 0;//初始化
+		}
+		for (int i = 0; i < numbers.size(); i++)//统计出现次数
+		{		
+			mapValue[numbers[i]]++;
+		}
+		for (iter = mapValue.begin(); iter != mapValue.end(); iter++)
+		{
+			if (iter->second*2 > numbers.size())
+			{
+				return iter->first;
+			}
+		}
+		return 0;
 
 	}
 	/*牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，
@@ -567,21 +718,25 @@ int main()
 
 	vector<int> test;
 	
+	/*test.push_back(1);
+	test.push_back(2);*/
+	/*test.push_back(3);
 	test.push_back(2);
-	test.push_back(3);
-	test.push_back(4);
 	test.push_back(2);
-	test.push_back(6);
 	test.push_back(2);
 	test.push_back(5);
-	test.push_back(1);
+	test.push_back(4);
+	test.push_back(2);*/
 
 
 	Solution sl;
-
-	cout<<(sl.ReverseSentence("123 546 987 sdf dfs./,")).c_str();
+	vector<string> vecStr;
+	vecStr = sl.Permutation("a");
 	
-	
+	for (int i = 0; i < vecStr.size();i++)
+	{
+		cout << vecStr[i].c_str() << endl;
+	}
 	
 
 	getchar();
