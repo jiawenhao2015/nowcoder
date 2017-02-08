@@ -16,7 +16,41 @@ struct ListNode {
 
 class Solution {
 public:
+	 
+	/*约瑟夫环 让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列,
+	下一个继续0...m-1报,问最后剩下谁*/
+	int LastRemaining_Solution(int n, int m)
+	{
+		if (m <= 0)return -1;
 
+	}
+	//堆排序，root为根节点下标
+	void heapSort(vector<int> &input, int root, int end)
+	{
+		for (int j = end - 1; j >= root; j--)
+		{
+			int parent = (j + root - 1) / 2;
+			if (input[parent] > input[j])
+			{
+				int temp = input[j];
+				input[j] = input[parent];
+				input[parent] = temp;
+			}
+		}
+	}
+	/*输入n个整数，找出其中最小的K个数。
+	例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,*/
+	vector<int> GetLeastNumbers_Solution(vector<int> input, int k)
+	{
+		vector<int> result;
+		if (input.size() < k||k<=0)return result;
+		sort(input.begin(), input.end());
+		for (int i = 0; i < k;i++)
+		{
+			result.push_back(input[i]);
+		}
+		return result;
+	}
 	/*输入一个字符串,按字典序打印出该字符串中字符的所有排列。
 	例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串
 	abc,acb,bac,bca,cab和cba。输入一个字符串,长度不超过9(可能有字符重复),
@@ -718,24 +752,24 @@ int main()
 
 	vector<int> test;
 	
-	/*test.push_back(1);
-	test.push_back(2);*/
-	/*test.push_back(3);
-	test.push_back(2);
-	test.push_back(2);
-	test.push_back(2);
-	test.push_back(5);
 	test.push_back(4);
-	test.push_back(2);*/
+	test.push_back(5);
+	test.push_back(1);
+	test.push_back(6);
+	test.push_back(2);
+	test.push_back(7);
+	test.push_back(3);
+	test.push_back(8);
+	//test.push_back(2);
 
 
 	Solution sl;
-	vector<string> vecStr;
-	vecStr = sl.Permutation("a");
+	vector<int> result;
+	result = sl.GetLeastNumbers_Solution(test, 0);
 	
-	for (int i = 0; i < vecStr.size();i++)
+	for (int i = 0; i < result.size();i++)
 	{
-		cout << vecStr[i].c_str() << endl;
+		cout << result[i] << endl;
 	}
 	
 
