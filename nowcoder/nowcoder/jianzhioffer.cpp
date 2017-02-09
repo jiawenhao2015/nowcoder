@@ -2,6 +2,7 @@
 #include<vector>
 #include <stack>
 #include<map>
+#include<list>
 #include <algorithm>//里边有好多现成的函数
 using namespace std;
 
@@ -16,12 +17,91 @@ struct ListNode {
 
 class Solution {
 public:
-	 
+	
+
+	/*{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止(子向量的长度至少是1)*/
+	int FindGreatestSumOfSubArray(vector<int> array)
+	{
+		if (array.size() < 1) return 0;
+		int max = array[0],sum = 0;
+		//int result = array[0];//作为记录单次遍历最大和
+		
+		//如果左边总和为负数 那么从下一个值开始 O(n)复杂度 效率高
+		for (int i = 0; i < array.size();i++)
+		{
+			if (sum < 0)
+			{
+				sum = array[i];
+			}
+			else
+			{
+				sum += array[i];
+			}
+			if (max < sum)max = sum;
+			
+		}
+
+		//for (int i = 0; i < array.size();i++) //效率低
+		//{
+		//	result = array[i];
+		//	sum = 0;
+		//	for (int j = i; j < array.size(); j++)
+		//	{
+		//		sum += array[j];
+		//		if (result < sum)
+		//		{
+		//			result = sum;
+		//		}
+		//	}
+		//	if (max<result)
+		//	{
+		//		max = result;
+		//	}
+
+		//}
+		
+		return max;
+	}
+
 	/*约瑟夫环 让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列,
 	下一个继续0...m-1报,问最后剩下谁*/
 	int LastRemaining_Solution(int n, int m)
 	{
-		if (m <= 0)return -1;
+		if (n == 0)
+			return -1;
+		if (n == 1)
+			return 0;
+		else
+			return (LastRemaining_Solution(n - 1, m) + m) % n;//参考的别人的
+
+		if (m <= 0||n<1)return -1;
+		list<int>* table = new list<int>();
+		for (int i = 1; i <= n;i++)	table->push_back(i);
+		
+		int count = 1;
+		for (list<int>::iterator it = table->begin(); table->size() != 1;)
+		{			
+			if (count == m)
+			{
+				cout << " " <<*it;
+				it = table->erase(it);				
+				count = 0;
+			}
+			else
+			{
+				it++;
+			}
+			if (it == table->end())
+			{
+				it = table->begin();
+			}
+			count++;
+		}
+		//cout << endl<<"The last one is:";
+		cout << *table->begin() << endl;
+
+		return *table->begin();
+		return 0;
 
 	}
 	//堆排序，root为根节点下标
@@ -752,24 +832,24 @@ int main()
 
 	vector<int> test;
 	
-	test.push_back(4);
-	test.push_back(5);
 	test.push_back(1);
-	test.push_back(6);
-	test.push_back(2);
-	test.push_back(7);
+	test.push_back(-2);
 	test.push_back(3);
-	test.push_back(8);
+	test.push_back(10);
+	test.push_back(-4);
+	test.push_back(7);
+	test.push_back(2);
+	test.push_back(-5);
 	//test.push_back(2);
 
 
 	Solution sl;
 	vector<int> result;
-	result = sl.GetLeastNumbers_Solution(test, 0);
+	cout<<sl.FindGreatestSumOfSubArray(test);
 	
 	for (int i = 0; i < result.size();i++)
 	{
-		cout << result[i] << endl;
+		//cout << result[i] << endl;
 	}
 	
 
