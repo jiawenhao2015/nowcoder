@@ -18,7 +18,35 @@ struct ListNode {
 class Solution {
 public:
 	
-
+	/*在一个字符串(1<=字符串长度<=10000，全部由大写字母组成)
+	中找到第一个只出现一次的字符,并返回它的位置*/
+	int FirstNotRepeatingChar(string str)
+	{
+		if (str.size() == 0)return -1;
+		//构造一个hash表 统计出现次数
+		map<char, int> table;
+		for (char i = 'A'; i <= 'Z';i++) table[i] = 0;
+		char *p = new char[str.size()+1];  
+		str.copy(p, str.size(), 0);
+		
+		for (int i = 0; i < str.size();i++)	table[str[i]]++;
+		map<char, int>::iterator it;
+		int pos = str.size();
+		for (it = table.begin(); it != table.end();it++)
+		{
+			if (it->second == 1 && pos>str.find_first_of(it->first))//只出现一次
+			{
+				pos = str.find_first_of(it->first);
+			}
+		}
+		if (pos == str.size())
+		{
+			return -1;
+		}
+		else
+			return pos;
+		
+	}
 	/*{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止(子向量的长度至少是1)*/
 	int FindGreatestSumOfSubArray(vector<int> array)
 	{
@@ -845,7 +873,7 @@ int main()
 
 	Solution sl;
 	vector<int> result;
-	cout<<sl.FindGreatestSumOfSubArray(test);
+	cout<<sl.FirstNotRepeatingChar("AABBCDDEEFGC");
 	
 	for (int i = 0; i < result.size();i++)
 	{
