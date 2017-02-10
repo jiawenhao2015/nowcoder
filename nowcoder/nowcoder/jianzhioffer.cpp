@@ -464,7 +464,59 @@ public:
 	但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。*/
 	bool isNumeric(char* string)
 	{
+		int i = 0;
+		if (string[i] == '+' || string[i] == '-'||isdigit(string[i]))//判断第一位
+		{
+			while (string[++i] != '\0'&&isdigit(string[i]));//检测到第一个非数字符号
+			
+			if (string[i]=='.')
+			{
+				if (isdigit(string[++i]))//小数点后下一位是否是数字
+				{
+					while (string[++i] != '\0'&&isdigit(string[i]));//检测到第一个非数字符号
 
+					if (string[i] == 'e' || string[i] == 'E')
+					{
+						i++;
+						if (string[i] == '+' || string[i] == '-' || isdigit(string[i]))
+						{
+							while (string[++i] != '\0' && isdigit(string[i]));
+							if (string[i] == '\0') return true;
+							else return false;
+						}
+						else return false;
+					}
+					else if (string[i] == '\0')
+					{
+						return true;
+					}
+					else return false;
+				}
+				else
+					return false;
+			}
+			else if (string[i] == 'e' || string[i] == 'E')
+			{
+				i++;
+				if (string[i] == '+' || string[i] == '-' || isdigit(string[i]))
+				{
+					while (string[++i] != '\0' && isdigit(string[i]));
+					if (string[i] == '\0') return true;
+					else return false;
+				}
+				else return false;
+			}
+			else if (string[i] == '\0')
+			{
+				return true;
+			}
+			else
+				return false;//其他情况 非数字
+		}
+		else
+		{
+			return false;
+		}
 	}
 	/*///网上说用双端队列~~~~~~~....待优化
 	给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
@@ -966,7 +1018,7 @@ int main()
 
 	Solution sl;
 	vector<int> result;
-	cout<<sl.PrintMinNumber(test);
+	cout << sl.isNumeric("1a3.14");
 	
 	for (int i = 0; i < result.size();i++)
 	{

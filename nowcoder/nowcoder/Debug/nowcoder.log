@@ -1,4 +1,4 @@
-﻿生成启动时间为 2/10/2017 4:49:29 PM。
+﻿生成启动时间为 2/10/2017 10:51:10 PM。
      1>项目“E:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\nowcoder.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt -D_SCL_SECURE_NO_WARNINGS jianzhioffer.cpp
@@ -17,18 +17,18 @@
      1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(384): warning C4018: “>”: 有符号/无符号不匹配
      1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(446): warning C4018: “<”: 有符号/无符号不匹配
      1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(453): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(481): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(486): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(540): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(691): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(694): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(730): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(733): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(533): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(538): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(592): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(743): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(746): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(782): warning C4018: “<”: 有符号/无符号不匹配
      1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(785): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(792): warning C4018: “<”: 有符号/无符号不匹配
      1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(837): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(862): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(971): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(844): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(889): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(914): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1023): warning C4018: “<”: 有符号/无符号不匹配
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.lib" /MACHINE:X86 Debug\jianzhioffer.obj
          nowcoder.vcxproj -> E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.exe
@@ -36,4 +36,4 @@
 
 生成成功。
 
-已用时间 00:00:01.34
+已用时间 00:00:06.67
