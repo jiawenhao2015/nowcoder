@@ -3,6 +3,7 @@
 #include <stack>
 #include<map>
 #include<list>
+#include <sstream>
 #include <algorithm>//里边有好多现成的函数
 using namespace std;
 
@@ -17,7 +18,81 @@ struct ListNode {
 
 class Solution {
 public:
+	/*数组中的逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，
+	则这两个数字组成一个逆序对。输入一个数组,
+	求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。
+	即输出P%1000000007 
+	题目保证输入的数组中没有的相同的数字
+	输入例子:	1,2,3,4,5,6,7,0 
+	输出例子:	7 */
+	//：出处http://blog.csdn.net/ns_code/article/details/27520535
+	long long MergePairsBetweenArray(int *arr, int *brr, int start, int mid, int end)
+	{
+		int i = mid;
+		int j = end;
+		int k = end;  //辅助数组的最后一位  
+		long long count = 0;
+
+		//设置两个指针i,j分别从右往左依次比较，  
+		//将较大的依次放入辅助数组的右边  
+		while (i >= start && j >= mid + 1)
+		{
+			if (arr[i] > arr[j])
+			{
+				count += j - mid;
+				brr[k--] = arr[i--];
+			}
+			else
+				brr[k--] = arr[j--];
+		}
+
+		//将其中一个数组中还剩下的元素拷贝到辅助数组中，  
+		//两个循环只会执行其中的一个  
+		while (i >= start)
+			brr[k--] = arr[i--];
+		while (j >= mid + 1)
+			brr[k--] = arr[j--];
+
+		//从辅助数组中将元素拷贝到原数组中，使其有序排列  
+		for (i = end; i > k; i--)
+			arr[i] = brr[i];
+
+		return count;
+	}
+	long long CountMergePairs(int *arr, int *brr, int start, int end)
+	{
+		long long PairsNum = 0;
+		if (start < end)
+		{
+			int mid = (start + end) >> 1;
+			PairsNum += CountMergePairs(arr, brr, start, mid); //统计左边子数组的逆序对  
+			PairsNum += CountMergePairs(arr, brr, mid + 1, end); //统计右边子数组的逆序对  
+			PairsNum += MergePairsBetweenArray(arr, brr, start, mid, end); //统计左右子数组间的逆序对  
+		}
+		return PairsNum;
+	}
+	int InversePairs(vector<int> data)
+	{
+		if (data.size() == 0)return 0;
+		long long count = 0;
+		//for (int i = 0; i < data.size() - 1;i++)//时间复杂度太大 不通过
+		//for (int j = i + 1; j < data.size(); j++)
+		//if (data[i]>data[j])count++;
+		
+		//vector<int> temp(data.size());//初始化向量的大小
 	
+		int *brr = new int[data.size()];
+		for (int i = 0; i < data.size();i++)
+		{
+			brr[i] = data[i];
+		}
+		int *temp = new int[data.size()];
+
+		count = CountMergePairs(brr, temp, 0, data.size() - 1);
+
+
+		return count % 1000000007;
+	}
 	/*在一个字符串(1<=字符串长度<=10000，全部由大写字母组成)
 	中找到第一个只出现一次的字符,并返回它的位置*/
 	int FirstNotRepeatingChar(string str)
@@ -578,10 +653,10 @@ public:
 	bool duplicate(int numbers[], int length, int* duplication)
 	{
 
-		int *flags = new int[length];//
+		int *flags = new int[length];//标记数组
 		for (int i = 0; i < length; i++)
 		{
-			flags[i] = 0;
+			flags[i] = 0;//初始化为0
 		}
 		for (int i = 0; i < length; i++)
 		{
@@ -600,7 +675,6 @@ public:
 			return true;
 		}
 		return false;
-
 
 	}
 	/*一个整型数组里除了两个数字之外，其他的数字都出现了两次。
@@ -696,9 +770,30 @@ public:
 	打印能拼接出的所有数字中最小的一个。
 	例如输入数组{ 3，32，321 }，
 	则打印出这三个数字能排成的最小数字为321323。*/
+	static bool compare(string str1,string str2)///需要加上static 修饰符
+	{
+		string s1 = str1 + str2;
+		string s2 = str2 + str1;
+		return s1 < s2;
+	}
 	string PrintMinNumber(vector<int> numbers)
 	{
+		string result;
+		if (numbers.size() == 0)return result;
 
+		vector<string> allResult;
+		for (int i = 0; i < numbers.size();i++)
+		{
+			stringstream  ss;
+			ss<<numbers[i];//将不同类型的值转换成string类型的好方法
+			allResult.push_back(ss.str());
+		}
+		sort(allResult.begin(),allResult.end(),compare);
+		for (int i = 0; i < numbers.size();i++)
+		{
+			result.append(allResult[i]);//值得学习的方法 
+		}
+		return result;
 	}
 
 	/*把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
@@ -842,8 +937,6 @@ public:
 
 			flag = flag << 1;
 		}
-
-
 		return count;
 	}
 private:
@@ -860,20 +953,20 @@ int main()
 
 	vector<int> test;
 	
-	test.push_back(1);
-	test.push_back(-2);
 	test.push_back(3);
-	test.push_back(10);
-	test.push_back(-4);
+	test.push_back(32);
+	test.push_back(321);
+	/*test.push_back(4);
+	test.push_back(5);
+	test.push_back(6);
 	test.push_back(7);
-	test.push_back(2);
-	test.push_back(-5);
+	test.push_back(0);*/
 	//test.push_back(2);
 
 
 	Solution sl;
 	vector<int> result;
-	cout<<sl.FirstNotRepeatingChar("AABBCDDEEFGC");
+	cout<<sl.PrintMinNumber(test);
 	
 	for (int i = 0; i < result.size();i++)
 	{
