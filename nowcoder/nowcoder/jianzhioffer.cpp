@@ -18,6 +18,28 @@ struct ListNode {
 
 class Solution {
 public:
+	/*输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序*/
+	vector<vector<int> > FindContinuousSequence(int sum) 
+	{
+		vector<vector<int>> result;
+		if (sum <= 2)return result;
+
+		for (int a = 1; a <= sum / 2;a++)
+		{
+			float b;
+			b = (-1 + sqrt(1 + 4 * a*a - 4 * a + 8 * sum)) / 2;
+			if ((b-(int)b)==0)//如果b是整数 则存在序列
+			{
+				vector<int> temp;
+				for (int i = a; i <= b;i++)
+				{
+					temp.push_back(i);
+				}
+				result.push_back(temp);
+			}
+		}
+		return result;
+	}
 	/*输入一个递增排序的数组和一个数字S，在数组中查找两个数，
 	是的他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。 */
 	vector<int> FindNumbersWithSum(vector<int> array, int sum)
@@ -1177,12 +1199,16 @@ int main()
 
 
 	Solution sl;
-	vector<int> result;
-	result =sl.FindNumbersWithSum(test,19);
+	vector<vector<int>> result;
+	result =sl.FindContinuousSequence(3);
 		
 	for (int i = 0; i < result.size();i++)
 	{
-		cout << result[i] << endl;
+		for (int j = 0; j < result[i].size();j++)
+		{
+			cout << result[i][j] << " ";
+		}
+		cout << endl;
 	}
 	
 
