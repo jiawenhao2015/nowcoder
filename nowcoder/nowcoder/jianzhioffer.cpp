@@ -18,6 +18,37 @@ struct ListNode {
 
 class Solution {
 public:
+	/*输入一个递增排序的数组和一个数字S，在数组中查找两个数，
+	是的他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。 */
+	vector<int> FindNumbersWithSum(vector<int> array, int sum)
+	{
+
+	}
+	/*定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。*/
+	stack<int>s1, min1;
+	void push1(int value)
+	{
+		s1.push(value);
+		if (min1.empty())min1.push(value);
+		if (min1.top()>=value)
+		{
+			min1.push(value);
+		}
+	
+	}
+	void pop1()
+	{
+		s1.pop();
+		if (s1.top() == min1.top())min1.pop();
+	}
+	int top()
+	{
+		return s1.top();
+	}
+	int min()
+	{
+		return min1.top();
+	}
 
 	/*输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。*/
 	ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
