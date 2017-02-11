@@ -21,8 +21,40 @@ public:
 	/*输入一个递增排序的数组和一个数字S，在数组中查找两个数，
 	是的他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。 */
 	vector<int> FindNumbersWithSum(vector<int> array, int sum)
-	{
-
+	{//别人写的o（n）的复杂度
+		/* vector<int> result;
+		int length = array.size();
+		int start = 0;
+		int end = length - 1;
+		while (start < end)
+		{
+		if (array[start] + array[end] == sum)
+		{
+		result.push_back(array[start]);
+		result.push_back(array[end]);
+		break;
+		}
+		else if (array[start] + array[end] < sum)
+		start++;
+		else
+		end--;
+		}*/
+		vector<int>result;
+		if (array.size() <= 1)return result;
+		for (int i = 0; i < array.size() - 1;i++)
+		{
+			for (int j = array.size() - 1; j>i;j--)
+			{
+				if (array[i]+array[j]==sum)
+				{
+					result.push_back(array[i]);
+					result.push_back(array[j]);
+					//break; 退出循环
+					i = array.size();
+				}				
+			}
+		}
+		return result;
 
 	}
 	/*定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。*/
@@ -1133,30 +1165,24 @@ int main()
 
 	vector<int> test;
 	
+	test.push_back(1);
+	test.push_back(2);
 	test.push_back(3);
-	test.push_back(32);
-	test.push_back(321);
-	/*test.push_back(4);
+	test.push_back(4);
 	test.push_back(5);
 	test.push_back(6);
 	test.push_back(7);
-	test.push_back(0);*/
+	test.push_back(8);
 	//test.push_back(2);
 
 
 	Solution sl;
 	vector<int> result;
-	resultNode =sl.Merge(&node1,&node2);
-	while (resultNode)
-	{
-		cout << resultNode->val << " ";
-		resultNode = resultNode->next;
-	}
-
-	
+	result =sl.FindNumbersWithSum(test,19);
+		
 	for (int i = 0; i < result.size();i++)
 	{
-		//cout << result[i] << endl;
+		cout << result[i] << endl;
 	}
 	
 
