@@ -18,6 +18,26 @@ struct ListNode {
 
 class Solution {
 public:
+	/*扑克牌顺子 大王用0表示   可以表示任何数字*/
+	bool IsContinuous(vector<int> numbers)
+	{
+		if (numbers.size() != 5)return false;
+		sort(numbers.begin(),numbers.end());
+		int zreos = 0, gap = 0;//记录0的个数 和记录差距 
+		for (int i = 0; i < numbers.size();i++)
+		{
+			if (numbers[i] == 0)zreos++;
+			else if (i + 1 < numbers.size())
+			{
+				if (numbers[i] == numbers[i + 1])return false;
+				gap += numbers[i + 1] - numbers[i] - 1;				
+			}
+		}
+		if (gap>zreos)		//差距大于0的个数
+			return false;
+		return true;
+		
+	}
 	/*输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序*/
 	vector<vector<int> > FindContinuousSequence(int sum) 
 	{
