@@ -18,6 +18,29 @@ struct ListNode {
 
 class Solution {
 public:
+	/*请实现一个函数用来找出字符流中第一个只出现一次的字符。*/
+	//Insert one char from stringstream
+	//用map来统计出现次数
+	map<char, int>table;
+	vector<char>charStream;
+	void Insert(char ch)
+	{
+		charStream.push_back(ch);
+		table[ch]++;
+	}
+	//return the first appearence once char in current stringstream
+	char FirstAppearingOnce()
+	{
+		vector<char>::iterator it;
+		for (it = charStream.begin(); it != charStream.end();it++)
+		{
+			if (table[*it]==1)
+			{
+				return *it;
+			}
+		}
+		return '#';
+	}
 	/*输入两个链表，找出它们的第一个公共结点。*/
 	int getListLength(ListNode* pHead)
 	{
