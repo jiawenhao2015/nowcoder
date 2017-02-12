@@ -18,6 +18,59 @@ struct ListNode {
 
 class Solution {
 public:
+	/*输入两个链表，找出它们的第一个公共结点。*/
+	int getListLength(ListNode* pHead)
+	{
+		int length = 0;
+		if (pHead == NULL)return length;
+		while (pHead)
+		{
+			pHead = pHead->next;
+			length++;
+		}
+		return length;
+	}
+	ListNode *move(ListNode* list,int length)
+	{
+		while (length)
+		{
+			list = list->next;
+			length--;
+		}
+		return list;
+	}
+	ListNode* FindFirstCommonNode(ListNode* pHead1, ListNode* pHead2)
+	{//首先求两个链表长度，做差  同时向后移动
+		int length1 = 0, length2 = 0;
+		length1 = getListLength(pHead1);
+		length2 = getListLength(pHead2);
+		if (length1 == 0)return NULL;
+		if (length2 == 0)return NULL;
+		ListNode* temp1 = pHead1;
+		ListNode* temp2 = pHead2;
+		if (length1>length2)
+		{
+			temp1 = move(pHead1, length1 - length2);
+		}
+		else if (length1<length2)
+		{
+			temp2 = move(pHead2, length2 - length1);
+		}
+		while (temp1&&temp2)
+		{
+			if (temp1==temp2)
+			{
+				return temp1;
+			}
+			else
+			{
+				temp1 = temp1->next;
+				temp2 = temp2->next;
+			}
+		}
+
+		return NULL;		
+	}
 	/*扑克牌顺子 大王用0表示   可以表示任何数字*/
 	bool IsContinuous(vector<int> numbers)
 	{
@@ -1204,7 +1257,7 @@ int main()
 	node2.next = &node4;
 	node3.next = &node5;
 	node4.next = &node6;
-
+	node5.next = &node4;
 	vector<int> test;
 	
 	test.push_back(1);
@@ -1220,8 +1273,12 @@ int main()
 
 	Solution sl;
 	vector<vector<int>> result;
-	result =sl.FindContinuousSequence(3);
+	resultNode = sl.FindFirstCommonNode(&node1,&node2);
 		
+	if (resultNode)
+	{
+		cout << resultNode->val;
+	}
 	for (int i = 0; i < result.size();i++)
 	{
 		for (int j = 0; j < result[i].size();j++)
