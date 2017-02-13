@@ -18,6 +18,29 @@ struct ListNode {
 
 class Solution {
 public:
+	/*把只包含因子2、3和5的数称作丑数（Ugly Number）。
+	例如6、8都是丑数，但14不是，因为它包含因子7。
+	习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。*/
+	int GetUglyNumber_Solution(int index)
+	{//参考作者博客http://zhedahht.blog.163.com/blog/static/2541117420094245366965/
+		if (index < 1)return index;
+		vector<int>ugly;
+		ugly.push_back(1);
+		int index2 = 0, index3 = 0, index5 = 0;
+		int i = 1;
+		while (i<index)
+		{			
+			ugly.push_back(std::min(ugly[index2] * 2, std::min(ugly[index3] * 3, ugly[index5] * 5)));
+			while (ugly[index2] * 2 <= ugly[i])
+				index2++;
+			while (ugly[index3] * 3 <= ugly[i])
+				index3++;
+			while (ugly[index5] * 5 <= ugly[i])
+				index5++;
+			i++;
+		}
+		return ugly[index - 1];
+	}
 	/*请实现一个函数用来找出字符流中第一个只出现一次的字符。*/
 	//Insert one char from stringstream
 	//用map来统计出现次数
@@ -1275,7 +1298,7 @@ private:
 int main()
 {
 	ListNode node1(1), node2(2), node3(3), node4(4), node5(9),node6(5);
-	ListNode* resultNode;
+	ListNode* resultNode= NULL;
 	node1.next = &node3;
 	node2.next = &node4;
 	node3.next = &node5;
@@ -1296,7 +1319,7 @@ int main()
 
 	Solution sl;
 	vector<vector<int>> result;
-	resultNode = sl.FindFirstCommonNode(&node1,&node2);
+	cout<< sl.GetUglyNumber_Solution(7);
 		
 	if (resultNode)
 	{
