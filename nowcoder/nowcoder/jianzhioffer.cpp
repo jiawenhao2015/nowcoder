@@ -18,6 +18,50 @@ struct ListNode {
 
 class Solution {
 public:
+	/*输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。
+	假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，
+	序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。
+	（注意：这两个序列的长度是相等的）*/
+	bool IsPopOrder(vector<int> pushV, vector<int> popV)
+	{//设置一个辅助栈，将pushV中的数字依次压入栈中，一直检查栈顶元素是否与popV中的第一个数字相等，
+	 //如果相等则弹出栈，不相等就接着将pushV中数字push进栈，直到将所有数字都入栈，如果最后栈不空，则不是弹出序列
+		/*        if(pushV.size() == 0) return false;//别人的简洁
+		vector<int> stack;
+		for(int i = 0,j = 0 ;i < pushV.size();){
+		stack.push_back(pushV[i++]);
+		while(j < popV.size() && stack.back() == popV[j]){
+		stack.pop_back();
+		j++;
+		}
+		}
+		return stack.empty();*/
+		if (pushV.size() != popV.size() || pushV.size()<1 || popV.size()<1)return false;
+		
+		stack<int>temp;
+		int i=1,j = 0;
+		temp.push(pushV[0]);
+		while (1)
+		{
+			while (temp.top() != popV[j] && i < pushV.size())
+			{
+				temp.push(pushV[i++]);
+			}
+			if (temp.top() == popV[j])
+			{
+				temp.pop();
+				j++;
+			}
+			else //将pushV里的数字都入栈了也没有找到
+			{
+				return false;
+			}
+			if (temp.size() == 0) //栈最后为空 或者popV为空 说明都匹配完毕
+			{
+				return true;
+			}
+		}		
+		return false;//yong 不上 
+	}
 	/*把只包含因子2、3和5的数称作丑数（Ugly Number）。
 	例如6、8都是丑数，但14不是，因为它包含因子7。
 	习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。*/
@@ -1304,22 +1348,25 @@ int main()
 	node3.next = &node5;
 	node4.next = &node6;
 	node5.next = &node4;
-	vector<int> test;
+	vector<int> test,popV;
 	
 	test.push_back(1);
 	test.push_back(2);
 	test.push_back(3);
 	test.push_back(4);
 	test.push_back(5);
-	test.push_back(6);
-	test.push_back(7);
-	test.push_back(8);
+	popV.push_back(4);
+	popV.push_back(5);
+	popV.push_back(3);
+	popV.push_back(2);
+	//popV.push_back(2);
+
 	//test.push_back(2);
 
 
 	Solution sl;
 	vector<vector<int>> result;
-	cout<< sl.GetUglyNumber_Solution(7);
+	cout<< sl.IsPopOrder(test,popV);
 		
 	if (resultNode)
 	{
