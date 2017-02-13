@@ -7,7 +7,14 @@
 #include <algorithm>//里边有好多现成的函数
 using namespace std;
 
-
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+		val(x), left(NULL), right(NULL) {
+	}
+};
 struct ListNode {
 	int val;
 	struct ListNode *next;
@@ -18,6 +25,72 @@ struct ListNode {
 
 class Solution {
 public:
+	/*操作给定的二叉树，将其变换为源二叉树的镜像。 */
+	void Mirror(TreeNode *pRoot)
+	{//递归 类似先序遍历
+		if (pRoot == NULL)return;
+		TreeNode* temp = pRoot->left;
+		pRoot->left = pRoot->right;
+		pRoot->right = temp;
+		Mirror(pRoot->left);
+		Mirror(pRoot->right);
+		
+	}
+	/*求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,
+	但是对于后面问题他就没辙了。ACMer希望你们帮帮他,并把问题更加普遍化,可以很快的求出任意非负整数区间中1出现的次数。*/
+	int PowerBase10(unsigned int n)
+	{		// 10^n
+		int result = 1;
+		for (unsigned int i = 0; i < n; ++i)
+			result *= 10;
+		return result;
+	}
+	int b10(unsigned int n)
+	{
+		return PowerBase10(n);
+	}
+	int NumberBitCount(unsigned int n)
+	{
+		int N = 0;
+		while (n)
+		{
+			n = n / 10;
+			N++;
+		}
+		return N;
+	}
+	int NumberOf1Between1AndN_Solution(int n)
+	{//看不懂 抄的http://www.cnblogs.com/hellogiser/p/3738812.html
+		// T(n) = o(N) = o(lgn)
+		if (n<=0)
+		{
+			return 0;
+		}
+		int N = NumberBitCount(n);
+		int si, sum = 0;
+		int A, B, bi, ri;
+		for (int i = 1; i <= N; i++)
+		{
+			A = n / b10(i) * b10(i - 1);
+			bi = n / b10(i - 1) % 10;
+			ri = n % b10(i - 1);
+			if (bi == 0)
+			{
+				B = 0;
+			}
+			else if (bi == 1)
+			{
+				B = ri + 1;
+			}
+			else if (bi > 1)
+			{
+				B = b10(i - 1);
+			}
+			si = A + B;
+			sum += si;
+		}
+		return sum;
+	}
 	/*输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。
 	假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，
 	序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。
@@ -1366,7 +1439,7 @@ int main()
 
 	Solution sl;
 	vector<vector<int>> result;
-	cout<< sl.IsPopOrder(test,popV);
+	cout<< sl.NumberOf1Between1AndN_Solution(0);
 		
 	if (resultNode)
 	{
