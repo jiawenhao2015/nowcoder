@@ -5,6 +5,8 @@
 #include<list>
 #include <sstream>
 #include <algorithm>//里边有好多现成的函数
+#include <queue>
+
 using namespace std;
 
 struct TreeNode {
@@ -25,6 +27,45 @@ struct ListNode {
 
 class Solution {
 public:
+	/*从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。*/
+	vector<vector<int> > Print(TreeNode* pRoot)
+	{
+		vector<vector<int>> result;
+		if (pRoot == NULL)return result;
+		queue<TreeNode*> myqueue;
+		myqueue.push(pRoot);
+		while (!myqueue.empty())
+		{
+
+		}
+
+		return result;
+	}
+	/*从上往下打印出二叉树的每个节点，同层节点从左至右打印。*/
+	vector<int> PrintFromTopToBottom(TreeNode* root)
+	{ //层序遍历
+		vector<int> result;
+		queue<TreeNode*> myqueue;
+		if (root == NULL)  return result;
+
+		myqueue.push(root);
+		while (!myqueue.empty())
+		{
+			result.push_back(myqueue.front()->val);
+			if (myqueue.front()->left != NULL)
+			{
+				myqueue.push(myqueue.front()->left);
+			}
+			if (myqueue.front()->right != NULL)
+			{
+				myqueue.push(myqueue.front()->right);
+			}
+			myqueue.pop();
+		}
+
+		return result;
+
+	}
 	/*请实现一个函数，用来判断一颗二叉树是不是对称的。
 	注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的*/
 	bool Symmetrical(TreeNode* pLeft, TreeNode* pRight)
