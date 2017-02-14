@@ -42,9 +42,28 @@ public:
 	}
 	/*输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
 	路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。*/
-	vector<vector<int> > FindPath(TreeNode* root, int expectNumber)
+	vector<vector<int>> result;
+	vector<int> temp;
+	void Traverse(TreeNode* root, int expectNumber)
 	{
+		temp.push_back(root->val);
+		if (expectNumber == root->val && root->left==NULL && root->right ==NULL)//正好找到为叶结点
+		{
+			result.push_back(temp);
+		}
+		else
+		{
+			if(root->left)Traverse(root->left, expectNumber - root->val);
+			if(root->right)Traverse(root->right, expectNumber - root->val);
+		}
+		temp.pop_back(); //深度遍历 要回退一个结点
+	}
+	vector<vector<int> > FindPath(TreeNode* root, int expectNumber)
+	{		
+		if (root == NULL ) return result;
 
+		Traverse(root,expectNumber);
+		return result;
 	}
 	/*操作给定的二叉树，将其变换为源二叉树的镜像。 */
 	void Mirror(TreeNode *pRoot)
