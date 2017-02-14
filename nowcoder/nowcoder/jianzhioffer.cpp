@@ -27,6 +27,29 @@ struct ListNode {
 
 class Solution {
 public:
+
+	/*一个链表中包含环，请找出该链表的环的入口结点。*/
+	ListNode* EntryNodeOfLoop(ListNode* pHead)
+	{
+		if (pHead == NULL)return NULL;
+		map<ListNode*, int> table;//用来记录访问次数
+		ListNode* entry= NULL;
+		while (pHead!=NULL)
+		{
+			table[pHead]++;
+			if (table[pHead]==2)
+			{
+				return pHead;
+			}
+			pHead = pHead->next;
+		}
+		return entry;
+	}
+	/*输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）*/
+	bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+	{//中序遍历和前序遍历 生成字符串 同理判断是否存在包含关系
+
+	}
 	/*从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。*/
 	vector<vector<int> > Print(TreeNode* pRoot)
 	{
