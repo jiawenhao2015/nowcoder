@@ -25,6 +25,27 @@ struct ListNode {
 
 class Solution {
 public:
+	/*请实现一个函数，用来判断一颗二叉树是不是对称的。
+	注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的*/
+	bool Symmetrical(TreeNode* pLeft, TreeNode* pRight)
+	{
+		if (pLeft == NULL && pRight == NULL)return true;
+		if ((pLeft == NULL&&pRight != NULL) || (pLeft != NULL&&pRight == NULL))return false;		
+		if (pLeft->val != pRight->val)return false;
+		
+		return Symmetrical(pLeft->left, pRight->right) && Symmetrical(pLeft->right, pRight->left);		
+	}
+	bool isSymmetrical(TreeNode* pRoot)
+	{
+		if (pRoot == NULL)return true;
+		return Symmetrical(pRoot, pRoot);
+	}
+	/*输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+	路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。*/
+	vector<vector<int> > FindPath(TreeNode* root, int expectNumber)
+	{
+
+	}
 	/*操作给定的二叉树，将其变换为源二叉树的镜像。 */
 	void Mirror(TreeNode *pRoot)
 	{//递归 类似先序遍历
