@@ -30,15 +30,65 @@ public:
 	/*从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。*/
 	vector<vector<int> > Print(TreeNode* pRoot)
 	{
+		/*  vector<vector<int>> ret;
+		if (pRoot == NULL) return ret;
+
+		queue<TreeNode*> q;
+		q.push(pRoot);
+
+		while (!q.empty())
+		{
+		int low = 0, high = q.size();
+		vector<int> level;
+		TreeNode *tmp;
+
+		while (low++ < high)     //按层次来!!!
+		{
+		tmp = q.front();
+		q.pop();
+		level.push_back(tmp->val);
+		if (tmp->left)
+		q.push(tmp->left);
+		if (tmp->right)
+		q.push(tmp->right);
+		}
+		ret.push_back(level);
+		level.clear();
+		}
+		return ret;*/
+
 		vector<vector<int>> result;
 		if (pRoot == NULL)return result;
 		queue<TreeNode*> myqueue;
 		myqueue.push(pRoot);
+		int i = 0, levelLen = 1,nextLevelLen = 0;//当前索引  当前层的长度  下一层长度 貌似看别人的方法不用求 利用queue.size 统计队内元素个数
 		while (!myqueue.empty())
 		{
-
+			vector<int> temp;
+			while (i < levelLen)
+			{
+				temp.push_back(myqueue.front()->val);
+				if (myqueue.front()->left!=NULL)
+				{
+					myqueue.push(myqueue.front()->left);
+					nextLevelLen++;
+				}
+				if (myqueue.front()->right != NULL)
+				{
+					myqueue.push(myqueue.front()->right);
+					nextLevelLen++;
+				}
+				myqueue.pop();
+				if (i == levelLen-1)//本层最后一个元素  将本层遍历过的元素保存 
+				{
+					result.push_back(temp);					
+				}				
+				i++;
+			}
+			levelLen = nextLevelLen; //本层遍历结束 进入下一层
+			nextLevelLen = 0;
+			i = 0;//每层从头开始			
 		}
-
 		return result;
 	}
 	/*从上往下打印出二叉树的每个节点，同层节点从左至右打印。*/
