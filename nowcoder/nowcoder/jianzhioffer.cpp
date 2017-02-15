@@ -24,10 +24,60 @@ struct ListNode {
 		val(x), next(NULL) {
 	}
 };
-
+struct RandomListNode {
+	int label;
+	struct RandomListNode *next, *random;
+	RandomListNode(int x) :
+		label(x), next(NULL), random(NULL) {
+	}
+};
 class Solution {
 public:
 
+
+	/*输入一棵二叉树，判断该二叉树是否是平衡二叉树。*/
+	//网上有复杂度为O（n）方法
+	int getTreeDepth(TreeNode* pRoot)
+	{
+		if (pRoot == NULL) return 0;
+		return 1+max(getTreeDepth(pRoot->left),getTreeDepth(pRoot->right));
+	}
+	bool IsBalanced_Solution(TreeNode* pRoot)
+	{
+		if (pRoot == NULL) return true;
+		if (!IsBalanced_Solution(pRoot->left))return false;
+		if (!IsBalanced_Solution(pRoot->right))return false;
+
+		int leftDepth = getTreeDepth(pRoot->left);
+		int rightDepth = getTreeDepth(pRoot->right);
+
+		if (abs(leftDepth - rightDepth) > 1) return false;
+		return true;
+	}
+	/*输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），
+	返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）*/
+	RandomListNode* Clone(RandomListNode* pHead)
+	{
+		if (pHead == NULL)return pHead;
+		RandomListNode* tempPre = new RandomListNode(0);
+		tempPre->label = pHead->label;
+		pHead = pHead->next;
+		while (pHead != NULL)
+		{
+			RandomListNode* tempCur = new RandomListNode(0);
+			RandomListNode* tempRandom = new RandomListNode(0);
+			tempPre->next = tempCur;
+			tempPre->random = tempRandom;
+
+			tempCur->label = pHead->label;
+			
+
+			temp->label = pHead->label;
+			temp->next = pHead->next;
+			temp->random = pHead->random;
+			pHead = pHead->next;
+		}
+	}
 	/*如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
 	如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
 	*/
@@ -71,8 +121,7 @@ public:
 	}
 
 	/*请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，
-	第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。*/
-	
+	第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。*/	
 	vector<vector<int> > Print2(TreeNode* pRoot)
 	{
 		vector<vector<int> > result;
