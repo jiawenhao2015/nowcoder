@@ -33,8 +33,27 @@ struct RandomListNode {
 };
 class Solution {
 public:
+	/*给定一颗二叉搜索树，请找出其中的第k大的结点。
+	例如， 5 / \ 3 7 /\ /\ 2 4 6 8 中，按结点数值大小顺序第三个结点的值为4。*/
+	void InOrderTraverse(TreeNode*pRoot, vector<TreeNode*>& result)
+	{
+		if (pRoot!=NULL)
+		{
+			InOrderTraverse(pRoot->left, result);
+			result.push_back(pRoot);
+			InOrderTraverse(pRoot->right, result);
+		}
+	}
+	TreeNode* KthNode(TreeNode* pRoot, int k)
+	{//首先中序遍历 然后返回kth值。。。效率太低了吧。。但是暂时没有高效率方法
+		if (pRoot == NULL || k <= 0) return NULL;
+		vector<TreeNode*> result;
+		InOrderTraverse(pRoot,result);
 
-
+		if (k > result.size()) return NULL;
+		return result[k - 1];
+		
+	}
 	/*输入一棵二叉树，判断该二叉树是否是平衡二叉树。*/
 	//网上有复杂度为O（n）方法
 	int getTreeDepth(TreeNode* pRoot)
