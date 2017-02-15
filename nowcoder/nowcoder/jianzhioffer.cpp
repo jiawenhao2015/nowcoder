@@ -27,6 +27,7 @@ struct ListNode {
 
 class Solution {
 public:
+
 	/*如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
 	如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
 	*/
@@ -66,6 +67,50 @@ public:
 	/*输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）*/
 	bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
 	{//中序遍历和前序遍历 生成字符串 同理判断是否存在包含关系
+
+	}
+
+	/*请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，
+	第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。*/
+	
+	vector<vector<int> > Print2(TreeNode* pRoot)
+	{
+		vector<vector<int> > result;
+		if (pRoot==NULL)return result;
+		//首先层次遍历 最后将偶数层 翻转。。。。效率貌似不高。。。 高效率就是 访问偶数层的时候  反着插入
+		queue<TreeNode*>myqueue;
+		myqueue.push(pRoot);
+	    int flag = 1;//flag 表示奇数还是偶数层
+		while (!myqueue.empty())
+		{
+			int index = 0, levelSize = myqueue.size();
+			vector<int> level;
+			TreeNode* temp;
+			
+			while (index++ < levelSize)
+			{
+				temp = myqueue.front();
+				myqueue.pop();
+				vector<int>::iterator it;
+
+				if (flag==1)//第奇数层
+				{									
+					level.push_back(temp->val);
+				}
+				else//第偶数层
+				{
+					it = level.begin();
+					level.insert(it, temp->val);							
+				}
+				if (temp->left)	myqueue.push(temp->left);
+				if (temp->right)myqueue.push(temp->right);
+			}
+			result.push_back(level);
+			level.clear();
+			if (flag == 1)flag = 0;
+			else if (flag == 0)flag = 1;
+		}
+		return result;
 
 	}
 	/*从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。*/
