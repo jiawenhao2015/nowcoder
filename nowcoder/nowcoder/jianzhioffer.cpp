@@ -31,8 +31,47 @@ struct RandomListNode {
 		label(x), next(NULL), random(NULL) {
 	}
 };
+struct TreeLinkNode {
+	int val;
+	struct TreeLinkNode *left;
+	struct TreeLinkNode *right;
+	struct TreeLinkNode *next;
+	TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) {
+
+	}
+};
 class Solution {
 public:
+	/*给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。
+	注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。*/	
+	TreeLinkNode* GetNext(TreeLinkNode* pNode)
+	{
+		if (pNode == NULL) return NULL;
+		if (pNode->right!=NULL)//有右子树
+		{
+			pNode = pNode->right;
+			while (pNode->left!=NULL)
+			{
+				pNode = pNode->left;
+			}
+			return pNode;
+		}
+
+		TreeLinkNode* parent = pNode->next;
+		while (parent!=NULL )//父亲的父亲的。。。父亲为空停止循环 或者找到 作为父亲的左孩子为止&& parent->next->left != parent 
+		{
+			if (parent->left == pNode)//if (parent->next->left ==parent)//原来是这么写的 不对！！！
+			{
+				return parent;//return parent->next;
+			}
+			pNode = parent;
+			parent = parent->next;
+			
+		}			
+		
+		return NULL;
+		
+	}
 	/*给定一颗二叉搜索树，请找出其中的第k大的结点。
 	例如， 5 / \ 3 7 /\ /\ 2 4 6 8 中，按结点数值大小顺序第三个结点的值为4。*/
 	void InOrderTraverse(TreeNode*pRoot, vector<TreeNode*>& result)
@@ -77,7 +116,7 @@ public:
 	返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）*/
 	RandomListNode* Clone(RandomListNode* pHead)
 	{
-		if (pHead == NULL)return pHead;
+		/*if (pHead == NULL)return pHead;
 		RandomListNode* tempPre = new RandomListNode(0);
 		tempPre->label = pHead->label;
 		pHead = pHead->next;
@@ -95,7 +134,7 @@ public:
 			temp->next = pHead->next;
 			temp->random = pHead->random;
 			pHead = pHead->next;
-		}
+		}*/
 	}
 	/*如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
 	如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
