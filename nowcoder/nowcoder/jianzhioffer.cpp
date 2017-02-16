@@ -42,6 +42,44 @@ struct TreeLinkNode {
 };
 class Solution {
 public:
+
+	/*输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。
+	要求不能创建任何新的结点，只能调整树中结点指针的指向。*/
+	void InOrderNonRecursiveTraverse(TreeNode*pRoot, vector<TreeNode*>& result)//非递归中序遍历
+	{
+		if (pRoot == NULL)return;
+		stack<TreeNode*>st;
+		while (pRoot!=NULL||!st.empty())
+		{
+			while (pRoot != NULL)
+			{
+				st.push(pRoot);
+				pRoot = pRoot->left;//最左端
+			}
+			if (!st.empty())
+			{
+				pRoot = st.top();//出栈
+				st.pop();
+				result.push_back(pRoot);
+				pRoot = pRoot->right;//向右边遍历
+			}
+		}
+	}
+	TreeNode* Convert(TreeNode* pRootOfTree)
+	{//首先中序遍历，存储在一个vector里 然后遍历vector建立链表 别人貌似不是这么做的。。么有用vector存储一遍的
+		if (pRootOfTree == NULL)return pRootOfTree;
+		vector<TreeNode*> result;
+		InOrderTraverse(pRootOfTree, result);
+		
+		for (int i = 0; i < result.size()-1; i++)
+		{
+			result[i]->right = result[i + 1];
+			result[i + 1]->left = result[i];
+		}
+		
+		return result[0];		
+	}
+
 	/*给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。
 	注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。*/	
 	TreeLinkNode* GetNext(TreeLinkNode* pNode)
@@ -90,8 +128,7 @@ public:
 		InOrderTraverse(pRoot,result);
 
 		if (k > result.size()) return NULL;
-		return result[k - 1];
-		
+		return result[k - 1];		
 	}
 	/*输入一棵二叉树，判断该二叉树是否是平衡二叉树。*/
 	//网上有复杂度为O（n）方法
@@ -905,7 +942,6 @@ public:
 		
 		return max;
 	}
-
 	/*约瑟夫环 让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列,
 	下一个继续0...m-1报,问最后剩下谁*/
 	int LastRemaining_Solution(int n, int m)
