@@ -42,7 +42,26 @@ struct TreeLinkNode {
 };
 class Solution {
 public:
-
+	/*输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+	如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。*/
+	bool isOK(vector<int>&a,int left,int right)
+	{//抄的 马克（Mark）
+		if (left >= right) return true;
+		int  i = right;
+		while (i > left && a[i - 1] > a[right])i--;//a[right]为根 找到中间左右子树界限
+		for (int j = i - 1; j >= left;j--)
+		{
+			if (a[j] > a[right])return false;//如果左子树有大于根的 返回FALSE
+		}
+		return isOK(a, left, i - 1) && isOK(a, i, right - 1);
+	}
+	bool VerifySquenceOfBST(vector<int> sequence)
+	{//BST的后序序列的合法序列是，对于一个序列S，最后一个元素是x （也就是根），如果去掉最后一个元素的序列为T，
+	//那么T满足：T可以分成两段，前一段（左子树）小于x，后一段（右子树）大于x，且这两段（子树）都是合法的后序序列。完美的递归定义 : ) 。
+		if (sequence.size() == 0)return false;
+		return isOK(sequence,0,sequence.size()-1);
+		
+	}
 	/*输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。
 	要求不能创建任何新的结点，只能调整树中结点指针的指向。*/
 	void InOrderNonRecursiveTraverse(TreeNode*pRoot, vector<TreeNode*>& result)//非递归中序遍历
@@ -1784,14 +1803,14 @@ int main()
 	vector<int> test,popV;
 	
 	test.push_back(1);
-	test.push_back(2);
 	test.push_back(3);
-	test.push_back(4);
+	test.push_back(2);
 	test.push_back(5);
-	popV.push_back(4);
-	popV.push_back(5);
-	popV.push_back(3);
-	popV.push_back(2);
+	test.push_back(7);
+	test.push_back(6);
+	test.push_back(4);
+	//popV.push_back(3);
+	//popV.push_back(2);
 	//popV.push_back(2);
 
 	//test.push_back(2);
@@ -1801,10 +1820,8 @@ int main()
 	vector<vector<int>> result;
 
 	
-	 sl.Insert(5);
-	 cout << sl.GetMedian() << endl;;
-	 sl.Insert(2);
-	 cout << sl.GetMedian();
+	
+	 cout << sl.VerifySquenceOfBST(test);
 		
 	if (resultNode)
 	{
