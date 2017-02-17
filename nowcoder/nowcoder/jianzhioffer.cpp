@@ -42,6 +42,37 @@ struct TreeLinkNode {
 };
 class Solution {
 public:
+	/*输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
+	假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+	例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。*/
+	TreeNode* ConstructTree(vector<int>&pre, vector<int>&vin,int preLeft,int preRight,int vinLeft,int vinRight)
+	{
+		if (preLeft > preRight || vinLeft> vinRight)return NULL;
+
+		TreeNode* root = new TreeNode(0);
+		root->val = pre[preLeft];
+
+ 		int index = vinLeft;
+		while (vin[index] != pre[preLeft])index++;//在中序遍历中找到根节点位置
+		int length = index - vinLeft;//左子树节点个数
+		//int length2 = vinRight - index;//右子树节点个数
+
+		TreeNode* leftTree = ConstructTree(pre, vin, preLeft + 1, preLeft+length,index-length,index -1);//注意下标
+		TreeNode* rightTree = ConstructTree(pre, vin, preLeft+length + 1,preRight,index+1,vinRight );
+
+		root->left = leftTree;
+		root->right = rightTree;
+		return root;
+	}
+	TreeNode* reConstructBinaryTree(vector<int> pre, vector<int> vin)
+	{
+		if (pre.size() == 0||pre.size()!=vin.size()) return NULL;
+
+		TreeNode* root = new TreeNode(0);		
+		root->val = pre[0];		
+		root = ConstructTree(pre, vin, 0, pre.size() - 1, 0, vin.size() - 1);
+		return root;
+	}
 	/*输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
 	如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。*/
 	bool isOK(vector<int>&a,int left,int right)
@@ -1803,37 +1834,37 @@ int main()
 	vector<int> test,popV;
 	
 	test.push_back(1);
-	test.push_back(3);
 	test.push_back(2);
-	test.push_back(5);
-	test.push_back(7);
-	test.push_back(6);
 	test.push_back(4);
-	//popV.push_back(3);
-	//popV.push_back(2);
-	//popV.push_back(2);
+	test.push_back(7);
+	test.push_back(3);
+	test.push_back(5);
+	test.push_back(6);
+	test.push_back(8);
 
-	//test.push_back(2);
+	popV.push_back(4);
+	popV.push_back(7);
+	popV.push_back(2);
+	popV.push_back(1);
+	popV.push_back(5);
+	popV.push_back(3);
+	popV.push_back(8);
+	popV.push_back(6);
+	
+	
 
 
 	Solution sl;
 	vector<vector<int>> result;
-
+	vector<TreeNode*> tree;
 	
+	TreeNode * root;
+	root =  sl.reConstructBinaryTree(test,popV);
+	sl.InOrderTraverse(root, tree);
 	
-	 cout << sl.VerifySquenceOfBST(test);
-		
-	if (resultNode)
-	{
-		cout << resultNode->val;
-	}
-	for (int i = 0; i < result.size();i++)
-	{
-		for (int j = 0; j < result[i].size();j++)
-		{
-			cout << result[i][j] << " ";
-		}
-		cout << endl;
+	for (int i = 0; i < tree.size();i++)
+	{		
+		cout << tree[i]->val << " ";		
 	}
 	
 
