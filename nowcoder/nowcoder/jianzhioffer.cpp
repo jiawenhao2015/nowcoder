@@ -41,7 +41,20 @@ struct TreeLinkNode {
 };
 class Solution {
 public:
+	
+	/*请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。
+	在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配*/
+	bool match(char* str, char* pattern)
+	{
 
+	}
+	/*地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，
+	但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），
+	因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？*/
+	int movingCount(int threshold, int rows, int cols)
+	{
+
+	}
 	/*请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，
 	每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
 	例如 a b c e s f c s a d e e 矩阵中包含一条字符串"bccced"的路径，
@@ -266,8 +279,7 @@ public:
 			tempPre->next = tempCur;
 			tempPre->random = tempRandom;
 
-			tempCur->label = pHead->label;
-			
+			tempCur->label = pHead->label;			
 
 			temp->label = pHead->label;
 			temp->next = pHead->next;
@@ -312,11 +324,71 @@ public:
 		return entry;
 	}
 	/*输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）*/
+	void PreOrder(TreeNode* pRoot, vector<TreeNode*>& result)
+	{
+		if (pRoot != NULL)
+		{
+			result.push_back(pRoot);
+			PreOrder(pRoot->left, result);			
+			PreOrder(pRoot->right, result);
+		}
+	}
+	bool isContain2(vector<TreeNode*>order1, vector<TreeNode*>order2)
+	{//子串是否包含函数
+		int N = order1.size();
+		int M = order2.size();			
+		for (int i = 0; i <= N - M; i++)//判断连续子串 只需到N-M
+		{
+			int j;
+			for (j = 0; j < M; j++)
+			{
+				if (order1[i + j]->val != order2[j]->val)//是order1[i + j]->val相等 不是order1[i + j]相等
+					break;
+			}
+			if (j == M)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	/*测试用例:{8,8,7,9,2,#,#,#,#,4,7},{8,9,2} true*/
+	bool isContain(vector<TreeNode*>order1, vector<TreeNode*>order2)
+	{
+		int N = order1.size();
+		int M = order2.size();
+		int j = 0;
+		for (int i = 0; i < N; i++)//边界条件！此题不需要连续子串
+		{
+						
+			if (j<M && order1[i]->val==order2[j]->val)
+			{
+				j++;
+			}			
+			if (j == M)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
 	{//中序遍历和前序遍历 生成字符串 同理判断是否存在包含关系
+		if (pRoot1 == NULL || pRoot2 == NULL) return false;
+		vector<TreeNode*>inOrder1, inOrder2,preOrder1,preOrder2;
+		PreOrder(pRoot1, preOrder1);
+		PreOrder(pRoot2, preOrder2);
+
+		InOrderTraverse(pRoot1, inOrder1);
+		InOrderTraverse(pRoot2, inOrder2);
+
+		//判断是否是子串关系
+		if (isContain(preOrder1, preOrder2) && isContain(inOrder1, inOrder2))
+			return true;
+		
+		return false;
 
 	}
-
 	/*请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，
 	第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。*/	
 	vector<vector<int> > Print2(TreeNode* pRoot)
@@ -1885,23 +1957,23 @@ int main()
 	node5.next = &node4;
 	vector<int> test,popV;
 	
-	test.push_back(1);
-	test.push_back(2);
-	test.push_back(4);
-	test.push_back(7);
-	test.push_back(3);
-	test.push_back(5);
-	test.push_back(6);
+	test.push_back(9);
 	test.push_back(8);
+	test.push_back(4);
+	test.push_back(2);
+	test.push_back(7);
+	test.push_back(8);
+	test.push_back(7);
+	//test.push_back(8);
 
-	popV.push_back(4);
-	popV.push_back(7);
-	popV.push_back(2);
-	popV.push_back(1);
-	popV.push_back(5);
-	popV.push_back(3);
+	popV.push_back(9);
 	popV.push_back(8);
-	popV.push_back(6);	
+	popV.push_back(2);
+	//popV.push_back(1);
+	//popV.push_back(5);
+	//popV.push_back(3);
+	//popV.push_back(8);
+	//popV.push_back(6);	
 
 
 	Solution sl;
@@ -1910,7 +1982,7 @@ int main()
 	
 	TreeNode * root;
 
-	cout << sl.hasPath("abcesfcsadee",3,4,"aced");
+	cout << sl.isContain(test,popV);
 	
 	for (int i = 0; i < tree.size();i++)
 	{		
