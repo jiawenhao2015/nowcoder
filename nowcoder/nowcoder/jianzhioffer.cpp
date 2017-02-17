@@ -51,9 +51,36 @@ public:
 	/*地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，
 	但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），
 	因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？*/
-	int movingCount(int threshold, int rows, int cols)
+	int sumOfDigits(int n)
 	{
+		int sum = 0;
+		while (n>0)
+		{
+			sum += n % 10;
+			n /= 10;
+		}
+		return sum;
+	}
+	int count(int threshold, int rows, int cols, int *flag,int i,int j)
+	{
+		if (i < 0 || i >= rows || j < 0 || j >= cols || sumOfDigits(i) + sumOfDigits(j) > threshold || flag[i*cols + j] == 1)
+			return 0;
+		flag[i*cols + j] = 1;
 
+		return 1 + count(threshold, rows, cols, flag, i + 1, j) +
+			       count(threshold, rows, cols, flag, i - 1, j) +
+			       count(threshold, rows, cols, flag, i, j + 1) +
+			       count(threshold, rows, cols, flag, i, j - 1);
+
+	}
+	int movingCount(int threshold, int rows, int cols)
+	{		
+		int* flag = new int[rows*cols];
+		for (int i = 0; i < rows*cols;i++)
+		{
+			flag[i] = 0;
+		}
+		return count(threshold,rows,cols,flag,0,0);
 	}
 	/*请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，
 	每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
@@ -324,6 +351,25 @@ public:
 		return entry;
 	}
 	/*输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）*/
+	/*class Solution {//别人 de
+		bool isSubtree(TreeNode* pRootA, TreeNode* pRootB) {
+			if (pRootB == NULL) return true;
+			if (pRootA == NULL) return false;
+			if (pRootB->val == pRootA->val) {
+				return isSubtree(pRootA->left, pRootB->left)
+					&& isSubtree(pRootA->right, pRootB->right);
+			}
+			else return false;
+		}
+	public:
+		bool HasSubtree(TreeNode* pRootA, TreeNode* pRootB)
+		{
+			if (pRootA == NULL || pRootB == NULL) return false;
+			return isSubtree(pRootA, pRootB) ||
+				HasSubtree(pRootA->left, pRootB) ||
+				HasSubtree(pRootA->right, pRootB);
+		}
+	};*/
 	void PreOrder(TreeNode* pRoot, vector<TreeNode*>& result)
 	{
 		if (pRoot != NULL)
@@ -1982,7 +2028,9 @@ int main()
 	
 	TreeNode * root;
 
-	cout << sl.isContain(test,popV);
+	
+	cout << sl.sumOfDigits(-2644) << endl;
+	
 	
 	for (int i = 0; i < tree.size();i++)
 	{		

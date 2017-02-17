@@ -1,48 +1,48 @@
-﻿生成启动时间为 2/17/2017 8:58:28 PM。
+﻿生成启动时间为 2/17/2017 11:01:51 PM。
      1>项目“E:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\nowcoder.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt -D_SCL_SECURE_NO_WARNINGS jianzhioffer.cpp
          jianzhioffer.cpp
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(94): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(189): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(245): warning C4018: “>”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(653): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(778): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(781): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(801): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(837): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1036): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1058): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1063): warning C4018: “>”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1084): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1179): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1285): warning C4018: “>”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1289): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1295): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1298): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1324): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1328): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1334): warning C4018: “>”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1396): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1403): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1483): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1488): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1542): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1693): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1696): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(70): error C2087: “flag”: 缺少下标
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(70): error C2540: 作为数组界限的非常量表达式
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(70): error C2440: “初始化”: 无法从“int (*)[1]”转换为“int [][1]”
+                 没有转换为数组类型，但有转换为数组的引用或指针
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(111): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(206): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(262): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(689): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(814): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(817): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(837): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(873): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1072): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1094): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1099): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1120): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1215): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1321): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1325): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1331): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1334): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1360): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1364): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1370): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1432): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1439): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1519): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1524): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1578): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1729): warning C4018: “<”: 有符号/无符号不匹配
      1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1732): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1735): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1787): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1794): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1839): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1864): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1987): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1983): warning C4101: “root”: 未引用的局部变量
-       Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.lib" /MACHINE:X86 Debug\jianzhioffer.obj
-         nowcoder.vcxproj -> E:\laboratory\mygithub\nowcoder\nowcoder\Debug\jianzhioffer.exe
-     1>已完成生成项目“E:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\nowcoder.vcxproj”(Build 个目标)的操作。
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1768): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1771): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1823): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1830): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1875): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(1900): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\jianzhioffer.cpp(2025): warning C4018: “<”: 有符号/无符号不匹配
+     1>已完成生成项目“E:\laboratory\mygithub\nowcoder\nowcoder\nowcoder\nowcoder.vcxproj”(Build 个目标)的操作 - 失败。
 
-生成成功。
+生成失败。
 
-已用时间 00:00:01.04
+已用时间 00:00:01.87
