@@ -41,7 +41,73 @@ struct TreeLinkNode {
 };
 class Solution {
 public:
-	
+	/*请实现两个函数，分别用来序列化和反序列化二叉树*/
+	TreeNode* decode(char *&str) {
+		if (*str == '#'){
+			str++;
+			return NULL;
+		}
+		int num = 0;
+		while (*str != ',')
+			num = num * 10 + (*(str++) - '0');
+		str++;
+		TreeNode *root = new TreeNode(num);
+		root->left = decode(str);
+		root->right = decode(str);
+		return root;
+	}
+	char* Serialize2(TreeNode *root) {
+		if (!root) return "#";
+		string r = to_string(root->val);
+		r.push_back(',');
+		char *left = Serialize(root->left);
+		char *right = Serialize(root->right);
+		char *ret = new char[strlen(left) + strlen(right) + r.size()];
+		strcpy(ret, r.c_str());
+		strcat(ret, left);
+		strcat(ret, right);
+		return ret;
+	}
+	TreeNode* Deserialize2(char *str) {
+		return decode(str);
+	}
+
+	char* Serialize(TreeNode *root)
+	{
+		//先序遍历 中序遍历 保存结果
+		if (root == NULL) return NULL;
+		vector<TreeNode*>preOrder, inOrder;
+		PreOrder(root, preOrder);
+		InOrderTraverse(root, inOrder);
+		
+		char * combine = new char[preOrder.size()+inOrder.size()+1];
+		for (int i = 0; i < preOrder.size();i++)
+		{
+			combine[i] = preOrder[i]->val;
+		}
+		for (int i = preOrder.size(); i < preOrder.size() + inOrder.size(); i++)
+		{
+			combine[i] = inOrder[i - preOrder.size()]->val;
+		}
+		combine[preOrder.size() + inOrder.size()] = '\0';
+		return combine;
+	}
+	TreeNode* Deserialize(char *str)
+	{
+		int len = strlen(str);
+		vector<int>preOrder, inOrder;
+		for (int i = 0; i < len / 2;i++)
+		{
+			preOrder.push_back((int)str[i]);
+		}
+		for (int i = len/2; i < len; i++)
+		{
+			inOrder.push_back((int)str[i]);
+		}
+
+		return reConstructBinaryTree(preOrder, inOrder);
+	}
+
 	/*请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。
 	在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配*/
 	bool match(char* str, char* pattern)
@@ -2003,23 +2069,23 @@ int main()
 	node5.next = &node4;
 	vector<int> test,popV;
 	
-	test.push_back(9);
-	test.push_back(8);
-	test.push_back(4);
+	test.push_back(1);
 	test.push_back(2);
+	test.push_back(4);
 	test.push_back(7);
+	test.push_back(3);
+	test.push_back(5);
+	test.push_back(6);
 	test.push_back(8);
-	test.push_back(7);
-	//test.push_back(8);
 
-	popV.push_back(9);
-	popV.push_back(8);
+	popV.push_back(4);
+	popV.push_back(7);
 	popV.push_back(2);
-	//popV.push_back(1);
-	//popV.push_back(5);
-	//popV.push_back(3);
-	//popV.push_back(8);
-	//popV.push_back(6);	
+	popV.push_back(1);
+	popV.push_back(5);
+	popV.push_back(3);
+	popV.push_back(8);
+	popV.push_back(6);	
 
 
 	Solution sl;
@@ -2028,9 +2094,22 @@ int main()
 	
 	TreeNode * root;
 
+	root = sl.reConstructBinaryTree(test, popV);
+
+//	cout << sl.Serialize(root);
+	for (int i = 0; i < strlen(sl.Serialize(root));i++)
+	{
+		cout <<(int)sl.Serialize(root)[i] << " ";
+	}
 	
-	cout << sl.sumOfDigits(-2644) << endl;
-	
+	cout <<  endl;
+
+	TreeNode * root2;
+	root2 = sl.Deserialize(sl.Serialize(root));
+	for (int i = 0; i < strlen(sl.Serialize(root2)); i++)
+	{
+		cout << (int)sl.Serialize(root2)[i] << " ";
+	}
 	
 	for (int i = 0; i < tree.size();i++)
 	{		
