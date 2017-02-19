@@ -107,11 +107,9 @@ public:
 
 		return reConstructBinaryTree(preOrder, inOrder);
 	}
-
 	/*请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。
 		在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，
 		但是与"aa.a"和"ab*a"均不匹配http://www.voidcn.com/blog/huzhigenlaohu/article/p-6087740.html*/	
-
 	bool matchCore(char* str, int strIndex, char* pattern, int patternIndex)
 	{
 		//str到尾，pattern到尾，匹配成功
@@ -1961,13 +1959,11 @@ public:
 		}
 		return result;
 	}
-
 	/*把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
 	输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
 	例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。
 	NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
 	//网上说是2分查找最好*/
-
 	int minNumberInRotateArray(vector<int> rotateArray)
 	{
 		int size = rotateArray.size();
@@ -1987,7 +1983,6 @@ public:
 		return min;
 
 	}
-
 	/*输入一个链表，输出该链表中倒数第k个结点。*/
 	ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
 	{
@@ -2105,6 +2100,163 @@ public:
 		}
 		return count;
 	}
+	/*大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项。*/
+	int Fibonacci(int n) 
+	{
+		if (n <= 0)	return 0;		
+		if (n == 1 || n == 2)		
+			return 1;
+		else			
+			return Fibonacci(n - 1) + Fibonacci(n - 2);
+	}
+	/*一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。*/
+	int jumpFloorII(int number)
+	{
+	  if (number <= 0)	return -1;
+	  if (number == 1)	return 1;
+	  else	return 2 * jumpFloorII(number - 1);
+	
+	 }
+	/*一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。*/
+	int jumpFloor(int number)
+	{
+		if (number == 1)return 1;			
+		else if (number == 2)return 2;
+		return jumpFloor(number - 1) + jumpFloor(number - 2);
+	}
+	/*输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，
+	例如，如果输入如下矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.*/
+    vector<int> printMatrix(vector<vector<int> > matrix)
+	{
+		int row = matrix.size();
+		int col = matrix[0].size();
+		vector<int> a;
+		//参考的别人的代码。。。   上地https://www.nowcoder.com/profile/709885
+		if (row == 0 || col == 0)  return a;
+		// 定义四个关键变量，表示左上和右下的打印范围
+		int left = 0, top = 0, right = col - 1, bottom = row - 1;
+		while (left <= right && top <= bottom)
+		{
+			// left to right
+			for (int i = left; i <= right; ++i)  a.push_back(matrix[top][i]);
+			// top to bottom
+			for (int i = top + 1; i <= bottom; ++i)  a.push_back(matrix[i][right]);
+			// right to left
+			if (top != bottom)
+			for (int i = right - 1; i >= left; --i)  a.push_back(matrix[bottom][i]);
+			// bottom to top
+			if (left != right)
+			for (int i = bottom - 1; i > top; --i)  a.push_back(matrix[i][left]);
+			left++, top++, right--, bottom--;
+		}
+		return a;
+	}
+	/*输入一个链表，反转链表后，输出链表的所有元素。*/
+    ListNode* ReverseList(ListNode* pHead)
+	{
+		if (pHead == NULL)
+			return pHead;
+		ListNode *curNode = pHead;
+		ListNode *nextNode = curNode->next;
+		ListNode *temp;
+		if (curNode->next != NULL)
+		{
+			pHead = curNode->next;
+		}
+		curNode->next = NULL;
+		//保存当前结点指针 下一个结点指针 还有下一个的下一个结点指针
+		while (nextNode)
+		{
+			pHead = nextNode;
+			temp = nextNode->next;
+			nextNode->next = curNode;
+
+			curNode = nextNode;
+			nextNode = temp;
+		}
+		return pHead;
+	}
+	/*输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。*/
+    int TreeDepth(TreeNode* pRoot)
+	{
+		if (pRoot == NULL)
+		{
+			return 0;
+		}
+		int a = TreeDepth(pRoot->left);
+		int b = TreeDepth(pRoot->right);
+		return 1 + (a > b ? a : b);
+	}
+	/*输入一个链表，从尾到头打印链表每个节点的值。*/
+   vector<int> printListFromTailToHead(ListNode* head)
+	{
+		vector<int> a;
+		if (head != NULL)
+		{
+			a.insert(a.begin(), head->val);
+			while (head->next != NULL)
+			{
+				head = head->next;
+				a.insert(a.begin(), head->val);
+			}
+		}
+		return a;
+    }
+   /*实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。*/
+   void replaceSpace(char *str, int length)
+   {
+		if (str == NULL || length <= 0)		return;		
+		int i = 0;
+		int oldLength = 0;
+		int space = 0;
+		while (str[i] != '\0')
+		{
+			oldLength++;
+			if (str[i] == ' ')	space++;			
+			i++;
+		}
+		int newLength = oldLength + space * 2;//新的字符串长度     
+		if (newLength > length)	return;
+		while (oldLength >= 0)
+		{
+			if (str[oldLength] == ' ')
+			{
+				str[newLength--] = '0';
+				str[newLength--] = '2';
+				str[newLength--] = '%';
+			}
+			else
+			{
+				str[newLength--] = str[oldLength];
+			}
+
+			oldLength--;
+		}
+	}
+   /*在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+   请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。*/
+	bool Find(int target, vector<vector<int> > array)
+	{
+		   int colNum;
+		   int rowNum;
+		   rowNum = array.size();
+		   colNum = array[0].size();
+		   bool flag = false;
+		   int j = 0;
+		   int i = rowNum - 1;
+		   while (!flag)
+		   {
+			   if (0 <= i && j <= colNum - 1)
+			   {
+				   if (array[i][j] < target)   j++;				  
+				   else if (array[i][j] > target)  i--;			 
+				   else if (array[i][j] == target) flag = true;
+			   }
+			   else	   break;			  
+		   }
+		   return flag;
+	 }
+
 private:
 	stack<int> stack1;
 	stack<int> stack2;
