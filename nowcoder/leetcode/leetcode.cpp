@@ -4,17 +4,134 @@
 #include <unordered_map>
 #include <stack>
 using namespace std;
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+};
 struct TreeNode{
 	int val;
 	struct TreeNode *left;
 	struct TreeNode *right;
 	TreeNode(int x) :
-		val(x), left(NULL), right(NULL) {
-	}
+		val(x), left(NULL), right(NULL) {}
 };
 class Solution 
 {
 public:
+	/*2. Add Two Numbers
+	You are given two non - empty linked lists representing two non - negative integers.
+	The digits are stored in reverse order and each of their nodes contain a single digit.
+	Add the two numbers and return it as a linked list.
+	You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+	Input : (2 -> 4 -> 3) + (5 -> 6 -> 4)
+	Output : 7 -> 0 -> 8
+	*/
+	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+	{
+		/*ListNode preHead(0), *p = &preHead;
+	int extra = 0;
+	while (l1 || l2 || extra) {
+	int sum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + extra;
+	extra = sum / 10;
+	p->next = new ListNode(sum % 10);
+	p = p->next;
+	l1 = l1 ? l1->next : l1;
+	l2 = l2 ? l2->next : l2;
+	}
+	return preHead.next;*/
+		int carry = 0;//进位
+		ListNode* result = l1;
+		while (l1->next != NULL && l2->next != NULL)
+		{
+			l1->val = l1->val + l2->val + carry;							
+			if (l1->val >= 10)
+			{
+				l1->val -= 10;
+				carry = 1;
+			}
+			else carry = 0;
+			l1 = l1->next;
+			l2 = l2->next;
+		}
+		l1->val = l1->val + l2->val + carry;
+		if (l1->val >= 10)
+		{
+			l1->val -= 10;
+			carry = 1;
+		}
+		else carry = 0;
+		if (l1->next == NULL && l2->next == NULL)
+		{
+			if (carry == 1)
+			{
+				ListNode* newNode = new ListNode(1);
+				l1->next = newNode;
+			}
+		}
+		else
+		{			
+			if (l1->next == NULL &&  l2->next != NULL)//l2非空
+			{			
+				l1->next = l2->next;
+				l1 = l1->next;
+				while (carry && l1->next!=NULL)
+				{
+					l1->val += carry;
+					if (l1->val >= 10)
+					{
+						l1->val -= 10;
+						carry = 1;
+					}
+					else carry = 0;
+					l1 = l1->next;
+				}
+				if (carry ==1)//最后一位
+				{
+					l1->val += carry;
+					if (l1->val >= 10)
+					{
+						l1->val -= 10;
+						ListNode* newNode = new ListNode(1);//新建结点
+						l1->next = newNode;
+						carry = 1;
+					}
+					else carry = 0;
+				}
+				
+			}
+			else if (l1->next != NULL && l2->next == NULL)
+			{				
+				l1 = l1->next;
+				while (carry && l1->next != NULL)
+				{
+					l1->val += carry;
+					if (l1->val >= 10)
+					{
+						l1->val -= 10;
+						carry = 1;
+					}
+					else carry = 0;
+					l1 = l1->next;
+				}
+				if (carry == 1)//最后一位
+				{
+					l1->val += carry;
+					if (l1->val >= 10)
+					{
+						l1->val -= 10;
+						ListNode* newNode = new ListNode(1);//新建结点
+						l1->next = newNode;
+						carry = 1;
+					}
+					else carry = 0;
+				}
+			}
+		}	
+		
+		return result;
+	}
 	/*150. Evaluate Reverse Polish Notation
 	Evaluate the value of an arithmetic expression in Reverse Polish Notation.
 	Valid operators are +, -, *, /. Each operand may be an integer or another expression.
@@ -120,7 +237,20 @@ int main()
 	/*str.push_back("3");
 	str.push_back("*");	*/
 
-	cout << sl.evalRPN(str) << endl;
+	ListNode node1(9), node2(1), node3(9), node4(1), node5(9), node6(1);
+	ListNode* resultNode = NULL;
+	node1.next = &node3;
+	node2.next = &node4;
+	node3.next = &node5;
+	node4.next = &node6;	
+
+	resultNode = sl.addTwoNumbers(&node1,&node2);
+	while (resultNode)
+	{
+		cout << resultNode->val << " ";
+		resultNode = resultNode->next;
+	}
+	
 	getchar();
 	return 0;
 }
