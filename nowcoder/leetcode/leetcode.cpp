@@ -20,6 +20,19 @@ struct TreeNode{
 class Solution 
 {
 public:
+	/*136. Single Number
+	Given an array of integers, every element appears twice except for one. Find that single one.
+	Note:
+	Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?*/
+	int singleNumber(vector<int>& nums)
+	{
+		for (int i = 1; i < nums.size();i++)
+		{
+			nums[0] ^= nums[i];
+		}
+		return nums[0];
+	}
+
 	/*2. Add Two Numbers
 	You are given two non - empty linked lists representing two non - negative integers.
 	The digits are stored in reverse order and each of their nodes contain a single digit.
@@ -225,11 +238,14 @@ public:
 int main()
 {
 	Solution sl;
-	vector<int>test;
+	vector<int>test;	
+	test.push_back(3);
+	test.push_back(4);
 	test.push_back(2);
-	test.push_back(7);
-	test.push_back(11);
-	test.push_back(15);
+	test.push_back(3);
+	test.push_back(5);
+	test.push_back(4);
+	test.push_back(2);
 	vector<string> str;
 	str.push_back("0");
 	str.push_back("3");
@@ -244,12 +260,9 @@ int main()
 	node3.next = &node5;
 	node4.next = &node6;	
 
-	resultNode = sl.addTwoNumbers(&node1,&node2);
-	while (resultNode)
-	{
-		cout << resultNode->val << " ";
-		resultNode = resultNode->next;
-	}
+	int a = 5;
+	cout <<sl.singleNumber(test)<< endl;
+	
 	
 	getchar();
 	return 0;
