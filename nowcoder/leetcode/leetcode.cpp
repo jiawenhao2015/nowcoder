@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <unordered_map>
+#include <stack>
 using namespace std;
 struct TreeNode{
 	int val;
@@ -14,6 +15,41 @@ struct TreeNode{
 class Solution 
 {
 public:
+	/*150. Evaluate Reverse Polish Notation
+	Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+	Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+	Some examples:
+	["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
+	["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+	*/
+	int evalRPN(vector<string>& tokens)
+	{//字符串可以直接比较。。不用strcmp 直接tokens[i]=="*"
+		stack<int> st;
+		for (int i = 0; i < tokens.size();i++)
+		{
+			if (atoi(tokens[i].c_str())!=0)st.push(atoi(tokens[i].c_str()));//返回非0代表为数字 
+			else if (strcmp(tokens[i].c_str(), "0") == 0)
+			{
+				 st.push(atoi(tokens[i].c_str()));				
+			}
+			else
+			{				
+				int b = st.top();
+				st.pop();
+				int a = st.top();
+				st.pop();
+				if (strcmp(tokens[i].c_str(), "+")==0)	st.push(a + b);				
+				else if (strcmp(tokens[i].c_str(), "-") == 0)st.push(a - b);
+				else if (strcmp(tokens[i].c_str(), "*") == 0)st.push(a * b);
+				else if (tokens[i] == "/")st.push(a / b);
+				else
+				{
+					//说明有别的字符 错误					
+				}
+			}
+		}
+		return st.top();
+	}
 	/*1. Two Sum
 	Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 	You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -77,8 +113,14 @@ int main()
 	test.push_back(7);
 	test.push_back(11);
 	test.push_back(15);
+	vector<string> str;
+	str.push_back("0");
+	str.push_back("3");
+	str.push_back("/");
+	/*str.push_back("3");
+	str.push_back("*");	*/
 
-	cout << sl.twoSum(test, 9)[0] << " "<<sl.twoSum(test, 9)[1] << endl;
+	cout << sl.evalRPN(str) << endl;
 	getchar();
 	return 0;
 }
