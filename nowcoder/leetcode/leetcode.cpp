@@ -26,9 +26,48 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-148-Sort List
+    Sort a linked list in O(n log n) time using constant space complexity.*/	
+	ListNode* merge(ListNode* l1, ListNode* l2)
+	{//合并两个有序链表
+		ListNode dumb(0);
+		ListNode* cur = &dumb;
+		while (l1 != NULL && l2 != NULL)
+		{
+			if (l1->val < l2->val)
+			{
+				cur->next = l1;
+				l1 = l1->next;
+			}
+			else
+			{
+				cur->next = l2;
+				l2 = l2->next;
+			}
+			cur = cur->next;
+		}
+		if (l1 != NULL)	cur->next = l1;			
+		if (l2 != NULL)	cur->next = l2;	
+		return dumb.next;
+	}
+	ListNode* sortList(ListNode* head)
+	{//归并
+		if (head == NULL || head->next == NULL) return head;
+		
+		ListNode* first = head;
+		ListNode* second = head->next;
+		while (second != NULL && second->next != NULL)
+		{
+			first = first->next;
+			second = second->next->next;//每次移动两个结点
+		}
+		second = first->next;
+		first->next = NULL;//将链表分成两个部分
+
+		return merge(sortList(head), sortList(second));
+	}
 	/*leetcode-149-Max Points on a Line
-	Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.*/
-	//牛客网上通不过所有测试用例
+	Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.*/	
 	void getLine(double& a, double& b, double & c, Point pt1, Point pt2)
 	{//ax+by+c = 0;
 		a = pt2.y - pt1.y;
@@ -321,7 +360,7 @@ int main()
 	/*str.push_back("3");
 	str.push_back("*");	*/
 
-	ListNode node1(9), node2(1), node3(9), node4(1), node5(9), node6(1);
+	ListNode node1(1), node2(2), node3(3), node4(4), node5(5), node6(6);
 	ListNode* resultNode = NULL;
 	node1.next = &node3;
 	node2.next = &node4;
@@ -333,11 +372,14 @@ int main()
 	pts.push_back(Point(1, 1));
 	pts.push_back(Point(1, 1));
 
-	double a = 0, b = 0;
+	double a = 0, b = 0;	
 	
-	
-	cout << sl.maxPoints(pts)<< endl;
-	
+	 resultNode = sl.merge(&node1,&node2);
+	 while (resultNode!=NULL)
+	 {
+		 cout << resultNode->val << " ";
+		 resultNode = resultNode->next;
+	 }
 	
 	
 	
