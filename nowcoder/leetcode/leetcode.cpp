@@ -26,6 +26,39 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-147-Insertion Sort List
+		Sort a linked list using insertion sort.*/
+	ListNode* insert(ListNode* head, ListNode* node)
+	{//将node插入到有序链表中的合适位置 保持从小到大有序
+		ListNode dump(0);
+		dump.next = head;		
+		ListNode* pre = &dump;
+		while (head != NULL && head->val < node->val )
+		{
+			pre = head;
+			head = head->next;			
+		}
+		pre->next = node;
+		node->next = head;
+
+		return dump.next;
+
+	}
+	ListNode* insertionSortList(ListNode* head)
+	{
+		if (head == NULL || head->next == NULL) return head;
+		
+		ListNode* temp = head;
+		ListNode  newList(0) ;
+		
+		while (head != NULL)
+		{
+			temp = head->next;//保存当前的下一个结点位置
+			newList.next =insert(newList.next, head);
+			head = temp;		
+		}
+		return newList.next;
+	}
 	/*leetcode-148-Sort List
     Sort a linked list in O(n log n) time using constant space complexity.*/	
 	ListNode* merge(ListNode* l1, ListNode* l2)
@@ -127,7 +160,6 @@ public:
 		}
 		return nums[0];
 	}
-
 	/*2. Add Two Numbers
 	You are given two non - empty linked lists representing two non - negative integers.
 	The digits are stored in reverse order and each of their nodes contain a single digit.
@@ -360,7 +392,7 @@ int main()
 	/*str.push_back("3");
 	str.push_back("*");	*/
 
-	ListNode node1(1), node2(2), node3(3), node4(4), node5(5), node6(6);
+	ListNode node1(1), node2(2), node3(30), node4(4), node5(5), node6(6);
 	ListNode* resultNode = NULL;
 	node1.next = &node3;
 	node2.next = &node4;
@@ -374,7 +406,7 @@ int main()
 
 	double a = 0, b = 0;	
 	
-	 resultNode = sl.merge(&node1,&node2);
+	 resultNode = sl.insertionSortList(&node1);
 	 while (resultNode!=NULL)
 	 {
 		 cout << resultNode->val << " ";
