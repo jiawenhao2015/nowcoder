@@ -17,9 +17,65 @@ struct TreeNode{
 	TreeNode(int x) :
 		val(x), left(NULL), right(NULL) {}
 };
+struct Point {
+	int x;
+	int y;
+	Point() : x(0), y(0) {}
+	Point(int a, int b) : x(a), y(b) {}
+};
 class Solution 
 {
 public:
+	/*leetcode-149-Max Points on a Line
+	Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.*/
+	//牛客网上通不过所有测试用例
+	void getLine(double& a, double& b, double & c, Point pt1, Point pt2)
+	{//ax+by+c = 0;
+		a = pt2.y - pt1.y;
+		b = pt1.x - pt2.x;
+		c = pt2.x * pt1.y - pt1.x *pt2.y;
+	}
+	bool isOnLine(double a,double b,double c,Point pt)
+	{
+		if (a*a + b*b == 0) return true;
+		double distance = abs(a*pt.x + b*pt.y + c) / sqrt(a*a + b*b);
+		if (distance < 0.000001)
+			return true;
+		else return false;
+	}
+	int maxPoints(vector<Point>& points)
+	{
+		if (points.size() <= 2) return points.size();	
+		int max = 0;
+		for (int i = 0; i < points.size();i++)
+		{		
+			int same = 1;
+			for (int j = i+1; j < points.size();j++)
+			{
+				if (points[i].x == points[j].x && points[i].y == points[j].y)	//两个点相同
+				{				
+					same++;
+					continue;
+				}
+				double a=0, b=0, c=0;
+				int num = 0;
+				getLine(a, b, c, points[i], points[j]);				
+				for (int k = 0;  k < points.size(); k++)
+				{
+					if (isOnLine(a, b, c, points[k]))
+					{
+						num++;
+					}
+				}
+				if (max < num)max = num;				
+			}
+			if (same == points.size())
+			{
+				max = same;
+			}
+		}		
+		return max;
+	}
 	/*136. Single Number
 	Given an array of integers, every element appears twice except for one. Find that single one.
 	Note:
@@ -231,6 +287,18 @@ public:
 		if (root->right == NULL) return 1 + minDepth(root->left);
 		return 1 + min(minDepth(root->left), minDepth(root->right));		
 	}
+	/*104. Maximum Depth of Binary Tree
+	Given a binary tree, find its maximum depth.
+	The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.*/
+	int maxDepth(TreeNode* root)
+	{
+		if (root == NULL)return 0;
+		int left = maxDepth(root->left);
+		int right = maxDepth(root->right);
+
+		return 1+max(left,right);
+		
+	}
 
 	
 };
@@ -258,10 +326,19 @@ int main()
 	node1.next = &node3;
 	node2.next = &node4;
 	node3.next = &node5;
-	node4.next = &node6;	
+	node4.next = &node6;
 
-	int a = 5;
-	cout <<sl.singleNumber(test)<< endl;
+	vector<Point>pts;
+	pts.push_back(Point(1, 1));
+	pts.push_back(Point(1, 1));
+	pts.push_back(Point(1, 1));
+
+	double a = 0, b = 0;
+	
+	
+	cout << sl.maxPoints(pts)<< endl;
+	
+	
 	
 	
 	getchar();
