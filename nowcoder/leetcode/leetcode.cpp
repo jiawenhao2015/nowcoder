@@ -26,6 +26,86 @@ struct Point {
 class Solution 
 {
 public:
+
+	/*leetcode-145-Binary Tree Postorder Traversal
+	Given a binary tree, return the postorder traversal of its nodes' values.
+	For example:
+	Given binary tree {1,#,2,3},
+	1
+	\
+	2
+	/
+	3
+	return [3,2,1].
+	Note: Recursive solution is trivial, could you do it iteratively?*/
+	vector<int> postorderTraversal(TreeNode* root)
+	{
+		vector<int>result;
+		if (root == NULL)return result;
+		stack<TreeNode*>st;
+		bool flag;
+		TreeNode* temp;
+		do
+		{
+			while (root != NULL)//左结点入栈
+			{
+				st.push(root);
+				root = root->left;
+			}
+			flag = true;//设置root 为已经访问过
+			temp = NULL;//temp 指向栈顶结点的前一个已访问的结点
+
+			while (!st.empty() && flag)
+			{
+				root = st.top();
+				if (root ->right == temp)//右孩子不存在或者右孩子已经访问过 则访问 root结点
+				{
+					result.push_back(root->val);//访问
+					st.pop();
+					temp = root;//指向被访问的结点
+				}
+				else
+				{
+					root = root->right;
+					flag = false;//设置为未被访问过
+				}
+			}
+		} while (!st.empty());
+		return result;
+	}
+	/*leetcode-144-Binary Tree Preorder Traversal
+	Given a binary tree, return the preorder traversal of its nodes' values.
+	Given binary tree {1,#,2,3},
+	1
+	\
+	2
+	/
+	3
+	return [1,2,3].
+	Note: Recursive solution is trivial, could you do it iteratively?*/
+	void preorderNonRecursiveTraversal(TreeNode*pRoot, vector<int>& result)
+	{
+		if (pRoot == NULL) return;
+		stack<TreeNode*> st;
+		TreeNode* temp;
+		st.push(pRoot);
+		while (!st.empty())
+		{
+			temp = st.top();
+			result.push_back(temp->val);
+			st.pop();
+			if (temp->right != NULL)st.push(temp->right);//先右 后左
+			if (temp->left != NULL)st.push(temp->left);
+		}
+
+	}
+	vector<int> preorderTraversal(TreeNode* root)
+	{
+		vector<int> result;
+		if (root == NULL) return result;
+		preorderNonRecursiveTraversal(root, result);
+		return result;
+	}
 	/*leetcode-147-Insertion Sort List
 		Sort a linked list using insertion sort.*/
 	ListNode* insert(ListNode* head, ListNode* node)
@@ -399,13 +479,11 @@ int main()
 	node3.next = &node5;
 	node4.next = &node6;
 
-	vector<Point>pts;
-	pts.push_back(Point(1, 1));
-	pts.push_back(Point(1, 1));
-	pts.push_back(Point(1, 1));
-
-	double a = 0, b = 0;	
+	vector<int> temp;
+	TreeNode treenode(0);
+	temp = sl.postorderTraversal(&treenode);
 	
+	cout << temp[0] << endl;
 	 resultNode = sl.insertionSortList(&node1);
 	 while (resultNode!=NULL)
 	 {
