@@ -26,7 +26,68 @@ struct Point {
 class Solution 
 {
 public:
-	/*141. Linked List Cycle
+	/*leetcode-143-Reorder List
+	Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+	reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+	You must do this in-place without altering the nodes' values.
+	For example,
+	Given {1,2,3,4}, reorder it to {1,4,2,3}.	*/
+	/*思路：用快慢指针将链表分为前后两部分，
+	将后部分链表用头插法翻转
+	将翻转后的链表跟前半部分连起来*/
+	ListNode* reversal(ListNode* head)
+	{//将链表用头插法 翻转
+		if (head == NULL || head->next == NULL) return head;
+		ListNode dump(0);		
+		ListNode* next = head->next;
+		while (next != NULL)
+		{			
+			head->next = dump.next;
+			dump.next = head;
+			head = next;
+			next = next->next;
+		}
+		head->next = dump.next;
+		dump.next = head;
+		return dump.next;
+	}
+	ListNode* mergeList(ListNode* head, ListNode* head2)
+	{//将list2 每一个元素插入到对应位置的list1元素的后面
+		ListNode* temp = head;
+		ListNode* p1 = head->next;
+		ListNode* p2 = head2->next;
+		while (head!=NULL && p1 != NULL && p2!= NULL)
+		{
+			head->next = head2;
+			head2->next = p1;
+			head = p1;
+			p1 = p1->next;
+			head2 = p2;
+			p2 = p2->next;
+		}
+		head->next = head2;
+		head2->next = p1;//处理最后一个结点		
+
+		return temp;
+	}
+
+	void reorderList(ListNode* head)
+	{
+		if (head == NULL || head->next == NULL || head->next->next == NULL) return;
+		ListNode* slow = head, *fast = head;
+
+		while (fast->next!=NULL && fast->next->next!=NULL)//当fast结点后只有一个或者没有结点时停止循环
+		{
+			slow = slow->next;
+			fast = fast->next->next;
+		}	
+		ListNode*lastPart = reversal(slow->next); //后半部分链表 翻转		
+		slow->next = NULL;//将链表分为前后两个部分	前一个链表长度大于或者等于后边链表长度
+
+		head = mergeList(head, lastPart);
+	}
+	/*leetcode-141-Linked List Cycle
 	Given a linked list, determine if it has a cycle in it.
 	Follow up:	Can you solve it without using extra space?*/
 	bool hasCycle(ListNode *head)
@@ -527,25 +588,25 @@ int main()
 	/*str.push_back("3");
 	str.push_back("*");	*/
 
-	ListNode node1(1), node2(2), node3(30), node4(4), node5(5), node6(6);
-	ListNode* resultNode = NULL;
-	node1.next = &node3;
-	node2.next = &node4;
-	node3.next = &node5;
-	node4.next = &node6;
-
+	ListNode node1(1), node2(2), node3(3), node4(4), node5(5), node6(6);
+	
+	node1.next = &node2;
+	node2.next = &node3;
+	node3.next = &node4;
+	node4.next = &node5;
+	node5.next = &node6;
 	
 	TreeNode treenode(0);
 	TreeNode treenode2(0);
-	cout << sl.isSameTree2(&treenode,&treenode2) << endl;;
-	
-	
-	 resultNode = sl.insertionSortList(&node1);
-	 while (resultNode!=NULL)
-	 {
-		 cout << resultNode->val << " ";
-		 resultNode = resultNode->next;
-	 }
+	 
+	ListNode* resultNode = &node1;
+	sl.reorderList(resultNode);
+	 
+	while (resultNode != NULL)
+	{
+		cout << resultNode->val << " ";
+		resultNode = resultNode->next;
+	}
 	
 	
 	
