@@ -26,6 +26,50 @@ struct Point {
 class Solution 
 {
 public:
+	/*129. Sum Root to Leaf Numbers
+	Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+
+	An example is the root-to-leaf path 1->2->3 which represents the number 123.
+
+	Find the total sum of all root-to-leaf numbers.
+
+	For example,
+
+	1
+	/ \
+	2   3
+	The root-to-leaf path 1->2 represents the number 12.
+	The root-to-leaf path 1->3 represents the number 13.
+
+	Return the sum = 12 + 13 = 25.*/
+	int sumNumbers(TreeNode* root)
+	{
+		stack<TreeNode*>st;
+		TreeNode* p = root;
+		int sum = 0,num = 0;
+
+		while (p!=NULL || !st.empty())
+		{
+			while(p!= NULL)
+			{
+				num = num * 10 + p->val;
+				st.push(p);
+				p = p->left;			
+			}
+			if (!st.empty())
+			{
+				p = st.top();
+				st.pop();
+				p = p->right;
+				if (p == NULL)//没有右子树了 说明到叶节点了
+				{
+					num /= 10;
+					sum += num;
+				}
+			}
+		}
+		return sum;
+	}
 	/*leetcode-143-Reorder List
 	Given a singly linked list L: L0→L1→…→Ln-1→Ln,
 	reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
@@ -71,7 +115,6 @@ public:
 
 		return temp;
 	}
-
 	void reorderList(ListNode* head)
 	{
 		if (head == NULL || head->next == NULL || head->next->next == NULL) return;
@@ -598,9 +641,10 @@ int main()
 	
 	TreeNode treenode(0);
 	TreeNode treenode2(0);
-	 
+	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
-	sl.reorderList(resultNode);
+	
+	cout<<sl.sumNumbers(&treenode);
 	 
 	while (resultNode != NULL)
 	{
