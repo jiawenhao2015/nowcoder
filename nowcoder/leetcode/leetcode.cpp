@@ -26,6 +26,51 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-139-Word Break
+	Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
+	determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+	You may assume the dictionary does not contain duplicate words.
+
+	For example, given
+	s = "leetcode",
+	dict = ["leet", "code"].
+
+	Return true because "leetcode" can be segmented as "leet code".
+	*/
+	bool wordInDict(string s,vector<string>& wordDict)
+	{
+		if (s == "")return true;
+		vector<string>::iterator it;
+		for (it = wordDict.begin(); it != wordDict.end();it++)
+			if (*it == s)	return true;		
+	 return false;
+	}
+	bool wordBreak(string s, vector<string>& wordDict)
+	{
+		vector<bool> flag(s.size(),false);//从某位置开始，是否能分词
+		return wordBreak(s, wordDict, 0, flag);
+	}
+	bool wordBreak(string s, vector<string>& wordDict,int index,vector<bool>& flag)
+	{
+		if (flag[index]) return false;
+		
+		int len = s.size() - index;
+		for (int i = len; i > 0;i--)
+		{
+			string word = s.substr(index, i);
+			if (wordInDict(word,wordDict))
+			{
+				if (i == len) return true;
+				else
+				{
+					if (wordBreak(s, wordDict, index+i, flag)) return true;
+				}
+			}
+		}
+		flag[index] = true;
+		return false;
+	}
+	
 	/*leetcode-129-Sum Root to Leaf Numbers
 	Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
 
@@ -593,8 +638,7 @@ public:
 		return 1+max(left,right);
 		
 	}
-
-	
+		
 };
 
 int main()
@@ -628,16 +672,19 @@ int main()
 	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
 	
-	cout<<sl.sumNumbers(&treenode);
+	vector<string>strvec;
+	strvec.push_back("a");
+	strvec.push_back("abc");
+	strvec.push_back("b");
+	strvec.push_back("cd3");
+	cout << sl.wordBreak("abcd", strvec) << endl;;
 	 
 	while (resultNode != NULL)
 	{
 		cout << resultNode->val << " ";
 		resultNode = resultNode->next;
 	}
-	
-	
-	
+		
 	getchar();
 	return 0;
 }
