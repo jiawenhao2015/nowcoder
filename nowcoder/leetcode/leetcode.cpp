@@ -26,7 +26,39 @@ struct Point {
 class Solution 
 {
 public:
-	/*151. Reverse Words in a String
+	/*	leetcode-135-Candy
+	There are N children standing in a line. Each child is assigned a rating value.
+	You are giving candies to these children subjected to the following requirements:
+	Each child must have at least one candy.
+	Children with a higher rating get more candies than their neighbors.
+	What is the minimum candies you must give?*/
+	int candy(vector<int>& ratings)
+	{
+		if (ratings.size() == 0) return 0;
+	//	sort(ratings.begin(), ratings.end());
+		int sum = 0;//第一个为1
+		vector<int>candyvec(ratings.size(),1);
+		for (int i = 1; i < ratings.size();i++)
+		{
+			if (ratings[i] > ratings[i-1])//如果相等
+			{
+				candyvec[i] = candyvec[i - 1]+1;
+			}
+			else
+			{
+				candyvec[i] = 1;//最少1个
+			}
+		}
+		sum = candyvec[ratings.size() - 1];
+		for (int i = ratings.size() - 2; i >=0 ;i--)
+		{
+			if ((ratings[i] > ratings[i + 1]) && candyvec[i] < (candyvec[i + 1] + 1))candyvec[i] = candyvec[i + 1] + 1;
+			sum += candyvec[i];
+		}
+		 
+		return sum;
+	}
+	/*leetcode-151-Reverse Words in a String
 	Given an input string, reverse the string word by word.
 
 	For example,
@@ -41,15 +73,10 @@ public:
 		if (s == "")return;
 		int i = 0;
 		string temp="";
-		string temp2 = "";
-		 
+		string temp2 = "";		 
 		while (s[i]!='\0')
 		{
-			if (s[i] != ' ')
-			{
-				temp.append(s.substr(i, 1));
-				i++;
-			}
+			if (s[i] != ' ')temp.append(s.substr(i, 1));			
 			else//空格
 			{
 				if (temp != "")
@@ -57,9 +84,9 @@ public:
 					temp2.insert(0, " ");
 					temp2.insert(0, temp);
 					temp.clear();
-				}				
-				i++;			 
+				}							 
 			}
+			i++;
 		}
 		temp2.insert(0, " ");
 		temp2.insert(0, temp);
@@ -78,9 +105,8 @@ public:
 		}
 		i = 0;
  		while (s[i] == ' ')//擦除前面空格
- 		{
- 			s.erase(i, 1); 			
- 		}
+ 		  s.erase(i, 1); 			
+ 		
 	}
 	/*leetcode-139-Word Break
 	Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
@@ -701,13 +727,10 @@ int main()
 {
 	Solution sl;
 	vector<int>test;	
-	test.push_back(3);
-	test.push_back(4);
+	test.push_back(1);
+	test.push_back(0);
 	test.push_back(2);
-	test.push_back(3);
-	test.push_back(5);
-	test.push_back(4);
-	test.push_back(2);
+	
 	vector<string> str;
 	str.push_back("0");
 	str.push_back("3");
@@ -727,16 +750,9 @@ int main()
 	TreeNode treenode2(2);
 	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
-	
-	vector<string>strvec;
-	strvec.push_back("a");
-	strvec.push_back("abc");
-	strvec.push_back("b");
-	strvec.push_back("cd3");
-	string str1 = "  a b  ";
-	sl.reverseWords(str1);
-	cout <<":"<< str1.c_str();
 	 
+	cout<<sl.candy(test);
+	  
 	while (resultNode != NULL)
 	{
 		//cout << resultNode->val << " ";
