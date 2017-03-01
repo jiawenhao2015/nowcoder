@@ -1,0 +1,22 @@
+/*leetcode-141-Linked List Cycle
+	Given a linked list, determine if it has a cycle in it.
+	Follow up:	Can you solve it without using extra space?*/
+	bool hasCycle(ListNode *head)
+	{
+		/*判断链表是否带环，我们可以采用在头结点设两个指针，一个叫fast，一个叫slow，fast一下走两步，而slow一下走一步。
+		如果链表中存在环的话，那么fast和slow必定会在环中相遇。若链表中没有环的话，那么fast必定现于slow指针先到达链表的尾节点（->next = Null）。
+		为什么链表中存在环，则slow和fast会在环中相遇？
+		可以联想在体育场里面跑步时候的场景，速度快和速度慢的在同一起点的话，必定在某个时间点，速度快的会追上速度慢的 */
+		ListNode* slow = head, *fast = head;
+		while (fast != NULL && fast->next != NULL)
+		{
+			slow = slow->next;
+			fast = fast->next->next;
+			if (slow == fast) return true;
+		}
+		if (fast==NULL || fast->next ==NULL)//没有环
+		{
+			return false;
+		}
+		return true;
+	}

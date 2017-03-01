@@ -1,0 +1,34 @@
+/*leetcode-100-Same Tree
+	Given two binary trees, write a function to check if they are equal or not.
+	Two binary trees are considered equal if they are structurally identical and the nodes have the same value.*/
+	bool isSameTree2(TreeNode* p, TreeNode* q)
+	{//先序非递归
+		stack<TreeNode*>st1, st2;
+		if (p != NULL)st1.push(p);
+		if (q!= NULL)st2.push(q);
+		TreeNode* ptemp;
+		TreeNode* qtemp;
+		while (!st1.empty() && !st2.empty())
+		{
+			ptemp = st1.top();
+			qtemp = st2.top();
+			if (ptemp->val != qtemp->val) return false;
+			st1.pop();
+			st2.pop();
+			if (ptemp->right != NULL) st1.push(ptemp->right);
+			if (qtemp->right != NULL) st2.push(qtemp->right);
+			if (st1.size() != st2.size()) return false;//比较两个栈的大小 
+
+			if (ptemp->left != NULL) st1.push(ptemp->left);
+			if (qtemp->left != NULL) st2.push(qtemp->left);
+			if (st1.size() != st2.size()) return false;//比较两个栈的大小 
+		}
+		return (st1.size() == st2.size());
+	}
+	bool isSameTree(TreeNode* p, TreeNode* q)
+	{//递归
+		if (p == NULL && q == NULL) return true;
+		if (p == NULL && q != NULL || p != NULL && q == NULL || q->val != p->val) return false;
+
+		return isSameTree(p->left, q->left) && isSameTree(p->right,q->right);
+	}

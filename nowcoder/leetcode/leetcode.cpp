@@ -26,7 +26,17 @@ struct Point {
 class Solution 
 {
 public:
-	/*58. Length of Last Word
+	/*128. Longest Consecutive Sequence
+	Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+	For example,
+	Given [100, 4, 200, 1, 3, 2],
+	The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+	Your algorithm should run in O(n) complexity.*/
+	int longestConsecutive(vector<int>& nums)
+	{
+
+	}
+	/*leetcode-58-Length of Last Word
 	Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
 	If the last word does not exist, return 0.
 	Note: A word is defined as a character sequence consists of non-space characters only.
@@ -577,7 +587,7 @@ public:
 		}		
 		return max;
 	}
-	/*136. Single Number
+	/*leetcode-136-Single Number
 	Given an array of integers, every element appears twice except for one. Find that single one.
 	Note:
 	Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?*/
@@ -589,7 +599,7 @@ public:
 		}
 		return nums[0];
 	}
-	/*2. Add Two Numbers
+	/*leetcode-2-Add Two Numbers
 	You are given two non - empty linked lists representing two non - negative integers.
 	The digits are stored in reverse order and each of their nodes contain a single digit.
 	Add the two numbers and return it as a linked list.
@@ -701,7 +711,7 @@ public:
 		
 		return result;
 	}
-	/*150. Evaluate Reverse Polish Notation
+	/*leetcode-150-Evaluate Reverse Polish Notation
 	Evaluate the value of an arithmetic expression in Reverse Polish Notation.
 	Valid operators are +, -, *, /. Each operand may be an integer or another expression.
 	Some examples:
@@ -736,7 +746,7 @@ public:
 		}
 		return st.top();
 	}
-	/*1. Two Sum
+	/*leetcode-1-Two Sum
 	Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 	You may assume that each input would have exactly one solution, and you may not use the same element twice.
 	Example:
@@ -778,7 +788,8 @@ public:
 		//}
 		//return result;
 	}
-	/*111. Minimum Depth of Binary TreeGiven a binary tree, find its minimum depth.The minimum depth is the number of nodes
+	/*leetcode-111-Minimum Depth of Binary Tree
+	Given a binary tree, find its minimum depth.The minimum depth is the number of nodes
 	along the shortest path from the root node down to the nearest leaf node.*/
 	int minDepth(TreeNode *root)
 	{
@@ -787,7 +798,7 @@ public:
 		if (root->right == NULL) return 1 + minDepth(root->left);
 		return 1 + min(minDepth(root->left), minDepth(root->right));		
 	}
-	/*104. Maximum Depth of Binary Tree
+	/*leetcode-104-Maximum Depth of Binary Tree
 	Given a binary tree, find its maximum depth.
 	The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.*/
 	int maxDepth(TreeNode* root)
