@@ -26,6 +26,29 @@ struct Point {
 class Solution 
 {
 public:
+	/*58. Length of Last Word
+	Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+	If the last word does not exist, return 0.
+	Note: A word is defined as a character sequence consists of non-space characters only.
+	For example,
+	Given s = "Hello World",
+	return 5.*/
+	int lengthOfLastWord(string s)
+	{
+		if (s.size() == 0)return 0;
+		int i = s.size()-1;
+		while (i >= 0 &&s[i] == ' ')//去除最后最后的空格
+		{
+			i--;
+		}
+		if (i == -1) return 0;//全是空格
+		int j = i;//记住此时下标
+		while (i >= 0 && s[i] != ' ')
+		{
+			i--;
+		}
+		return (j - i);
+	}
 	/*leetcode-134-Gas Station
 	There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
 	You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). 
@@ -807,7 +830,7 @@ int main()
 	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
 	 
-	cout<<sl.candy(test);
+	cout << sl.a("etest");
 	  
 	while (resultNode != NULL)
 	{
