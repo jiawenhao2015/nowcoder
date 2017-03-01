@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <stack>
 using namespace std;
 
@@ -26,7 +27,7 @@ struct Point {
 class Solution 
 {
 public:
-	/*128. Longest Consecutive Sequence
+	/*leetcode-128-Longest Consecutive Sequence
 	Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
 	For example,
 	Given [100, 4, 200, 1, 3, 2],
@@ -34,7 +35,29 @@ public:
 	Your algorithm should run in O(n) complexity.*/
 	int longestConsecutive(vector<int>& nums)
 	{
+		if (nums.size() == 0)return 0;
+		unordered_set<int>record(nums.begin(),nums.end());//hash表格
+		int result = 1;
+		for (int i = 0; i < nums.size();i++)
+		{
+			if (record.find(nums[i]) == record.end()) continue;//没有找到i
+			record.erase(nums[i]);//如果在的话就删除i，减少set的规模
+			
+			int pre = nums[i] - 1, next = nums[i] + 1;//向前和向后查找
+			while (record.find(pre) != record.end())
+			{
+				record.erase(pre);
+				pre--;
+			}
+			while (record.find(next) != record.end())
+			{
+				record.erase(next);
+				next++;
+			}
 
+			result = max(result,next-pre-1);
+		}
+		return result;
 	}
 	/*leetcode-58-Length of Last Word
 	Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
@@ -816,10 +839,14 @@ public:
 int main()
 {
 	Solution sl;
-	vector<int>test;	
-	test.push_back(1);
+	vector<int>test;
+	test.push_back(2147483646);
+	test.push_back(-2147483647);
 	test.push_back(0);
 	test.push_back(2);
+	test.push_back(2147483644);
+	test.push_back(-2147483645);
+	test.push_back(2147483645);
 	
 	vector<string> str;
 	str.push_back("0");
@@ -841,7 +868,7 @@ int main()
 	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
 	 
-	cout << sl.a("etest");
+	cout << sl.longestConsecutive(test);
 	  
 	while (resultNode != NULL)
 	{
