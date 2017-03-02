@@ -27,6 +27,26 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-110-Balanced Binary Tree
+	Given a binary tree, determine if it is height-balanced.
+	For this problem, a height-balanced binary tree is defined as a binary tree 
+	in which the depth of the two subtrees of every node never differ by more than 1.*/
+	int depthOfTree(TreeNode* root)
+	{
+		if (root == NULL) return 0;
+		int left = depthOfTree(root->left);
+		int right = depthOfTree(root->right);
+		return 1 + max(left, right);
+	}
+	bool isBalanced(TreeNode* root)
+	{
+		if (root == NULL) return true;
+		
+		int left = depthOfTree(root->left);
+		int right= depthOfTree(root->right);
+		if (abs(left - right) > 1) return false;
+		return isBalanced(root->left) && isBalanced(root->right);
+	}
 	/*leetcode-113-Path Sum II
 	Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
 	For example:
@@ -45,7 +65,7 @@ public:
 	]
 	Subscribe to see which companies asked this question.*/
 	void pathSum(TreeNode* root, int sum, vector<vector<int>>& result,vector<int>&path)
-	{
+	{//值得好好学习一下
 		if (root == NULL) return;
 		path.push_back(root->val);//暂时放入当前路径中保存
 		if (root->left == NULL && root->right == NULL && root->val == sum)//找到路径
@@ -887,10 +907,8 @@ public:
 		int left = maxDepth(root->left);
 		int right = maxDepth(root->right);
 
-		return 1+max(left,right);
-		
-	}
-		
+		return 1+max(left,right);		
+	}		
 };
 
 int main()
