@@ -1,0 +1,38 @@
+/*leetcode-113-Path Sum II
+	Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+	For example:
+	Given the below binary tree and sum = 22,
+		5
+		/ \
+		4   8
+		/   / \
+		11  13  4
+		/  \    / \
+		7    2  5   1
+	return
+	[
+	[5,4,11,2],
+	[5,8,4,5]
+	]
+	Subscribe to see which companies asked this question.*/
+	void pathSum(TreeNode* root, int sum, vector<vector<int>>& result,vector<int>&path)
+	{
+		if (root == NULL) return;
+		path.push_back(root->val);//暂时放入当前路径中保存
+		if (root->left == NULL && root->right == NULL && root->val == sum)//找到路径
+		{
+			result.push_back(path);
+		}
+		pathSum(root->left, sum - root->val, result, path);
+		pathSum(root->right,sum - root->val, result, path);
+
+		path.pop_back();//弹出 回溯
+	}
+	vector<vector<int>> pathSum(TreeNode* root, int sum)
+	{
+		vector<vector<int>> result;
+		vector<int> path; 
+		
+		pathSum(root, sum, result, path);
+		return result;
+	}
