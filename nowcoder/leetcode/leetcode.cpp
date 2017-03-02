@@ -27,12 +27,40 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-123-Best Time to Buy and Sell Stock III
+	Say you have an array for which the ith element is the price of a given stock on day i.
+	Design an algorithm to find the maximum profit. You may complete at most two transactions.
+	Note:
+	You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).*/
+	int maxProfitcore(vector<int>& prices,int start,int end)
+	{//从start 到 end期间 最大profit
+		if (start == end|| prices.size()==0) return 0;
+		int tempProfit = 0, maxProfit = 0;
+		for (int i = start+1; i <=end; i++)
+		{
+			tempProfit += prices[i] - prices[i - 1];
+			tempProfit = max(0, tempProfit);
+			maxProfit = max(maxProfit, tempProfit);
+		}
+		return maxProfit;
+	}//超时
+	int maxProfit3(vector<int>& prices)
+	{
+		int profit = 0;
+		for (int i = 1; i < prices.size();i++)
+		{
+			int pro1 = maxProfitcore(prices, 0, i);
+			int pro2 = maxProfitcore(prices, i, prices.size()-1);
+			profit = max(profit,pro1+pro2);
+		}
+		return profit;
+	}
 	/*leetcode-122-Best Time to Buy and Sell Stock II
 	Say you have an array for which the ith element is the price of a given stock on day i.
 	Design an algorithm to find the maximum profit. You may complete as many transactions as you like
 	(ie, buy one and sell one share of the stock multiple times).
 	However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).*/
-	int maxProfit3(vector<int>& prices)
+	int maxProfit2(vector<int>& prices)
 	{
 		if (prices.size() == 0)return 0;
 		int tempProfit = 0;
@@ -57,7 +85,7 @@ public:
 	Input: [7, 6, 4, 3, 1]
 	Output: 0
 	In this case, no transaction is done, i.e. max profit = 0.*/
-	int maxProfit2(vector<int>& prices)
+	int maxProfit1(vector<int>& prices)
 	{
 		if (prices.size() == 0)return 0;
 		int tempProfit = 0, maxProfit = 0;
@@ -973,13 +1001,13 @@ int main()
 {
 	Solution sl;
 	vector<int>test;
-	test.push_back(2147483646);
-	test.push_back(-2147483647);
-	test.push_back(0);
+	test.push_back(1);
 	test.push_back(2);
-	test.push_back(2147483644);
-	test.push_back(-2147483645);
-	test.push_back(2147483645);
+	test.push_back(5);
+	test.push_back(3);
+	test.push_back(6);
+	test.push_back(4);
+	
 	
 	vector<string> str;
 	str.push_back("0");
@@ -1001,7 +1029,7 @@ int main()
 	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
 	 
-	cout << sl.longestConsecutive(test);
+	cout << sl.maxProfit3(test);
 	  
 	while (resultNode != NULL)
 	{
