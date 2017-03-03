@@ -27,6 +27,22 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-53-Maximum Subarray
+	Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+	For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+	the contiguous subarray [4,-1,2,1] has the largest sum = 6.*/
+	int maxSubArray(vector<int>& nums)
+	{
+		if (nums.empty())return 0;
+		int temp = 0,result = nums[0];
+		for (int i = 0; i < nums.size();i++)
+		{
+			temp += nums[i];
+			result = max(result,temp);
+			temp = max(temp,0);			
+		}
+		return result;
+	}
 	/*leetcode-303-Range Sum Query - Immutable
 	Given an integer array nums, find the sum of the elements between indices i and j (i ¡Ü j), inclusive.
 	Example:
@@ -38,8 +54,7 @@ public:
 	There are many calls to sumRange function.*/
 	vector<int> nums;
 	Solution(vector<int> num)
-	{
-	
+	{	
 		for (int i = 1; i < num.size();i++)
 		{
 			num[i] = num[i] + num[i - 1];//´æ´¢ºÍ
