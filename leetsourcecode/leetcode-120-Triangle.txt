@@ -1,0 +1,40 @@
+/*leetcode-120-Triangle
+	Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+	For example, given the following triangle
+	[
+	[2],
+	[3,4],
+	[6,5,7],
+	[4,1,8,3]
+	]
+	The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).*/
+	int minimumTotal(vector<vector<int>>& triangle)
+	{		
+		vector<vector<int>>triangleSum = triangle;
+		int size = triangleSum.size();
+		for (int i = 1; i < size;i++)
+		{
+			for (int j = 0; j < triangle[i].size();j++)
+			{
+				if (j ==0)//第一列
+				{
+					triangleSum[i][j] = triangleSum[i][j] + triangleSum[i - 1][j];
+				}
+				else if (j == triangle[i].size() - 1)//最后一列
+				{
+					triangleSum[i][j] = triangleSum[i][j] + triangleSum[i - 1][j-1];
+				}
+				else
+				{
+					triangleSum[i][j] = triangleSum[i][j] + min(triangleSum[i - 1][j], triangleSum[i - 1][j - 1]);
+				}				
+			}
+		}
+		
+		int result = triangleSum[size -1][0];
+		for (int i = 0; i < triangleSum[size - 1].size();i++)
+		{
+			result = min(result, triangleSum[size - 1][i]);
+		}
+		return result;
+	}
