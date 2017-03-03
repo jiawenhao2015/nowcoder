@@ -42,7 +42,7 @@ public:
 	
 		for (int i = 1; i < num.size();i++)
 		{
-			num[i] = num[i] + num[i - 1];
+			num[i] = num[i] + num[i - 1];//´æ´¢ºÍ
 		}
 		this->nums = num;
 	}
