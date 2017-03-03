@@ -27,6 +27,31 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-303-Range Sum Query - Immutable
+	Given an integer array nums, find the sum of the elements between indices i and j (i ¡Ü j), inclusive.
+	Example:
+	Given nums = [-2, 0, 3, -5, 2, -1]
+	sumRange(0, 2) -> 1
+	sumRange(2, 5) -> -1
+	sumRange(0, 5) -> -3
+	You may assume that the array does not change.
+	There are many calls to sumRange function.*/
+	vector<int> nums;
+	Solution(vector<int> num)
+	{
+	
+		for (int i = 1; i < num.size();i++)
+		{
+			num[i] = num[i] + num[i - 1];
+		}
+		this->nums = num;
+	}
+	int sumRange(int i, int j)
+	{
+		if (nums.size() == 0) return NULL;
+		if (i ==0)return nums[j];
+		return nums[j] - nums[i - 1];
+	}
 	/*leetcode-123-Best Time to Buy and Sell Stock III
 	Say you have an array for which the ith element is the price of a given stock on day i.
 	Design an algorithm to find the maximum profit. You may complete at most two transactions.
