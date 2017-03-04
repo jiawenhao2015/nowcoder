@@ -27,6 +27,34 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-64-Minimum Path Sum
+	Given a m x n grid filled with non-negative numbers, find a path from top left 
+	to bottom right which minimizes the sum of all numbers along its path.
+	Note: You can only move either down or right at any point in time.*/
+	int minPathSum(vector<vector<int>>& grid)
+	{
+		if (grid.empty())return 0;
+		int row = grid.size();
+		int col = grid[0].size();
+		vector<vector<int>>pathSum(row,vector<int>(col));//其实可以不必申请空间 直接使用grid就行
+		pathSum[0][0] = grid[0][0];
+		for (int i = 1; i < row;i++)
+		{
+			pathSum[i][0] = pathSum[i - 1][0] + grid[i][0];
+		}
+		for (int i = 1; i < col; i++)
+		{
+			pathSum[0][i] = pathSum[0][i - 1] + grid[0][i];
+		}
+		for (int i = 1; i < row;i++)
+		{
+			for (int j = 1; j < col;j++)
+			{
+				pathSum[i][j] = grid[i][j] + min(pathSum[i-1][j], pathSum[i][j-1]);
+			}
+		}
+		return pathSum[row-1][col-1];
+	}
 	/*leetcode-70-Climbing Stairs
 	You are climbing a stair case. It takes n steps to reach to the top.
 	Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
@@ -147,7 +175,7 @@ public:
 	You may assume that the array does not change.
 	There are many calls to sumRange function.*/
 	vector<int> nums;
-	Solution(vector<int> num)
+	void Solution1(vector<int> num)
 	{	
 		for (int i = 1; i < num.size();i++)
 		{
@@ -1161,13 +1189,13 @@ public:
 int main()
 {
 	Solution sl;
-	vector<int>test;
+	vector<int>test,test2,test3;
+	test.push_back(0);
 	test.push_back(1);
-	test.push_back(2);
-	test.push_back(5);
-	test.push_back(3);
-	test.push_back(6);
-	test.push_back(4);
+	test2.push_back(1);
+	test2.push_back(2);
+	test3.push_back(2);
+	test3.push_back(3);
 	
 	
 	vector<string> str;
@@ -1190,7 +1218,11 @@ int main()
 	treenode.left = &treenode2;
 	ListNode* resultNode = &node1;
 	 
-	cout << sl.maxProfitnew(test);
+	vector<vector<int>>mat;
+	mat.push_back(test);
+	mat.push_back(test2);
+	mat.push_back(test3);
+	cout << sl.minPathSum(mat);
 	  
 	while (resultNode != NULL)
 	{
