@@ -27,6 +27,37 @@ struct Point {
 class Solution 
 {
 public:
+	/*leetcode-70-Climbing Stairs
+	You are climbing a stair case. It takes n steps to reach to the top.
+	Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+	Note: Given n will be a positive integer.*/
+	int climbStairs2(int n)
+	{
+		if (n == 1 || n == 2)return n;
+		int temp1 = 1;
+		int temp2 = 2;
+		int temp = 0;
+		for (int i = 3; i < n + 1; i++)
+		{ 
+			temp = temp1 + temp2;
+			temp1 = temp2;
+			temp2 = temp;
+		}
+		return temp;
+	}
+	int climbStairs(int n)
+	{
+		if (n == 1 || n == 2)return n;
+		vector<int>step(n+1);
+		step[0] = 0;
+		step[1] = 1;
+		step[2] = 2;
+		for (int i = 3; i < n+1;i++)
+		{//每一步有两种方案 走一个台阶 或者走两个台阶
+			step[i] = step[i - 1] + step[i - 2];
+		}
+		return step[n];
+	}
 	/*leetcode-198-House Robber
 	You are a professional robber planning to rob houses along a street. 
 	Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of 
