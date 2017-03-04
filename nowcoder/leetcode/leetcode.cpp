@@ -27,10 +27,37 @@ struct Point {
 class Solution 
 {
 public:
+
 	/*leetcode-64-Minimum Path Sum
 	Given a m x n grid filled with non-negative numbers, find a path from top left 
 	to bottom right which minimizes the sum of all numbers along its path.
 	Note: You can only move either down or right at any point in time.*/
+	int minPathSum2(vector<vector<int>>& grid)
+	{
+		if (grid.empty())return 0;
+		int row = grid.size();
+		int col = grid[0].size();
+		//其实可以不必申请空间 直接使用grid就行		
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				if (i==0 && j!=0)
+				{
+					grid[i][j] += grid[i][j - 1];
+				}
+				if (i != 0 && j == 0)
+				{
+					grid[i][j] += grid[i - 1][j];
+				}
+				if (i!=0&&j!=0)
+				{
+					grid[i][j] = grid[i][j] + min(grid[i - 1][j], grid[i][j - 1]);
+				}				
+			}
+		}
+		return grid[row - 1][col - 1];
+	}
 	int minPathSum(vector<vector<int>>& grid)
 	{
 		if (grid.empty())return 0;
