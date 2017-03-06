@@ -54,6 +54,59 @@ public:
 		}		
 		return result;
 	}
+	/*leetcode-63-Unique Paths II
+	Follow up for "Unique Paths":
+	Now consider if some obstacles are added to the grids. How many unique paths would there be?
+	An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+	For example,
+	There is one obstacle in the middle of a 3x3 grid as illustrated below.
+	[
+		[0,0,0],
+		[0,1,0],
+		[0,0,0]
+	][[0,0,0],[0,1,0],[0,0,0]]
+	The total number of unique paths is 2.*/
+	int uniquePathsWithObstacles(vector<vector<int>>& grid)
+	{
+		//类似没有障碍的方法：将有障碍的地方置为0；
+		if (grid.empty())return 0;
+		int row = grid.size();
+		int col = grid[0].size();
+		if (grid[0][0] == 1)return 0;
+		
+		for (int i = 0; i < col;i++)//处理第一行
+		{
+			if (grid[0][i] == 0)grid[0][i] = 1;			
+			else if (grid[0][i] == 1)
+			{
+				for (int j = i; j < col; j++)
+					grid[0][j] = 0;//i之后都置为0;
+				i = col;
+			}				
+		}
+		for (int i = 1; i < row; i++)//处理第一列
+		{
+			if (grid[i][0] == 0)grid[i][0] = 1;
+			else if (grid[i][0] == 1)
+			{
+				for (int j = i; j < row; j++)
+					grid[j][0] = 0;//i之后都置为0;
+				i = row;
+			}
+		}
+		for (int i = 1; i < row; i++)
+		{
+			for (int j = 1; j < col; j++)
+			{
+				if (grid[i][j] == 0)//不是障碍
+				{								
+					grid[i][j] = grid[i - 1][j] + grid[i][j - 1];					
+				}
+				else if(grid[i][j] == 1)grid[i][j] = 0;
+			}
+		}
+		return grid[row - 1][col - 1];
+	}
 	/*leetcode-62-Unique Paths
 	A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 	The robot can only move either down or right at any point in time.
@@ -1272,14 +1325,16 @@ public:
 int main()
 {
 	Solution sl;
-	vector<int>test,test2,test3;
+	vector<int>test,test1,test2;
 	test.push_back(0);
-	test.push_back(1);
-	test2.push_back(1);
-	test2.push_back(2);
-	test3.push_back(2);
-	test3.push_back(3);
-	
+	test.push_back(0);
+	test.push_back(0);
+	test1.push_back(0);
+	test1.push_back(1);
+	test1.push_back(0);
+	test2.push_back(0);
+	test2.push_back(0);
+	test2.push_back(0);
 	
 	vector<string> str;
 	str.push_back("0");
@@ -1303,9 +1358,9 @@ int main()
 	 
 	vector<vector<int>>mat;
 	mat.push_back(test);
+	mat.push_back(test1);
 	mat.push_back(test2);
-	mat.push_back(test3);
-	cout << sl.longestPalindromeSubseq("abcdjiawenahoefghigkl");
+	cout << sl.uniquePathsWithObstacles(mat);
 	  
 	while (resultNode != NULL)
 	{
