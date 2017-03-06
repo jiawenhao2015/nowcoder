@@ -27,7 +27,63 @@ struct Point {
 class Solution 
 {
 public:
-
+	/*516. Longest Palindromic Subsequence
+	Given a string s, find the longest palindromic subsequence's length in s. 
+	You may assume that the maximum length of s is 1000.
+	Example 1:
+	Input:"bbbab"
+	Output:4	One possible longest palindromic subsequence is "bbbb".
+	Example 2:
+	Input:	"cbbd"
+	Output:	2	One possible longest palindromic subsequence is "bb".*/
+	int longestPalindromeSubseq(string s)
+	{
+		if (s.size() <= 1)return s.size();
+		unordered_map<char,int>table;
+		for (int i = 0; i < s.size();i++)
+		{
+			table[s[i]]++;
+		}
+		int result = 0;
+		unordered_map<char, int>::iterator it;
+	
+		for (it = table.begin(); it != table.end();it++)
+		{
+			cout << it->first << "==>" << it->second << endl;
+			result = max(result,it->second);
+		}		
+		return result;
+	}
+	/*leetcode-62-Unique Paths
+	A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+	The robot can only move either down or right at any point in time.
+	The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+	How many possible unique paths are there?*/
+	int uniquePaths(int m, int n)
+	{
+		if (m <= 0 || n <= 0)return 0;
+		vector<vector<int>>grid(m,vector<int>(n));
+		grid[0][0] = 1;
+		for (int i = 0; i < m;i++)
+		{
+			for (int j = 0; j < n;j++)
+			{
+				if (i ==0 && j != 0)
+				{
+					grid[i][j] = 1;
+				}
+				if (i != 0 && j == 0)
+				{
+					grid[i][j] = 1;
+				}
+				if (i != 0 && j != 0)
+				{
+					grid[i][j] = grid[i - 1][j] + grid[i][j-1];
+				}
+			}
+		}
+		return grid[m-1][n-1];
+	}
 	/*leetcode-64-Minimum Path Sum
 	Given a m x n grid filled with non-negative numbers, find a path from top left 
 	to bottom right which minimizes the sum of all numbers along its path.
@@ -1249,7 +1305,7 @@ int main()
 	mat.push_back(test);
 	mat.push_back(test2);
 	mat.push_back(test3);
-	cout << sl.minPathSum(mat);
+	cout << sl.longestPalindromeSubseq("abcdjiawenahoefghigkl");
 	  
 	while (resultNode != NULL)
 	{
