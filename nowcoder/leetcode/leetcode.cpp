@@ -54,6 +54,40 @@ public:
 		}		
 		return result;
 	}
+	/*leetcode-78-Subsets
+	Given a set of distinct integers, nums, return all possible subsets.
+	Note: The solution set must not contain duplicate subsets.
+	For example,
+	If nums = [1,2,3], a solution is:
+	[
+	[3],
+	[1],
+	[2],
+	[1,2,3],
+	[1,3],
+	[2,3],
+	[1,2],
+	[]
+	]*/
+
+	void dfs(vector<vector<int>>& result, vector<int>& temp, vector<int>& nums, int index)
+	{
+		result.push_back(temp);
+		for (int i = index; i < nums.size();i++)
+		{
+			temp.push_back(nums[i]);//
+			dfs(result,temp,nums,i+1);
+			temp.erase(temp.end()-1);
+		}
+	}
+	vector<vector<int>> subsets(vector<int>& nums)
+	{
+		vector<vector<int>>result;
+		vector<int>temp;
+		sort(nums.begin(), nums.end());//为什么要加上排序？？
+		dfs(result,temp,nums,0);
+		return result;
+	}
 	/*leetcode-63-Unique Paths II
 	Follow up for "Unique Paths":
 	Now consider if some obstacles are added to the grids. How many unique paths would there be?
@@ -1326,9 +1360,9 @@ int main()
 {
 	Solution sl;
 	vector<int>test,test1,test2;
-	test.push_back(0);
-	test.push_back(0);
-	test.push_back(0);
+	test.push_back(1);
+	test.push_back(2);
+	test.push_back(3);
 	test1.push_back(0);
 	test1.push_back(1);
 	test1.push_back(0);
@@ -1360,7 +1394,7 @@ int main()
 	mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);
-	cout << sl.uniquePathsWithObstacles(mat);
+	 sl.subsets(test);
 	  
 	while (resultNode != NULL)
 	{
