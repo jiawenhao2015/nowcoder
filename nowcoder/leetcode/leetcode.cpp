@@ -76,7 +76,7 @@ public:
 			swap(nums[i], nums[index]);
 			permuteUniqueCore(result, nums, index + 1);
 			//swap(nums[i], nums[index]);	//不要交换。。。了。。 参数nums 也是变成了传值 不是传引用		
-		}
+		} 
 	}
 	vector<vector<int>> permuteUnique(vector<int>& nums)
 	{
