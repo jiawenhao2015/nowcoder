@@ -54,6 +54,37 @@ public:
 		}		
 		return result;
 	}
+	/*leetcode-47-Permutations II
+	Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+	For example,
+	[1,1,2] have the following unique permutations:
+	[
+		[1,1,2],
+		[1,2,1],
+		[2,1,1]
+	]*/
+	
+	void permuteUniqueCore(vector<vector<int>>& result, vector<int>  nums, int index)
+	{
+		if (index == nums.size())
+		{
+			result.push_back(nums);
+		}
+		for (int i = index; i < nums.size(); i++)
+		{
+			if (i!=index && nums[i]==nums[index])continue;//
+			swap(nums[i], nums[index]);
+			permuteUniqueCore(result, nums, index + 1);
+			//swap(nums[i], nums[index]);	//不要交换。。。了。。 参数nums 也是变成了传值 不是传引用		
+		}
+	}
+	vector<vector<int>> permuteUnique(vector<int>& nums)
+	{
+		vector<vector<int>>result;		
+		sort(nums.begin(), nums.end());		 
+		permuteUniqueCore(result, nums, 0);
+		return result;
+	}
 	/*leetcode-46-Permutations
 	Given a collection of distinct numbers, return all possible permutations.
 	For example,
@@ -1412,9 +1443,9 @@ int main()
 	Solution sl;
 	vector<int>test,test1,test2;
 	test.push_back(1);
+	test.push_back(1);
 	test.push_back(2);
-	test.push_back(3);
-	test.push_back(4);
+	test.push_back(2);
 	test1.push_back(1);
 	test1.push_back(0);
 	test2.push_back(0);
@@ -1445,7 +1476,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	mat = sl.permute(test);
+	mat = sl.permuteUnique(test);
 	
 
 	for (int i = 0; i < mat.size();i++)
