@@ -54,6 +54,57 @@ public:
 		}		
 		return result;
 	}
+	/*leetcode-46-Permutations
+	Given a collection of distinct numbers, return all possible permutations.
+	For example,
+	[1,2,3] have the following permutations:
+	[
+	[1,2,3],
+	[1,3,2],
+	[2,1,3],
+	[2,3,1],
+	[3,1,2],
+	[3,2,1]
+	]*/
+	void permuteCore2(vector<vector<int>>& result, vector<int>& nums , int index)
+	{
+		if (index == nums.size())
+		{
+			result.push_back(nums);
+		}
+		for (int i = index; i < nums.size(); i++)
+		{
+			swap(nums[i], nums[index]);
+			permuteCore2(result, nums,index + 1);
+			swap(nums[i], nums[index]);
+		}
+	}
+	void permuteCore(vector<vector<int>>& result,vector<int>& nums, vector<int>& temp,int index)
+	{
+		if (index == nums.size())
+		{
+			result.push_back(temp);
+		}
+		for (int i = index; i < nums.size();i++)
+		{
+			
+			temp.push_back(nums[i]);
+			swap(nums[i], nums[index]);
+			permuteCore(result, nums, temp, index + 1);
+			swap(nums[i], nums[index]);
+			temp.pop_back();
+			
+		}
+	}
+	vector<vector<int>> permute(vector<int>& nums)
+	{
+		vector<vector<int>>result;
+		vector<int> temp;
+		sort(nums.begin(),nums.end());
+		//permuteCore(result, nums, temp, 0);
+		permuteCore2(result, nums,0);
+		return result;
+	}
 	/*leetcode-78-Subsets
 	Given a set of distinct integers, nums, return all possible subsets.
 	Note: The solution set must not contain duplicate subsets.
@@ -77,7 +128,7 @@ public:
 		{
 			temp.push_back(nums[i]);//
 			dfs(result,temp,nums,i+1);
-			temp.erase(temp.end()-1);
+			temp.erase(temp.end()-1);//temp.pop_back();
 		}
 	}
 	vector<vector<int>> subsets(vector<int>& nums)
@@ -1363,7 +1414,7 @@ int main()
 	test.push_back(1);
 	test.push_back(2);
 	test.push_back(3);
-	test1.push_back(0);
+	test.push_back(4);
 	test1.push_back(1);
 	test1.push_back(0);
 	test2.push_back(0);
@@ -1391,11 +1442,20 @@ int main()
 	ListNode* resultNode = &node1;
 	 
 	vector<vector<int>>mat;
-	mat.push_back(test);
+	/*mat.push_back(test);
 	mat.push_back(test1);
-	mat.push_back(test2);
-	 sl.subsets(test);
-	  
+	mat.push_back(test2);*/
+	mat = sl.permute(test);
+	
+
+	for (int i = 0; i < mat.size();i++)
+	{
+		for (int j = 0; j < mat[i].size(); j++)
+		{
+			cout << mat[i][j] << " ";
+		}
+		cout << endl;
+	}
 	while (resultNode != NULL)
 	{
 		//cout << resultNode->val << " ";
