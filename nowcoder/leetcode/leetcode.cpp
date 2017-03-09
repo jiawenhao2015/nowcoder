@@ -51,7 +51,54 @@ public:
 		{
 			cout << it->first << "==>" << it->second << endl;
 			result = max(result,it->second);
-		}		
+		}
+		return result;
+	}
+	/*leetcode-15-3Sum
+	Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0?
+	Find all unique triplets in the array which gives the sum of zero.
+	Note: The solution set must not contain duplicate triplets.
+	For example, given array S = [-1, 0, 1, 2, -1, -4],
+	A solution set is:
+	[
+	[-1, 0, 1],
+	[-1, -1, 2]
+	]*///内存超过限制
+	void getTwoSum(vector<vector<int>>& result, vector<int>& nums, int begin, int end, int target, vector<int>&temp)
+	{
+		int i = begin, j = end;
+		while (i < j)
+		{
+			if (nums[i] + nums[j] + target == 0)
+			{
+				
+				temp.push_back(target);
+				temp.push_back(nums[i]);
+				temp.push_back(nums[j]);
+				result.push_back(temp);
+				temp.clear();
+				while (i < j && nums[i] == nums[i + 1])
+					++i;
+				while (i < j && nums[j] == nums[j - 1])
+					--j;
+			}
+			else if (nums[i] + nums[j] + target < 0)
+				++i;
+			else
+				--j;
+		}
+	}
+	vector<vector<int>> threeSum(vector<int>& nums)
+	{
+		vector<vector<int>>result;
+		vector<int> temp;
+		sort(nums.begin(),nums.end());
+		for (int i = 0; i < nums.size();i++)
+		{
+			if (i>0 && nums[i]==nums[i-1])
+				continue;
+			getTwoSum(result,nums,i+1,nums.size()-1,nums[i],temp);
+		}	
 		return result;
 	}
 	/*leetcode-47-Permutations II
@@ -62,8 +109,7 @@ public:
 		[1,1,2],
 		[1,2,1],
 		[2,1,1]
-	]*/
-	
+	]*/	
 	void permuteUniqueCore(vector<vector<int>>& result, vector<int>  nums, int index)
 	{
 		if (index == nums.size())
@@ -75,7 +121,7 @@ public:
 			if (i!=index && nums[i]==nums[index])continue;//
 			swap(nums[i], nums[index]);
 			permuteUniqueCore(result, nums, index + 1);
-			//swap(nums[i], nums[index]);	//不要交换。。。了。。 参数nums 也是变成了传值 不是传引用		
+			//swap(nums[i], nums[index]);	//不要交换。。。了。。 参数nums 也是变成了传值 不是传引用
 		} 
 	}
 	vector<vector<int>> permuteUnique(vector<int>& nums)
@@ -1442,12 +1488,12 @@ int main()
 {
 	Solution sl;
 	vector<int>test,test1,test2;
-	test.push_back(1);
+	test.push_back(-1);
+	test.push_back(0);
 	test.push_back(1);
 	test.push_back(2);
-	test.push_back(2);
-	test1.push_back(1);
-	test1.push_back(0);
+	test.push_back(-1);
+	test.push_back(4);
 	test2.push_back(0);
 	test2.push_back(0);
 	test2.push_back(0);
@@ -1476,7 +1522,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	mat = sl.permuteUnique(test);
+	mat = sl.threeSum(test);
 	
 
 	for (int i = 0; i < mat.size();i++)
