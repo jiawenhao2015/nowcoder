@@ -64,23 +64,25 @@ public:
 	[-1, 0, 1],
 	[-1, -1, 2]
 	]*///内存超过限制
-	void getTwoSum(vector<vector<int>>& result, vector<int>& nums, int begin, int end, int target, vector<int>&temp)
+	void getTwoSum(vector<vector<int>>& result, vector<int>& nums, int begin, int end, int target)
 	{
 		int i = begin, j = end;
 		while (i < j)
 		{
 			if (nums[i] + nums[j] + target == 0)
-			{
-				
+			{	
+				vector<int>temp;
 				temp.push_back(target);
 				temp.push_back(nums[i]);
 				temp.push_back(nums[j]);
 				result.push_back(temp);
-				temp.clear();
+				 
 				while (i < j && nums[i] == nums[i + 1])
 					++i;
 				while (i < j && nums[j] == nums[j - 1])
 					--j;
+				++i;
+				--j;
 			}
 			else if (nums[i] + nums[j] + target < 0)
 				++i;
@@ -90,14 +92,17 @@ public:
 	}
 	vector<vector<int>> threeSum(vector<int>& nums)
 	{
+
 		vector<vector<int>>result;
 		vector<int> temp;
+		if (nums.size() < 3)
+			return result;
 		sort(nums.begin(),nums.end());
-		for (int i = 0; i < nums.size();i++)
+		for (int i = 0; i < nums.size()-2;i++)
 		{
-			if (i>0 && nums[i]==nums[i-1])
+			if (i>0 && nums[i] == nums[i-1])
 				continue;
-			getTwoSum(result,nums,i+1,nums.size()-1,nums[i],temp);
+			getTwoSum(result,nums,i+1,nums.size()-1,nums[i]);
 		}	
 		return result;
 	}
@@ -1493,7 +1498,7 @@ int main()
 	test.push_back(1);
 	test.push_back(2);
 	test.push_back(-1);
-	test.push_back(4);
+	test.push_back(-4);
 	test2.push_back(0);
 	test2.push_back(0);
 	test2.push_back(0);
