@@ -54,6 +54,22 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-60-Permutation Sequence
+	The set [1,2,3,¡­,n] contains a total of n! unique permutations.
+	By listing and labeling all of the permutations in order,
+	We get the following sequence (ie, for n = 3):
+	"123"
+	"132"
+	"213"
+	"231"
+	"312"
+	"321"////»¹Ã»¿´¶®¡£¡£¡£¡£¡£¡£http://www.cnblogs.com/yrbbest/p/4436392.html
+	Given n and k, return the kth permutation sequence.*/
+	string getPermutation(int n, int k)
+	{
+
+
+	}
 	/*leetcode-18-4Sum
 	Given an array S of n integers, are there elements a, b, c,
 	and d in S such that a + b + c + d = target? Find all unique
