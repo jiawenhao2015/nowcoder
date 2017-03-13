@@ -1,0 +1,16 @@
+/*leetcode-7-Reverse Integer
+	Reverse digits of an integer.
+	Example1: x = 123, return 321
+	Example2: x = -123, return -321*/
+	int reverse(int x)
+	{
+		long long result = 0;//用long long类型避免32位溢出
+		int temp = 0;
+		while (x)
+		{
+			temp = x % 10;
+			x /= 10;
+			result = result * 10 + temp;
+		}
+		return (result<INT_MIN || result>INT_MAX) ? 0 : result;
+	}
