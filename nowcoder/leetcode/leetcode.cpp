@@ -54,6 +54,22 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-7-Reverse Integer
+	Reverse digits of an integer.
+	Example1: x = 123, return 321
+	Example2: x = -123, return -321*/
+	int reverse(int x)
+	{
+		long long result = 0;//用long long类型避免32位溢出
+		int temp = 0;
+		while (x)
+		{
+			temp = x % 10;
+			x /= 10;
+			result = result * 10 + temp;
+		}
+		return (result<INT_MIN || result>INT_MAX) ? 0 : result;
+	}
 	/*leetcode-60-Permutation Sequence
 	The set [1,2,3,…,n] contains a total of n! unique permutations.
 	By listing and labeling all of the permutations in order,
@@ -1608,7 +1624,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout<<sl.getPermutation(5,12).c_str();
+	cout << sl.reverse(10024234234243);
 	
 
 	for (int i = 0; i < mat.size();i++)
