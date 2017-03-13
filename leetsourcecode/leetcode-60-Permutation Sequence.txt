@@ -1,0 +1,33 @@
+/*leetcode-60-Permutation Sequence
+	The set [1,2,3,…,n] contains a total of n! unique permutations.
+	By listing and labeling all of the permutations in order,
+	We get the following sequence (ie, for n = 3):
+	"123"
+	"132"
+	"213"
+	"231"
+	"312"
+	"321"////还没看懂。。。。。。http://www.cnblogs.com/yrbbest/p/4436392.html
+	Given n and k, return the kth permutation sequence.*/
+	string getPermutation(int n, int k)
+	{
+		vector<int>factorial(n + 1, 1);//保留阶乘
+		for (int i = 1; i <= n;i++)		
+		 factorial[i] = i * factorial[i - 1];
+
+		vector<char> digits = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		string result;
+		int num = n - 1;
+
+		while (num)
+		{
+			int t = (k-1) / factorial[num];   //是k/(n-1)! 计算第一位数字
+			k = k - t * factorial[num];
+			result.push_back(digits[t]);
+			digits.erase(digits.begin() + t);
+			num--;
+		}
+		result.push_back(digits[k - 1]);
+		return result;
+		
+	}
