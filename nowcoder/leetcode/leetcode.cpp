@@ -67,8 +67,25 @@ public:
 	Given n and k, return the kth permutation sequence.*/
 	string getPermutation(int n, int k)
 	{
+		vector<int>factorial(n + 1, 1);//保留阶乘
+		for (int i = 1; i <= n;i++)		
+		 factorial[i] = i * factorial[i - 1];
 
+		vector<char> digits = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		string result;
+		int num = n - 1;
 
+		while (num)
+		{
+			int t = (k-1) / factorial[num];   //是k/(n-1)! 计算第一位数字
+			k = k - t * factorial[num];
+			result.push_back(digits[t]);
+			digits.erase(digits.begin() + t);
+			num--;
+		}
+		result.push_back(digits[k - 1]);
+		return result;
+		
 	}
 	/*leetcode-18-4Sum
 	Given an array S of n integers, are there elements a, b, c,
@@ -1591,7 +1608,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	mat = sl.threeSum(test);
+	cout<<sl.getPermutation(5,12).c_str();
 	
 
 	for (int i = 0; i < mat.size();i++)
