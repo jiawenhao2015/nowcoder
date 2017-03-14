@@ -54,11 +54,108 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-67-Add Binary
+	Given two binary strings, return their sum (also a binary string).
+	For example,
+	a = "11"
+	b = "1"
+	Return "100".*/
+	string addBinary(string a, string b)
+	{
+		int aIndex = a.size() - 1, bIndex = b.size() - 1;
+		int numa = 0, numb = 0, carry = 0, temp = 0;
+		string c;
+		char tempChar[10];
+		while (aIndex >= 0 || bIndex >= 0 || carry == 1)//¼ò½àÒ»Ð©ÁË
+		{
+			numa = 0, numb = 0;
+			if(aIndex >= 0)numa = a[aIndex--] - '0';
+			if(bIndex >= 0)numb = b[bIndex--] - '0';
+			temp = numa + numb + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else carry = 0;			
+			sprintf(tempChar, "%d", temp);		
+			c.insert(0, tempChar);			
+		}
+		return c;
+	}
+	string addBinary2(string a, string b)
+	{
+		int aIndex = a.size()-1, bIndex = b.size()-1;
+		int numa = 0, numb = 0, carry = 0,temp = 0;		
+		string c;
+		char tempChar[10];
+		while (aIndex>=0 && bIndex>=0)
+		{
+			numa = a[aIndex] - '0';
+			numb = b[bIndex] - '0';
+			temp = numa + numb + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else
+			{
+				carry = 0;
+			}			
+			sprintf(tempChar, "%d", temp);
+			//_itoa(temp, tempChar, 10);
+			c.insert(0,tempChar);
+			aIndex--;
+			bIndex--;
+		}
+		while (aIndex >= 0)
+		{
+			numa = a[aIndex] - '0';			 
+			temp = numa  + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else
+			{
+				carry = 0;
+			}
+			sprintf(tempChar,"%d",temp);
+			//_itoa(temp, tempChar, 10);
+			c.insert(0, tempChar);
+			aIndex--;			
+		}  
+		while (bIndex >= 0)
+		{			
+			numb = b[bIndex] - '0';
+			temp = numb + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else
+			{
+				carry = 0;
+			}
+			sprintf(tempChar, "%d", temp);
+			//_itoa(temp, tempChar, 10);
+			c.insert(0, tempChar);			
+			bIndex--;
+		}
+		if (carry)
+		{
+			c.insert(0, "1");
+		}
+		return c;	
+	}
 	/*leetcode-137-Single Number II
 	Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
 	Note:
 	Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?*/
-	int singleNumber(vector<int>& nums)
+	int singleNumber2(vector<int>& nums)
 	{
 		int result = 0;
 		for (int i = 0; i < 32;i++)
@@ -1643,7 +1740,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.reverse(10024234234243);
+	cout << sl.addBinary("11","1").c_str();
 	
 
 	for (int i = 0; i < mat.size();i++)
