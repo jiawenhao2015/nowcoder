@@ -54,6 +54,40 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-91-Decode Ways
+	A message containing letters from A-Z is being encoded to numbers using the following mapping:
+	'A' -> 1
+	'B' -> 2
+	...
+	'Z' -> 26
+	Given an encoded message containing digits, determine the total number of ways to decode it.
+	For example,
+	Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+	The number of ways decoding "12" is 2.*/
+	int numDecodings(string s)
+	{ 
+		int size = s.size();
+		if (size == 0 || s[0] == '0')return 0;
+		vector<int> dp(size+1,0);
+		dp[0] = dp[1] = 1;
+
+		for (int i = 1; i < size;i++)
+		{
+			if (s[i]=='0')
+			{
+				dp[i] = 0;
+			}
+			if (s[i - 1] == '1' || s[i - 1] == '2'&&s[i] <= '6')
+			{
+				dp[i + 1] = dp[i - 1] + dp[i];
+			}
+			else
+				dp[i + 1] = dp[i];
+			
+		}
+
+		return dp[size];
+	}
 	/*leetcode-72-Edit Distance
 	Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
 	You have the following 3 operations permitted on a word:
@@ -1770,7 +1804,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.addBinary("11","1").c_str();
+	cout << sl.numDecodings("1212");
 	
 
 	for (int i = 0; i < mat.size();i++)
