@@ -54,6 +54,38 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-50-Pow(x, n)
+	Implement pow(x, n).*/
+	double myPow2(double x, int n)
+	{
+		if (x == 0.0) return 0;
+		if (n == 1) return x;
+
+		double result = 1.0;
+		unsigned long long p = n;
+		if (n < 0) { p = -n; x = 1 / x; }
+		while (p)
+		{
+			if (p & 1) result *= x;
+			x *= x;
+			p >>= 1;
+		}
+	 
+		return result;	
+	}
+	double myPow(double x, int n)
+	{
+		if (x == 0.0) return 0;
+		if (n == 1) return x;
+
+		double result = 1.0;
+		for (int i = 0; i < abs(n);i++)
+		{
+			result *= x;
+		}
+		if (n>0)return result;
+		return 1.0/result;
+	}
 	/*leetcode-91-Decode Ways
 	A message containing letters from A-Z is being encoded to numbers using the following mapping:
 	'A' -> 1
@@ -1804,7 +1836,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.numDecodings("1212");
+	cout << sl.myPow2(2, 9);
 	
 
 	for (int i = 0; i < mat.size();i++)
