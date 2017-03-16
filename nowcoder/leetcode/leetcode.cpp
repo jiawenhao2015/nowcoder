@@ -54,6 +54,41 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-3-Longest Substring Without Repeating Characters
+	Given a string, find the length of the longest substring without repeating characters.
+	Examples:
+	Given "abcabcbb", the answer is "abc", which the length is 3.
+	Given "bbbbb", the answer is "b", with the length of 1.
+	Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring,
+	"pwke" is a subsequence and not a substring.*/
+	int lengthOfLongestSubstring(string s)
+	{
+		int size = s.size();
+		if (size <= 1)return size;
+		unordered_map<char,int> table;//用来记录字母与对应的下标值
+		int length = 0;
+		int result = 0;
+		int tempIndex = 0;
+		int temp = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (table.count(s[i])>0)//说明map里面有
+			{
+				result = max(result, length);
+				length = i - table[s[i]]-1;
+				temp = table[s[i]];
+				for (int j = tempIndex; j <= temp; j++)
+				{
+					table.erase(s[j]);//将这个重复元素之前所有去掉		
+				}
+				tempIndex = temp + 1;//保存新的起点下标				
+			}
+			table[s[i]] = i;//记录下标索引值
+			length++;			
+		}
+		result = max(result, length);
+		return result;
+	}
 	/*leetcode-50-Pow(x, n)
 	Implement pow(x, n).*/
 	double myPow2(double x, int n)
@@ -1836,7 +1871,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.myPow2(2, 9);
+	cout << sl.lengthOfLongestSubstring("bbbbb");
 	
 
 	for (int i = 0; i < mat.size();i++)
