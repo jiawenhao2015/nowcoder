@@ -54,6 +54,66 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-28-Implement strStr
+	Implement strStr().
+	Returns the index of the first occurrence of needle in haystack,
+	or -1 if needle is not part of haystack.*/
+	int strStr(string haystack, string needle)
+	{
+		int size1 = haystack.size();
+		int size2 = needle.size();
+		if (size2 == 0) return 0;
+		if ((size1 == 0 && size2 != 0)||(size1 < size2)) return -1;
+		
+		int j = 0;
+		for (int i = 0; i <=size1 -size2;i++)
+		{	
+			if (haystack[i] == needle[j] && j<size2)
+			{
+				for (int m = i; m < size1;m++)
+				{
+					if (haystack[m] == needle[j] && j < size2)j++;
+					else
+					{
+						m = size1;//跳出循环
+						j = 0;
+					}
+						
+					if (j == size2)	return m - size2 + 1;//succeed
+				}
+			}
+			else j = 0;			
+		}
+		return -1;
+	}
+	char *strStr(char *haystack, char *needle)
+	{
+		int size1 = strlen(haystack);
+		int size2 = strlen(needle);
+		if (size2 == 0) return &haystack[0];
+		if ((size1 == 0 && size2 != 0) || (size1 < size2)) return NULL;
+		char* p = haystack;
+		int j = 0;
+		for (int i = 0; i <= size1 - size2; i++)
+		{
+			if (haystack[i] == needle[j] && j < size2)
+			{
+				for (int m = i; m < size1; m++)
+				{
+					if (haystack[m] == needle[j] && j < size2)j++;
+					else
+					{
+						m = size1;//跳出循环
+						j = 0;
+					}
+					if (j == size2)	return &haystack[m - size2 + 1];//succeed
+				}
+			}
+			else j = 0;
+		}
+		return NULL;
+	}
+
 	/*leetcode-3-Longest Substring Without Repeating Characters
 	Given a string, find the length of the longest substring without repeating characters.
 	Examples:
@@ -1871,7 +1931,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.lengthOfLongestSubstring("bbbbb");
+	cout << sl.strStr("mississippi","issp");
 	
 
 	for (int i = 0; i < mat.size();i++)
