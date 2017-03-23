@@ -54,6 +54,35 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-124-Binary Tree Maximum Path Sum
+	Given a binary tree, find the maximum path sum.
+	For this problem, a path is defined as any sequence of nodes from some starting node to
+	any node in the tree along the parent-child connections.
+	The path must contain at least one node and does not need to go through the root.
+	For example:
+	Given the below binary tree,
+	 1
+	/ \
+   2   3
+	Return 6.*/
+	int maxToRoot(TreeNode* root,int &result)
+	{
+		if (root == NULL)return 0;
+		int left = maxToRoot(root->left,result);
+		int right = maxToRoot(root->right, result);
+		if (left  < 0)left = 0;
+		if (right < 0)right = 0;
+		if (left + right + root->val > result) result = left + right + root->val;
+		return root->val += max(left,right);
+	}
+	int maxPathSum(TreeNode* root)
+	{
+		int max = -2147483648;
+		maxToRoot(root, max);
+		return max;
+	}
+
+
 	/*leetcode-28-Implement strStr
 	Implement strStr().
 	Returns the index of the first occurrence of needle in haystack,
