@@ -54,6 +54,29 @@ public:
 		}
 		return result;
 	}
+	/*leetcode[115] Distinct Subsequences*/
+
+	/*leetcode-108-Convert Sorted Array to Binary Search Tree
+	Given an array where elements are sorted in ascending order,
+	convert it to a height balanced BST.*/
+	TreeNode* ArrayToBST(vector<int>& nums, int i, int j)
+	{	
+		if (i > j) return NULL;
+		int middle = (i + j) / 2;
+		TreeNode *root = new TreeNode(nums[middle]);
+		root->left = ArrayToBST(nums, i, middle - 1);
+		root->right = ArrayToBST(nums,middle + 1,j);
+		return root;
+	}
+	TreeNode* sortedArrayToBST(vector<int>& nums)
+	{
+		int size = nums.size();
+		if (size == 0) return NULL;
+
+		TreeNode *root = ArrayToBST(nums,0,size-1);
+		
+		return root;
+	}
 	/*leetcode-124-Binary Tree Maximum Path Sum
 	Given a binary tree, find the maximum path sum.
 	For this problem, a path is defined as any sequence of nodes from some starting node to
@@ -81,8 +104,6 @@ public:
 		maxToRoot(root, max);
 		return max;
 	}
-
-
 	/*leetcode-28-Implement strStr
 	Implement strStr().
 	Returns the index of the first occurrence of needle in haystack,
