@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <stack>
+#include <queue>
 using namespace std;
 
 struct ListNode {
@@ -56,7 +57,59 @@ public:
 	}
 
 	/*leetcode[115] Distinct Subsequences*/
-
+	/*leetcode-101-Symmetric Tree
+	Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+	For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+	    1
+	   / \
+	  2   2
+	 / \ / \
+	3  4 4  3
+	But the following [1,2,2,null,3,null,3] is not:
+	 1
+	/ \
+	2   2
+	 \   \
+	 3    3
+	Note:
+	Bonus points if you could solve it both recursively and iteratively.*/
+	bool isSymmetric2(TreeNode *root)
+	{//·ÇµÝ¹é ²ã´Î±éÀú¶þ²æÊ÷
+		TreeNode *left, *right;
+		if (!root)
+			return true;
+		queue<TreeNode*> q1, q2;
+		q1.push(root->left);
+		q2.push(root->right);
+		while (!q1.empty() && !q2.empty()){
+			left = q1.front();
+			q1.pop();
+			right = q2.front();
+			q2.pop();
+			if (NULL == left && NULL == right)
+				continue;
+			if (NULL == left || NULL == right)
+				return false;
+			if (left->val != right->val)
+				return false;
+			q1.push(left->left);
+			q1.push(left->right);
+			q2.push(right->right);
+			q2.push(right->left);
+		}
+		return true;
+	}
+	bool isSymmetricCore(TreeNode* left, TreeNode* right)
+	{
+		if (left == NULL && right == NULL) return true;
+		if (left == NULL && right != NULL || left != NULL && right == NULL || left->val != right->val)return false;
+		return isSymmetricCore(left->left, right->right) && isSymmetricCore(left->right, right->left);//µÝ¹éÅÐ¶Ï
+	}
+	bool isSymmetric(TreeNode* root)
+	{
+		if (root == NULL) return true;
+		return isSymmetricCore(root->left, root->right);
+	}
 	/*leetcode-21-Merge Two Sorted Lists
 	Merge two sorted linked lists and return it as a new list.
 	The new list should be made by splicing together the nodes of the first two lists.*/
@@ -78,14 +131,8 @@ public:
 			}
 			p = p->next;			 
 		}
-		if (l1!=NULL)
-		{
-			p->next = l1;
-		}
-		if (l2!= NULL)
-		{
-			p->next = l2;
-		}
+		if (l1 != NULL)p->next = l1;		
+		if (l2 != NULL)p->next = l2;		
 		return dummy->next;
 	}
 	/*leetcode-109-Convert Sorted List to Binary Search Tree
