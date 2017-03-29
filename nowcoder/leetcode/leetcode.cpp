@@ -57,6 +57,42 @@ public:
 	}
 
 	/*leetcode[115] Distinct Subsequences*/
+	/*leetcode-77-Combinations
+	Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+	For example,
+	If n = 4 and k = 2, a solution is:
+	[
+	[2,4],
+	[3,4],
+	[2,3],
+	[1,2],
+	[1,3],
+	[1,4],
+	]*/
+	//回溯法
+	void combine(vector<vector<int>>& result,vector<int>& temp,int n,int k,int start)
+	{
+		if (temp.size() == k)
+		{
+			result.push_back(temp);
+			return;
+		}
+		for (int i = start; i <= n;i++)
+		{
+			temp.push_back(i);//插入
+			combine(result, temp,n,k,i+1);//是i+1 不是start+1
+			temp.pop_back();//弹出
+		}	
+	}
+	vector<vector<int>> combine(int n, int k)
+	{
+		vector<vector<int>>result;
+		if (n < k) return result;
+		vector<int> temp;
+		combine(result, temp, n, k, 1);
+		return result;
+	}
+
 	/*leetcode-101-Symmetric Tree
 	Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
 	For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
@@ -205,7 +241,8 @@ public:
 	}
 	int maxPathSum(TreeNode* root)
 	{
-		int max = -2147483648;
+		//int max = -2147483648;//编译器报错
+		int max = -2147;
 		maxToRoot(root, max);
 		return max;
 	}
@@ -2086,7 +2123,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.strStr("mississippi","issp");
+	mat = sl.combine(5, 3);
 	
 
 	for (int i = 0; i < mat.size();i++)
