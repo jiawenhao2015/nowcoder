@@ -57,6 +57,7 @@ public:
 	}
 
 	/*leetcode[115] Distinct Subsequences*/
+
 	/*leetcode-77-Combinations
 	Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
 	For example,
@@ -2082,7 +2083,45 @@ public:
 		int right = maxDepth(root->right);
 
 		return 1+max(left,right);		
-	}		
+	}	
+	/*leetcode-102-Binary Tree Level Order Traversal
+	Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+	For example:
+	Given binary tree [3,9,20,null,null,15,7],
+	3
+	/ \
+	9  20
+	/  \
+	15   7
+	return its level order traversal as:
+	[
+	[3],
+	[9,20],
+	[15,7]
+	]*/
+	vector<vector<int>> levelOrder(TreeNode* root)
+	{
+		queue<TreeNode*>que;
+		vector<vector<int>>result;
+		if (root == NULL)return result;
+		que.push(root);
+		
+		while (!que.empty())
+		{
+			int size = que.size();//保证que里始终是同一层的数据
+			vector<int> temp;
+			for (int i = 0; i < size;i++)
+			{
+				TreeNode* node = que.front();
+				que.pop();				
+				temp.push_back(node->val);
+				if (node->left != NULL)que.push(node->left);
+				if (node->right != NULL)que.push(node->right);
+			}
+			result.push_back(temp);
+		}
+		return result;
+	}
 };
 
 int main()
@@ -2123,7 +2162,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	mat = sl.combine(5, 3);
+	mat = sl.levelOrder(&treenode);
 	
 
 	for (int i = 0; i < mat.size();i++)
