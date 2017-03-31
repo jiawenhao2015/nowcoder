@@ -558,7 +558,7 @@ public:
 	Reverse digits of an integer.
 	Example1: x = 123, return 321
 	Example2: x = -123, return -321*/
-	int reverse(int x)
+	int reverse1(int x)
 	{
 		long long result = 0;//用long long类型避免32位溢出
 		int temp = 0;
@@ -2229,6 +2229,52 @@ public:
 		}
 		nums1 = newvec;
 	}
+	/*leetcode-103-Binary Tree Zigzag Level Order Traversal
+	Given a binary tree, return the zigzag level order traversal of its nodes' values. 
+	(ie, from left to right, then right to left for the next level and alternate between).
+	For example:
+	Given binary tree [3,9,20,null,null,15,7],
+	   3
+	  / \
+	 9  20
+	 /  \
+	15   7
+	return its zigzag level order traversal as:
+	[
+	[3],
+	[20,9],
+	[15,7]
+	]*/
+	vector<vector<int>> zigzagLevelOrder(TreeNode* root)
+	{
+		vector<vector<int>> result;
+		if (root == NULL)return result;
+		queue<TreeNode*>que;
+		que.push(root);
+		bool flag = false;//判断是否需要翻转
+		while (!que.empty())
+		{
+			int size = que.size();			
+			vector<int>level;
+			for (int i = 0; i < size;i++)
+			{
+				TreeNode* temp = que.front();
+				que.pop();
+				if (temp->left != NULL)que.push(temp->left);
+				if (temp->right != NULL)que.push(temp->right);
+				level.push_back(temp->val);				
+			}
+			if (flag)
+			{
+				reverse(level.begin(), level.end());
+				flag = !flag;
+			}
+			else flag = !flag;
+			
+			result.push_back(level);		
+		}
+		return result;
+	}
 };
 
 int main()
@@ -2269,7 +2315,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.isPalindrome("A man, a plan, a canal: Panama");
+	mat = sl.zigzagLevelOrder(&treenode);
 	
 
 	for (int i = 0; i < mat.size();i++)
