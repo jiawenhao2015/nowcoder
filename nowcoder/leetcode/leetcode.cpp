@@ -2275,6 +2275,22 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-9-Palindrome Number
+	Determine whether an integer is a palindrome. Do this without extra space.*/
+	bool isPalindrome(int x)
+	{
+		int newNum = 0;
+		int a = 0;
+		int temp = x;
+		while (x>0)
+		{
+			a = x % 10;
+			newNum = newNum * 10 + a;
+			x = x / 10;
+		}
+		if (newNum == temp) return true;
+		else return false;		
+	}
 };
 
 int main()
@@ -2315,7 +2331,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	mat = sl.zigzagLevelOrder(&treenode);
+	cout << sl.isPalindrome(121);
 	
 
 	for (int i = 0; i < mat.size();i++)
