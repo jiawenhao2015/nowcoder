@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <stack>
 #include <queue>
+#include <map>
 using namespace std;
 
 struct ListNode {
@@ -2291,140 +2292,140 @@ public:
 		if (newNum == temp) return true;
 		else return false;		
 	}
-/*leetcode-506-Relative Ranks
-Given scores of N athletes, find their relative ranks and the people with the top three highest scores, who will be awarded medals:
-"Gold Medal", "Silver Medal" and "Bronze Medal".
-Example 1:
-Input: [5, 4, 3, 2, 1]
-Output: ["Gold Medal", "Silver Medal", "Bronze Medal", "4", "5"]
-Explanation: The first three athletes got the top three highest scores, so they got "Gold Medal", "Silver Medal" and "Bronze Medal".
-For the left two athletes, you just need to output their relative ranks according to their scores.
-Note:
-N is a positive integer and won't exceed 10,000.
-All the scores of athletes are guaranteed to be unique.*/
-//思路：首先排序，然后用map存储对应名词
- vector<string> findRelativeRanks(vector<int>& nums)
- {
-     vector<int>backup = nums;
-     vector<string>result;
-     if(nums.size()==0)return result;
-     sort(nums.begin(),nums.end(),greater<int>());
-     map<int,string>table;
-     char rank[10];
-     for(int i = 0;i < nums.size();i++)
-     {
-         sprintf(rank,"%d",i+1);
-         if(i == 0)table[nums[i]]="Gold Medal";
-         else if(i == 1)table[nums[i]]="Silver Medal";
-         else if(i == 2)table[nums[i]]="Bronze Medal";
-         else  table[nums[i]] = rank;
-     }
-     result.push_back(table[backup[0]]);
-     for(int i =1;i<nums.size();i++)
-     {
-                 result.push_back(table[backup[i]]);
-     }
-     return result;
-}
-/*leetcode-94-Binary Tree Inorder Traversal
-Given a binary tree, return the inorder traversal of its nodes' values.
-For example:
-Given binary tree [1,null,2,3],
-   1
-    \
-     2
-    /
-   3
-return [1,3,2].
-Note: Recursive solution is trivial, could you do it iteratively?
-*/
-vector<int> inorderTraversal(TreeNode* root)
-{
-    vector<int>result;
-    stack<TreeNode*>st;
-    while(root != NULL || !st.empty())
-    {
-        if(root!= NULL)
-        {
-            st.push(root);
-            root = root->left;
-        }
-        else
-        {
-            root = st.top();
-            result.push_back(root->val);
-            st.pop();
-            root = root->right;
-        }
-    }
-    return result;
-}
-/*leetcode-26-Remove Duplicates from Sorted Array
-Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length
-Do not allocate extra space for another array, you must do this in place with constant memory.
-For example,
-Given input array nums = [1,1,2],
-Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
-It doesn't matter what you leave beyond the new length.*/
-int removeDuplicates(vector<int>& nums)
- {
-     if(nums.size()<=1)return nums.size();
-     int first =0;
-     int second =1;//保存前后两个元素下标位置
-     while(second<nums.size())
-     {
-         while(nums[first] == nums[second])second++;
-         if(second<nums.size() && nums[first+1] != nums[second])nums[first+1] = nums[second];
+	/*leetcode-506-Relative Ranks
+	Given scores of N athletes, find their relative ranks and the people with the top three highest scores, who will be awarded medals:
+	"Gold Medal", "Silver Medal" and "Bronze Medal".
+	Example 1:
+	Input: [5, 4, 3, 2, 1]
+	Output: ["Gold Medal", "Silver Medal", "Bronze Medal", "4", "5"]
+	Explanation: The first three athletes got the top three highest scores, so they got "Gold Medal", "Silver Medal" and "Bronze Medal".
+	For the left two athletes, you just need to output their relative ranks according to their scores.
+	Note:
+	N is a positive integer and won't exceed 10,000.
+	All the scores of athletes are guaranteed to be unique.*/
+	//思路：首先排序，然后用map存储对应名词
+	 vector<string> findRelativeRanks(vector<int>& nums)
+	 {
+		 vector<int>backup = nums;
+		 vector<string>result;
+		 if(nums.size()==0)return result;
+		 sort(nums.begin(),nums.end(),greater<int>());
+		 map<int,string>table;
+		 char rank[10];
+		 for(int i = 0;i < nums.size();i++)
+		 {
+			 sprintf(rank,"%d",i+1);
+			 if(i == 0)table[nums[i]]="Gold Medal";
+			 else if(i == 1)table[nums[i]]="Silver Medal";
+			 else if(i == 2)table[nums[i]]="Bronze Medal";
+			 else  table[nums[i]] = rank;
+		 }
+		 result.push_back(table[backup[0]]);
+		 for(int i =1;i<nums.size();i++)
+		 {
+					 result.push_back(table[backup[i]]);
+		 }
+		 return result;
+	}
+	/*leetcode-94-Binary Tree Inorder Traversal
+	Given a binary tree, return the inorder traversal of its nodes' values.
+	For example:
+	Given binary tree [1,null,2,3],
+	   1
+		\
+		 2
+		/
+	   3
+	return [1,3,2].
+	Note: Recursive solution is trivial, could you do it iteratively?
+	*/
+	vector<int> inorderTraversal(TreeNode* root)
+	{
+		vector<int>result;
+		stack<TreeNode*>st;
+		while(root != NULL || !st.empty())
+		{
+			if(root!= NULL)
+			{
+				st.push(root);
+				root = root->left;
+			}
+			else
+			{
+				root = st.top();
+				result.push_back(root->val);
+				st.pop();
+				root = root->right;
+			}
+		}
+		return result;
+	}
+	/*leetcode-26-Remove Duplicates from Sorted Array
+	Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length
+	Do not allocate extra space for another array, you must do this in place with constant memory.
+	For example,
+	Given input array nums = [1,1,2],
+	Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
+	It doesn't matter what you leave beyond the new length.*/
+	int removeDuplicates(vector<int>& nums)
+	{
+		if(nums.size()<=1)return nums.size();
+		int first =0;
+		int second =1;//保存前后两个元素下标位置
+		while(second<nums.size())
+		{
+			while(nums[first] == nums[second])second++;
+			if(second<nums.size() && nums[first+1] != nums[second])nums[first+1] = nums[second];
 
-        if(second<nums.size()) first++;
-         second++;
-     }
-     return first+1;
-}
-int removeDuplicates(int A[], int n)
-{
-        if(n <= 1)   return n;
-        int cnt = 0;
-        A[cnt++] = A[0];
-        for(int i=1; i<n; i++)
-        {
-            if(A[i] == A[i-1])      continue;
-            else         A[cnt++] = A[i];
-        }
-        return cnt;
-    }
-/*leetcode-118-Pascal's Triangle
-Given numRows, generate the first numRows of Pascal's triangle.
-For example, given numRows = 5,
-Return
-[
-     [1],
-    [1,1],
-   [1,2,1],
-  [1,3,3,1],
- [1,4,6,4,1]
-]
-*/
-vector<vector<int> > generate(int numRows)
-{
-        vector<vector<int>> result;
-        if(numRows<1)return result;
-        vector<int>level;
-        level.push_back(1);
-        result.push_back(level);
-        for(int i = 1;i<numRows;i++)
-        {
-            level.clear();
-            level.push_back(1);
-            for(int j=1;j<i;j++)
-            {
-                level.push_back(result[i-1][j-1] + result[i-1][j]);
-            }
-            level.push_back(1);
-            result.push_back(level);
-        }
-        return result;
-}
+		if(second<nums.size()) first++;
+			second++;
+		}
+		return first+1;
+	}
+	int removeDuplicates(int A[], int n)
+	{
+		if(n <= 1)   return n;
+		int cnt = 0;
+		A[cnt++] = A[0];
+		for(int i=1; i<n; i++)
+		{
+			if(A[i] == A[i-1])      continue;
+			else         A[cnt++] = A[i];
+		}
+		return cnt;
+		}
+	/*leetcode-118-Pascal's Triangle
+	Given numRows, generate the first numRows of Pascal's triangle.
+	For example, given numRows = 5,
+	Return
+	[
+		 [1],
+		[1,1],
+	   [1,2,1],
+	  [1,3,3,1],
+	 [1,4,6,4,1]
+	]
+	*/
+	vector<vector<int> > generate(int numRows)
+	{
+		vector<vector<int>> result;
+		if(numRows<1)return result;
+		vector<int>level;
+		level.push_back(1);
+		result.push_back(level);
+		for(int i = 1;i<numRows;i++)
+		{
+			level.clear();
+			level.push_back(1);
+			for(int j=1;j<i;j++)
+			{
+				level.push_back(result[i-1][j-1] + result[i-1][j]);
+			}
+			level.push_back(1);
+			result.push_back(level);
+		}
+		return result;
+	}
 
 
 };
