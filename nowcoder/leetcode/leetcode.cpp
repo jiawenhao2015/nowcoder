@@ -6,6 +6,7 @@
 #include <stack>
 #include <queue>
 #include <map>
+
 using namespace std;
 
 struct ListNode {
@@ -2426,6 +2427,33 @@ public:
 		}
 		return result;
 	}
+	/*leetcode-119-Pascal's Triangle II
+	Given an index k, return the kth row of the Pascal's triangle.
+	For example, given k = 3,
+	Return [1,3,3,1].
+	Note:
+	Could you optimize your algorithm to use only O(k) extra space?*/
+	vector<int> getRow(int rowIndex)
+	{
+		vector<int>result;
+		vector<int>temp;
+		if (rowIndex < 0)return result;
+		temp.push_back(1);
+		if (rowIndex == 0)return temp;
+		
+		for (int i = 0; i <= rowIndex;i++)
+		{
+			result.clear();
+			result.push_back(1);
+			for (int j = 1; j < i; j++)
+			{
+				result.push_back(temp[j - 1] + temp[j]);
+			}
+			result.push_back(1);
+			temp = result;
+		}
+		return result;
+	}
 
 
 };
@@ -2468,9 +2496,12 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.isPalindrome(121);
+	test = sl.getRow(3);
 	
-
+	for (int i = 0; i < test.size();i++)
+	{
+		cout << test[i] << " ";
+	}
 	for (int i = 0; i < mat.size();i++)
 	{
 		for (int j = 0; j < mat[i].size(); j++)
