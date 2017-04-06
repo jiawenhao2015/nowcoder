@@ -2494,6 +2494,32 @@ public:
 			nums[i++] = temp[j];
 		}
 	}
+	/*leetcode-61-Rotate List
+	Given a list, rotate the list to the right by k places, where k is non-negative.
+	For example:
+	Given 1->2->3->4->5->NULL and k = 2,
+	return 4->5->1->2->3->NULL.*/
+	ListNode* rotateRight(ListNode* head, int k)
+	{
+		ListNode* result;
+		if (k == 0 || head == NULL) return head;
+		int length = 1;
+		ListNode* temp = head;
+		while (head != NULL && head->next != NULL)
+		{
+			head = head->next;
+			length++;
+		}
+		k %= length;
+		head->next = temp;//head 目前为最后一个结点的指针 指向初始时候的头部结点
+		for (int i = 0; i < length - k-1;i++)
+		{
+			temp = temp->next;
+		}
+		 result = temp->next;
+		temp->next = NULL;
+		return result;
+	}	
 };
 
 int main()
