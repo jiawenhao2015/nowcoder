@@ -2321,10 +2321,10 @@ public:
 			 else if(i == 2)table[nums[i]]="Bronze Medal";
 			 else  table[nums[i]] = rank;
 		 }
-		 result.push_back(table[backup[0]]);
-		 for(int i =1;i<nums.size();i++)
+		
+		 for(int i =0;i<nums.size();i++)
 		 {
-					 result.push_back(table[backup[i]]);
+			 result.push_back(table[backup[i]]);
 		 }
 		 return result;
 	}
@@ -2454,8 +2454,25 @@ public:
 		}
 		return result;
 	}
-
-
+	/*leetcode-27-Remove Element
+	Given an array and a value, remove all instances of that value in place and return the new length.
+	Do not allocate extra space for another array, you must do this in place with constant memory.
+	The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+	Example:
+	Given input array nums = [3,2,2,3], val = 3
+	Your function should return length = 2, with the first two elements of nums being 2.*/
+	int removeElement(vector<int>& nums, int val)
+	{
+		if (nums.size() < 1)return nums.size();
+		sort(nums.begin(), nums.end());
+		int count = 0;
+		for (int i = 0; nums[i] <= val && i < nums.size() ;i++)
+		{
+			if (nums[i] == val)continue;
+			else nums[count++] = nums[i];
+		}
+		return count;
+	}
 };
 
 int main()
