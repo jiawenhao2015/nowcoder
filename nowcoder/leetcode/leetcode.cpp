@@ -2543,10 +2543,8 @@ public:
 	Given 1->1->2->3->3, return 1->2->3.*/
 	ListNode* deleteDuplicates(ListNode* head)
 	{
-		if (head == NULL || head->next == NULL) return head;
-		
+		if (head == NULL || head->next == NULL) return head;		
 		ListNode* p = head, *q = head->next;
-
 		while (q != NULL)
 		{
 			if (p->val == q->val){}
@@ -2560,7 +2558,39 @@ public:
 		p->next = q;
 		return head;
 	}
-	
+	/*leetcode-80-Remove Duplicates from Sorted Array II
+	Follow up for "Remove Duplicates":
+	What if duplicates are allowed at most twice?
+	For example,
+	Given sorted array nums = [1,1,1,2,2,3],
+	Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. 
+	It doesn't matter what you leave beyond the new length.
+	https://discuss.leetcode.com/topic/7673/share-my-o-n-time-and-o-1-solution-when-duplicates-are-allowed-at-most-k-times
+	*/
+	int removeDuplicates(vector<int>& nums)
+	{
+		if (nums.size() <= 2)return nums.size();
+		int first = 1;
+		int second = 1;
+		int count = 1;
+		while (second<nums.size())
+		{
+			if (nums[second-1] == nums[second] )
+			{
+				if (count<2)
+				{
+					nums[first++] = nums[second];
+					count++;
+				}
+			}
+			else
+			{
+				count = 1;
+				nums[first++] = nums[second];
+			}
+			second++;
+		}
+	}
 };
 
 int main()
