@@ -2526,18 +2526,40 @@ public:
 	Follow up :
 	Could you do this in - place ?
 		思路：先翻转再对换
-		1 2 3 　　 7 8 9　　7 4 1
-		4 5 6 = > 4 5 6 = > 8 5 2
+		1 2 3 　　 7 8 9　　 7 4 1
+		4 5 6 = >  4 5 6 = > 8 5 2
 		7 8 9 　　 1 2 3 　　9 6 3*/
-
-		void rotate(vector<vector<int>>& matrix)
+	void rotate(vector<vector<int>>& matrix)
 	{
-			reverse(matrix.begin(), matrix.end());
-			for (int i = 0; i < matrix.size(); ++i)
-			for (int j = 0; j < i; ++j)
-				swap(matrix[i][j], matrix[j][i]);
-		}
+		reverse(matrix.begin(), matrix.end());
+		for (int i = 0; i < matrix.size(); ++i)
+		for (int j = 0; j < i; ++j)
+			swap(matrix[i][j], matrix[j][i]);
+	}
+	/*leetcode-83-Remove Duplicates from Sorted List
+	Given a sorted linked list, delete all duplicates such that each element appear only once.
+	For example,
+	Given 1->1->2, return 1->2.
+	Given 1->1->2->3->3, return 1->2->3.*/
+	ListNode* deleteDuplicates(ListNode* head)
+	{
+		if (head == NULL || head->next == NULL) return head;
+		
+		ListNode* p = head, *q = head->next;
 
+		while (q != NULL)
+		{
+			if (p->val == q->val){}
+			else
+			{
+				p->next = q;
+				p = q;
+			}
+			q = q->next;
+		}
+		p->next = q;
+		return head;
+	}
 	
 };
 
