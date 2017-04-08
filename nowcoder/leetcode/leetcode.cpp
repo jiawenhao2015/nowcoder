@@ -2672,6 +2672,37 @@ ListNode *reverseBetween2(ListNode *head, int m, int n) {
     }
     return prehead.next;
 }
+/*leetcode-206-Reverse Linked List
+Reverse a singly linked list*/
+ListNode* reverseList(ListNode* head)
+{
+    if(head == NULL) return head;
+    ListNode* dumb = new ListNode(0);
+    dumb->next = head;
+    ListNode * p = head->next;
+    head->next = NULL;
+    while(p != NULL)
+    {
+        head = p;
+        p = p->next;
+        head->next = dumb->next;
+        dumb->next = head;
+    }
+    return dumb->next;
+}
+//µİ¹é·½·¨
+ListNode* reverseList2(ListNode* head)
+{
+    if(head == NULL || head->next == NULL) return head;
+
+    ListNode * p = head->next;
+    head->next = NULL;
+    ListNode* newhead = reverseList2(p);
+    p->next = head;
+
+    return newhead;
+}
+
 };
 
 int main()
