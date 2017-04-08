@@ -2844,6 +2844,49 @@ public:
 		}
 		return result;
 	}
+Given a linked list, swap every two adjacent nodes and return its head.
+
+For example,
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+ 
+    ListNode *swapPairs(ListNode *head) {
+int k = 2;
+        if(k == 1 || head == NULL) return head;
+     int length = 0;
+     ListNode* p = head;
+     while(p!=NULL)
+     {
+         length++;
+         p = p->next;
+     }
+     int groupNum = length/k;//组数，比如length=13，k=5，则一共2组
+     ListNode* dumb = new ListNode(0);
+     dumb->next = head;
+     p = head;//p代表当前结点
+     ListNode* q = p->next;//保存下一个结点
+     ListNode* pre = dumb;//当前结点前驱
+    ListNode*tempHead = pre; //tempHead为每一组的 头结点前驱 别的结点插入到它后面t empHead->1 2 3 4 5
+     for(int i =1;i <= groupNum;i++)
+     {
+         tempHead = pre;
+         for(int j =0;j < k ;j++)// 组内 头插法翻转
+         {
+             p->next = tempHead->next;
+             tempHead->next = p;
+             pre = p;
+             p = q;
+            if(q!=NULL) q = q->next;
+         }
+          head->next  = p;
+          pre = head;
+          head = p;//head 现在为下一组的第一个 相当于刚开始时候的head 也就是每一组的head
+     }
+     pre->next = head;
+
+     return dumb->next; 
+    }
 
 };
 
