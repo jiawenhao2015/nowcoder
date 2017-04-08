@@ -2777,6 +2777,26 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
 
     return dumb->next;
 }
+/*leetcode-66-Plus One
+Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
+You may assume the integer do not contain any leading zero, except the number 0 itself.
+The digits are stored such that the most significant digit is at the head of the list.*/
+vector<int> plusOne(vector<int>& digits)
+{
+    int carry = 0;
+    int temp = 0;
+    for(int i = digits.size()-1;i >= 0;i--)
+    {
+         if(i == digits.size()-1 )      temp = digits[i] + 1 + carry;
+         else  temp = digits[i] + carry;
+         digits[i] = temp%10;
+         if( temp>=10)      carry = 1;
+        else  carry = 0;
+    }
+    if(carry == 1)
+        digits.insert(digits.begin(),1);
+    return digits;
+}
 };
 
 int main()
