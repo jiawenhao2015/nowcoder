@@ -2310,7 +2310,7 @@ public:
 		 vector<int>backup = nums;
 		 vector<string>result;
 		 if(nums.size()==0)return result;
-		 sort(nums.begin(),nums.end(),greater<int>());
+		// sort(nums.begin(),nums.end(),greater<int>());vs下编译报错 先注释
 		 map<int,string>table;
 		 char rank[10];
 		 for(int i = 0;i < nums.size();i++)
@@ -2567,7 +2567,7 @@ public:
 	It doesn't matter what you leave beyond the new length.
 	https://discuss.leetcode.com/topic/7673/share-my-o-n-time-and-o-1-solution-when-duplicates-are-allowed-at-most-k-times
 	*/
-	int removeDuplicates(vector<int>& nums)
+	int removeDuplicates3(vector<int>& nums)
 	{
 		if (nums.size() <= 2)return nums.size();
 		int first = 1;
@@ -2602,7 +2602,7 @@ public:
 	分析：p为head的next，如果p的值和head的值不同，则将head->next置为deleteDuplicates(p)，返回head，
 	否则直到找到第一个p不等于head的地方，返回deleteDuplicates(p)*/
 
-	ListNode* deleteDuplicates(ListNode* head)
+	ListNode* deleteDuplicates2(ListNode* head)
 	{
 		if (head == NULL || head->next == NULL) return head;
 		ListNode* p = head->next;
@@ -2612,206 +2612,253 @@ public:
 		}
 		else {
 			while (p != NULL && p->val == head->val) p = p->next;
-			return deleteDuplicates(p);
+			return deleteDuplicates2(p);
 		}
 	}
-/*leetcode-92-Reverse Linked List II
-Reverse a linked list from position m to n. Do it in-place and in one-pass.
-For example:
-Given 1->2->3->4->5->NULL, m = 2 and n = 4,
-return 1->4->3->2->5->NULL.
-Note:
-Given m, n satisfy the following condition:
-1 ≤ m ≤ n ≤ length of list.
-思路：
-*/
-ListNode* reverseBetween(ListNode* head, int m, int n)
- {
-     ListNode dumb(0);
-     dumb.next = head;
-     if(m == n) return head;
-     ListNode* preM = &dumb;//保存m之前结点
-     ListNode* pM = head,*pN = head ,*temp = head;
-     int index=1;
-     while(pN != NULL)
-     {
-         if(index < m)
-         {
-             index++;
-             preM = pM;
-             pM = pM->next;
-             pN = pN->next;
-         }
-         else if(index >= m && index <= n)
-         {
-             temp = pN->next;
-             pN->next = preM->next;
-             preM->next =pN;
-             pN = temp;
-             index++;
-         }
-         else if(index > n)        break;
-     }
-        pM->next = pN;
-   return dumb.next;
-}
-ListNode *reverseBetween2(ListNode *head, int m, int n) {
-    if(m==n)return head;
-	n-=m;
-    ListNode prehead(0);
-    prehead.next=head;
-    ListNode* pre=&prehead;
-    while(--m)pre=pre->next;
-    ListNode* pstart=pre->next;
-    while(n--)
-    {
-        ListNode *p=pstart->next;
-        pstart->next=p->next;
-        p->next=pre->next;
-        pre->next=p;
-    }
-    return prehead.next;
-}
-/*leetcode-206-Reverse Linked List
-Reverse a singly linked list*/
-ListNode* reverseList(ListNode* head)
-{
-    if(head == NULL) return head;
-    ListNode* dumb = new ListNode(0);
-    dumb->next = head;
-    ListNode * p = head->next;
-    head->next = NULL;
-    while(p != NULL)
-    {
-        head = p;
-        p = p->next;
-        head->next = dumb->next;
-        dumb->next = head;
-    }
-    return dumb->next;
-}
-//递归方法
-ListNode* reverseList2(ListNode* head)
-{
-    if(head == NULL || head->next == NULL) return head;
+	/*leetcode-92-Reverse Linked List II
+	Reverse a linked list from position m to n. Do it in-place and in one-pass.
+	For example:
+	Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+	return 1->4->3->2->5->NULL.
+	Note:
+	Given m, n satisfy the following condition:
+	1 ≤ m ≤ n ≤ length of list.
+	思路：
+	*/
+	ListNode* reverseBetween(ListNode* head, int m, int n)
+	 {
+		 ListNode dumb(0);
+		 dumb.next = head;
+		 if(m == n) return head;
+		 ListNode* preM = &dumb;//保存m之前结点
+		 ListNode* pM = head,*pN = head ,*temp = head;
+		 int index=1;
+		 while(pN != NULL)
+		 {
+			 if(index < m)
+			 {
+				 index++;
+				 preM = pM;
+				 pM = pM->next;
+				 pN = pN->next;
+			 }
+			 else if(index >= m && index <= n)
+			 {
+				 temp = pN->next;
+				 pN->next = preM->next;
+				 preM->next =pN;
+				 pN = temp;
+				 index++;
+			 }
+			 else if(index > n)        break;
+		 }
+			pM->next = pN;
+	   return dumb.next;
+	}
+	ListNode *reverseBetween2(ListNode *head, int m, int n) {
+		if(m==n)return head;
+		n-=m;
+		ListNode prehead(0);
+		prehead.next=head;
+		ListNode* pre=&prehead;
+		while(--m)pre=pre->next;
+		ListNode* pstart=pre->next;
+		while(n--)
+		{
+			ListNode *p=pstart->next;
+			pstart->next=p->next;
+			p->next=pre->next;
+			pre->next=p;
+		}
+		return prehead.next;
+	}
+	/*leetcode-206-Reverse Linked List
+	Reverse a singly linked list*/
+	ListNode* reverseList(ListNode* head)
+	{
+		if(head == NULL) return head;
+		ListNode* dumb = new ListNode(0);
+		dumb->next = head;
+		ListNode * p = head->next;
+		head->next = NULL;
+		while(p != NULL)
+		{
+			head = p;
+			p = p->next;
+			head->next = dumb->next;
+			dumb->next = head;
+		}
+		return dumb->next;
+	}
+	//递归方法
+	ListNode* reverseList2(ListNode* head)
+	{
+		if(head == NULL || head->next == NULL) return head;
 
-    ListNode * p = head->next;
-    head->next = NULL;
-    ListNode* newhead = reverseList2(p);
-    p->next = head;
+		ListNode * p = head->next;
+		head->next = NULL;
+		ListNode* newhead = reverseList2(p);
+		p->next = head;
 
-    return newhead;
-}
-/*leetcode-25-Reverse Nodes in k-Group
-    Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
-    k is a positive integer and is less than or equal to the length of the linked list.
-    If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
-    You may not alter the values in the nodes, only nodes itself may be changed.
-    Only constant memory is allowed.
-    For example,
-    Given this linked list: 1->2->3->4->5
-    For k = 2, you should return: 2->1->4->3->5
-    For k = 3, you should return: 3->2->1->4->5*/
- ListNode* reverseKGroup(ListNode* head, int k)
- {
-     if(k == 1 || head == NULL) return head;
-     int length = 0;
-     ListNode* p = head;
-     while(p!=NULL)
-     {
-         length++;
-         p = p->next;
-     }
-     int groupNum = length/k;//组数，比如length=13，k=5，则一共2组
-     ListNode* dumb = new ListNode(0);
-     dumb->next = head;
-     p = head;//p代表当前结点
-     ListNode* q = p->next;//保存下一个结点
-     ListNode* pre = dumb;//当前结点前驱
-    ListNode*tempHead = pre; //tempHead为每一组的 头结点前驱 别的结点插入到它后面t empHead->1 2 3 4 5
-     for(int i =1;i <= groupNum;i++)
-     {
-         tempHead = pre;
-         for(int j =0;j < k ;j++)// 组内 头插法翻转
-         {
-             p->next = tempHead->next;
-             tempHead->next = p;
-             pre = p;
-             p = q;
-            if(q!=NULL) q = q->next;
-         }
-          head->next  = p;
-          pre = head;
-          head = p;//head 现在为下一组的第一个 相当于刚开始时候的head 也就是每一组的head
-     }
-     pre->next = head;
+		return newhead;
+	}
+	/*leetcode-25-Reverse Nodes in k-Group
+		Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+		k is a positive integer and is less than or equal to the length of the linked list.
+		If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+		You may not alter the values in the nodes, only nodes itself may be changed.
+		Only constant memory is allowed.
+		For example,
+		Given this linked list: 1->2->3->4->5
+		For k = 2, you should return: 2->1->4->3->5
+		For k = 3, you should return: 3->2->1->4->5*/
+	 ListNode* reverseKGroup(ListNode* head, int k)
+	 {
+		 if(k == 1 || head == NULL) return head;
+		 int length = 0;
+		 ListNode* p = head;
+		 while(p!=NULL)
+		 {
+			 length++;
+			 p = p->next;
+		 }
+		 int groupNum = length/k;//组数，比如length=13，k=5，则一共2组
+		 ListNode* dumb = new ListNode(0);
+		 dumb->next = head;
+		 p = head;//p代表当前结点
+		 ListNode* q = p->next;//保存下一个结点
+		 ListNode* pre = dumb;//当前结点前驱
+		ListNode*tempHead = pre; //tempHead为每一组的 头结点前驱 别的结点插入到它后面t empHead->1 2 3 4 5
+		 for(int i =1;i <= groupNum;i++)
+		 {
+			 tempHead = pre;
+			 for(int j =0;j < k ;j++)// 组内 头插法翻转
+			 {
+				 p->next = tempHead->next;
+				 tempHead->next = p;
+				 pre = p;
+				 p = q;
+				if(q!=NULL) q = q->next;
+			 }
+			  head->next  = p;
+			  pre = head;
+			  head = p;//head 现在为下一组的第一个 相当于刚开始时候的head 也就是每一组的head
+		 }
+		 pre->next = head;
 
-     return dumb->next;
-}
-/*leetcode-19-Remove Nth Node From End of List
-Given a linked list, remove the nth node from the end of list and return its head.
-For example,
-   Given linked list: 1->2->3->4->5, and n = 2.
-   After removing the second node from the end, the linked list becomes 1->2->3->5.
-Note:
-Given n will always be valid.
-Try to do this in one pass.
-*/
-ListNode* removeNthFromEnd(ListNode* head, int n)
-{
-    if(head == NULL || n<=0)return head;
-    ListNode* dumb = new ListNode(0);
-    dumb->next = head;
-    ListNode* p = dumb;
-    head = dumb;
-    while(p !=NULL && n--)
-    {
-        p = p->next;
-    }
-    while(p !=NULL && p->next != NULL)
-    {
-        p = p->next;
-        head = head->next;
-    }
-    if(head->next != NULL) head->next = head->next->next;
+		 return dumb->next;
+	}
+	/*leetcode-19-Remove Nth Node From End of List
+	Given a linked list, remove the nth node from the end of list and return its head.
+	For example,
+	   Given linked list: 1->2->3->4->5, and n = 2.
+	   After removing the second node from the end, the linked list becomes 1->2->3->5.
+	Note:
+	Given n will always be valid.
+	Try to do this in one pass.
+	*/
+	ListNode* removeNthFromEnd(ListNode* head, int n)
+	{
+		if(head == NULL || n<=0)return head;
+		ListNode* dumb = new ListNode(0);
+		dumb->next = head;
+		ListNode* p = dumb;
+		head = dumb;
+		while(p !=NULL && n--)
+		{
+			p = p->next;
+		}
+		while(p !=NULL && p->next != NULL)
+		{
+			p = p->next;
+			head = head->next;
+		}
+		if(head->next != NULL) head->next = head->next->next;
 
-    return dumb->next;
-}
-/*leetcode-66-Plus One
-Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
-You may assume the integer do not contain any leading zero, except the number 0 itself.
-The digits are stored such that the most significant digit is at the head of the list.*/
-vector<int> plusOne(vector<int>& digits)
-{
-    int carry = 0;
-    int temp = 0;
-    for(int i = digits.size()-1;i >= 0;i--)
-    {
-         if(i == digits.size()-1 )      temp = digits[i] + 1 + carry;
-         else  temp = digits[i] + carry;
-         digits[i] = temp%10;
-         if( temp>=10)      carry = 1;
-        else  carry = 0;
-    }
-    if(carry == 1)
-        digits.insert(digits.begin(),1);
-    return digits;
-}
+		return dumb->next;
+	}
+	/*leetcode-66-Plus One
+	Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
+	You may assume the integer do not contain any leading zero, except the number 0 itself.
+	The digits are stored such that the most significant digit is at the head of the list.*/
+	vector<int> plusOne(vector<int>& digits)
+	{
+		int carry = 0;
+		int temp = 0;
+		for(int i = digits.size()-1;i >= 0;i--)
+		{
+			 if(i == digits.size()-1 )      temp = digits[i] + 1 + carry;
+			 else  temp = digits[i] + carry;
+			 digits[i] = temp%10;
+			 if( temp>=10)      carry = 1;
+			else  carry = 0;
+		}
+		if(carry == 1)
+			digits.insert(digits.begin(),1);
+		return digits;
+	}
+	/*leetcode-532-K-diff Pairs in an Array
+	Given an array of integers and an integer k, you need to find the number of unique k-diff pairs in the array.
+	Here a k-diff pair is defined as an integer pair (i, j), where i and j are both numbers in the array and their absolute difference is k.
+	Example 1:
+	Input: [3, 1, 4, 1, 5], k = 2
+	Output: 2
+	Explanation: There are two 2-diff pairs in the array, (1, 3) and (3, 5).
+	Although we have two 1s in the input, we should only return the number of unique pairs.
+	Example 2:
+	Input:[1, 2, 3, 4, 5], k = 1
+	Output: 4
+	Explanation: There are four 1-diff pairs in the array, (1, 2), (2, 3), (3, 4) and (4, 5).
+	Example 3:
+	Input: [1, 3, 1, 5, 4], k = 0
+	Output: 1
+	Explanation: There is one 0-diff pair in the array, (1, 1).
+	Note:
+	The pairs (i, j) and (j, i) count as the same pair.
+	The length of the array won't exceed 10,000.
+	All the integers in the given input belong to the range: [-1e7, 1e7].
+	思路：
+	用一个map记录所有关键字，同时去掉了重复元素，然后遍历map，统计个数
+	注意 absolute difference 绝对值>=0*/
+	int findPairs(vector<int>& nums, int k)
+	{
+		if (k < 0)return 0;
+		int result = 0;
+		//sort(nums.begin(),nums.end());//不需要排序
+		map<int, int>table;
+		map<int, int>::iterator it;
+		for (int i = 0; i < nums.size();i++)
+		{
+			table[nums[i]]++;
+		}
+		for (it = table.begin(); it != table.end();it++)
+		{
+			if (k!=0 &&table.count(k + it->first))//比如此时first为1 而k=2 判断是否存在3
+			{
+				result++;
+			}
+			else if (k == 0 && it->second >= 2)//说明存在至少两个元素值相等
+			{
+				result++;
+			}
+		}
+		return result;
+	}
 };
 
 int main()
 {
 	Solution sl;
 	vector<int>test,test1,test2;
-	test.push_back(-1);
-	test.push_back(0);
 	test.push_back(1);
+	test.push_back(3);
 	test.push_back(2);
-	test.push_back(-1);
-	test.push_back(-4);
+	test.push_back(5);
+	test.push_back(4);
+	/*test.push_back(-4);
 	test2.push_back(0);
 	test2.push_back(0);
-	test2.push_back(0);
+	test2.push_back(0);*/
 	
 	vector<string> str;
 	str.push_back("0");
@@ -2837,7 +2884,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	test = sl.getRow(3);
+	cout << sl.findPairs(test, -1) << endl;;
 	
 	for (int i = 0; i < test.size();i++)
 	{
