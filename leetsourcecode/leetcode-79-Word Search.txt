@@ -1,0 +1,47 @@
+/*leetcode-79-Word Search
+Given a 2D board and a word, find if the word exists in the grid.
+The word can be constructed from letters of sequentially adjacent cell,
+where "adjacent" cells are those horizontally or vertically neighboring.
+The same letter cell may not be used more than once.
+For example,
+Given board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+word = "ABCCED", -> returns true,
+word = "SEE", -> returns true,
+word = "ABCB", -> returns false.*/
+bool dfs(vector<vector<char>>& board, string word,int row ,int col ,int start,int m,int n,int length)
+{
+    char curChar = board[row][col];
+    bool res = false;
+
+    if(curChar != word[start]) return false;
+    if(start == length - 1) return true;
+
+    board[row][col] = '*';
+    if(row>0) res = dfs(board,word,row-1,col,start+1,m,n,length);
+    if(!res && row < m-1) res = dfs(board,word,row-1,col,start+1,m,n,length);
+
+    return res;
+}
+bool exist(vector<vector<char>>& board, string word)
+{
+    int m = board.size() , n = board[0].size(), length = word.size();
+
+    if( m && n && length)
+    {
+        for(int i = 0;i < m;i++)
+        {
+            for(int j =0;j<n;j++)
+            {
+                if(dfs(board,word,i,j,0,m,n,length))
+                    return true;
+            }
+        }
+
+    }
+    return false;
+}
