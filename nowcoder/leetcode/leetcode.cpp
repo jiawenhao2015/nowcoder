@@ -2844,16 +2844,16 @@ public:
 		}
 		return result;
 	}
-Given a linked list, swap every two adjacent nodes and return its head.
 
-For example,
-Given 1->2->3->4, you should return the list as 2->1->4->3.
-
-Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
- 
-    ListNode *swapPairs(ListNode *head) {
-int k = 2;
-        if(k == 1 || head == NULL) return head;
+	/*Given a linked list, swap every two adjacent nodes and return its head.
+	For example,
+	Given 1->2->3->4, you should return the list as 2->1->4->3.
+	Your algorithm should use only constant space. You may not modify
+	the values in the list, only nodes itself can be changed.*/ 
+    ListNode *swapPairs(ListNode *head)
+	{
+	 int k = 2;
+     if(k == 1 || head == NULL) return head;
      int length = 0;
      ListNode* p = head;
      while(p!=NULL)
@@ -2867,7 +2867,7 @@ int k = 2;
      p = head;//p代表当前结点
      ListNode* q = p->next;//保存下一个结点
      ListNode* pre = dumb;//当前结点前驱
-    ListNode*tempHead = pre; //tempHead为每一组的 头结点前驱 别的结点插入到它后面t empHead->1 2 3 4 5
+     ListNode*tempHead = pre; //tempHead为每一组的 头结点前驱 别的结点插入到它后面t empHead->1 2 3 4 5
      for(int i =1;i <= groupNum;i++)
      {
          tempHead = pre;
@@ -2884,19 +2884,18 @@ int k = 2;
           head = p;//head 现在为下一组的第一个 相当于刚开始时候的head 也就是每一组的head
      }
      pre->next = head;
-
      return dumb->next; 
     }
-/*leetcode-557-Reverse Words in a String III
-Given a string, you need to reverse the order of characters in each word within a sentence while
-still preserving whitespace and initial word order.
-Example 1:
-Input: "Let's take LeetCode contest"
-Output: "s'teL ekat edoCteeL tsetnoc"
-Note: In the string, each word is separated by single space and there will not be any extra space in the string.
-思路：
-用一个vector<vector<char> >shuzu
-string rev(string x)
+	/*leetcode-557-Reverse Words in a String III
+	Given a string, you need to reverse the order of characters in each word within a sentence while
+	still preserving whitespace and initial word order.
+	Example 1:
+	Input: "Let's take LeetCode contest"
+	Output: "s'teL ekat edoCteeL tsetnoc"
+	Note: In the string, each word is separated by single space and there will not be any extra space in the string.
+	思路：
+	用一个vector<vector<char> >shuzu
+	string rev(string x)
     {
         reverse(x.begin(), x.end());
         return x;
@@ -2916,129 +2915,116 @@ string rev(string x)
         ans += rev(t);
         return ans;
     }*/
-string reverseWords(string s)
-{
-    if(s == "")return s;
-    vector<vector<char> >sentence;
-    vector<char>word;
-    int i=0;
-    while(s[i] != '\0')
-    {
-        if(s[i]!=' ')
-        {
-            word.insert(word.begin(),s[i]);
-        }
-        else
-        {
-            sentence.push_back(word);
-            word.clear();
-        }
-        i++;
-    }
-    sentence.push_back(word);
-    char res[10000];//太小 要用100000
-    int ind =0;
-    for(int i=0;i<sentence.size();i++)
-    {
-        for(int j=0;j<sentence[i].size();j++)
-        {
-            res[ind] = sentence[i][j];
-            ind++;
-        }
-         res[ind] = ' ';
-         ind++;
-    }
-     res[ind-1] = '\0';
-    return res;
-}
-/*leetcode-554-Brick Wall My SubmissionsBack To Contest
-User Accepted: 308
-User Tried: 394
-Total Accepted: 310
-Total Submissions: 654
-Difficulty: Medium
-There is a brick wall in front of you. The wall is rectangular and has several rows of bricks.
-The bricks have the same height but different width. You want to draw a vertical line from the top to the bottom and cross the least bricks.
-The brick wall is represented by a list of rows. Each row is a list of integers representing the width of each brick in this row from left to right.
-If your line go through the edge of a brick, then the brick is not considered as crossed.
-You need to find out how to draw the line to cross the least bricks and return the number of crossed bricks.
-You cannot draw a line just along one of the two vertical edges of the wall, in which case the line will obviously cross no bricks.
-Example:
-Input:
-[[1,2,2,1],
- [3,1,2],
- [1,3,2],
- [2,4],
- [3,1,2],
- [1,3,1,1]]
-Output: 2
-Explanation:
-思路：
-统计每一层相同的和最多的即为画线的位置
-Note:
-The width sum of bricks in different rows are the same and won't exceed INT_MAX.
-The number of bricks in each row is in range [1,10,000].
- The height of wall is in range [1,10,000]. Total number of bricks of the wall won't exceed 20,000.
-  map<int, int> ess;
-        int s;
-        for(auto row: wall)
-        {
-            s = 0;
-            for(auto c: row)
-                ++ess[s += c];
-        }
-        int ans = 0;
-        for(auto pair: ess)
-            if(pair.first != s)
-                ans = max(ans, pair.second);
-        return (int) wall.size() - ans;*/
- int leastBricks(vector<vector<int> >& wall)
- {
-     map<int,int>sumTable;//统计相同和的个数
-     map<int ,int>::iterator it;
-     for(int i =0;i<wall.size();i++)
-     {
-         int sum =0;
-        for(int j =0;j<wall[i].size()-1;j++)//从0开始 倒数第一个结束
-        {
-            sum+=wall[i][j];
-            sumTable[sum]++;
-        }
-     }
-     int res =0;
-     for(it = sumTable.begin();it!=sumTable.end();it++)
-     {
-         res = max(res,it->second);
-    }
-    return wall.size()-res;
-
-}
-/*556. Next Greater Element III My SubmissionsBack To Contest
-User Accepted: 363
-User Tried: 574
-Total Accepted: 368
-Total Submissions: 1430
-Difficulty: Medium
-Given a positive 32-bit integer n, you need to find the smallest 32-bit integer which has exactly the same digits existing in
-the integer n and is greater in value than n. If no such positive 32-bit integer exists, you need to return -1.
-Example 1:
-Input: 12
-Output: 21
-Example 2:
-Input: 21
-Output: -1
-思路：
-将n分解为个位数字，放入vector中，然后排序
-
-Input:
-101
-Output:
--1
-Expected:
-110
-*/
-//大牛写的
- int nextGreaterElement(int n) {
+	string reverseWords(string s)
+	{
+		if(s == "")return s;
+		vector<vector<char> >sentence;
+		vector<char>word;
+		int i=0;
+		while(s[i] != '\0')
+		{
+			if(s[i]!=' ')
+			{
+				word.insert(word.begin(),s[i]);
+			}
+			else
+			{
+				sentence.push_back(word);
+				word.clear();
+			}
+			i++;
+		}
+		sentence.push_back(word);
+		char res[10000];//太小 要用100000
+		int ind =0;
+		for(int i=0;i<sentence.size();i++)
+		{
+			for(int j=0;j<sentence[i].size();j++)
+			{
+				res[ind] = sentence[i][j];
+				ind++;
+			}
+			 res[ind] = ' ';
+			 ind++;
+		}
+		 res[ind-1] = '\0';
+		return res;
+	}
+	/*leetcode-554-Brick Wall My SubmissionsBack To Contest
+	User Accepted: 308
+	User Tried: 394
+	Total Accepted: 310
+	Total Submissions: 654
+	Difficulty: Medium
+	There is a brick wall in front of you. The wall is rectangular and has several rows of bricks.
+	The bricks have the same height but different width. You want to draw a vertical line from the top to the bottom and cross the least bricks.
+	The brick wall is represented by a list of rows. Each row is a list of integers representing the width of each brick in this row from left to right.
+	If your line go through the edge of a brick, then the brick is not considered as crossed.
+	You need to find out how to draw the line to cross the least bricks and return the number of crossed bricks.
+	You cannot draw a line just along one of the two vertical edges of the wall, in which case the line will obviously cross no bricks.
+	Example:
+	Input:
+	[[1,2,2,1],
+	 [3,1,2],
+	 [1,3,2],
+	 [2,4],
+	 [3,1,2],
+	 [1,3,1,1]]
+	Output: 2
+	Explanation:
+	思路：
+	统计每一层相同的和最多的即为画线的位置
+	Note:
+	The width sum of bricks in different rows are the same and won't exceed INT_MAX.
+	The number of bricks in each row is in range [1,10,000].
+	 The height of wall is in range [1,10,000]. Total number of bricks of the wall won't exceed 20,000.
+	  map<int, int> ess;
+			int s;
+			for(auto row: wall)
+			{
+				s = 0;
+				for(auto c: row)
+					++ess[s += c];
+			}
+			int ans = 0;
+			for(auto pair: ess)
+				if(pair.first != s)
+					ans = max(ans, pair.second);
+			return (int) wall.size() - ans;*/
+	 int leastBricks(vector<vector<int> >& wall)
+	 {
+		 map<int,int>sumTable;//统计相同和的个数
+		 map<int ,int>::iterator it;
+		 for(int i =0;i<wall.size();i++)
+		 {
+			 int sum =0;
+			for(int j =0;j<wall[i].size()-1;j++)//从0开始 倒数第一个结束
+			{
+				sum+=wall[i][j];
+				sumTable[sum]++;
+			}
+		 }
+		 int res =0;
+		 for(it = sumTable.begin();it!=sumTable.end();it++)
+		 {
+			 res = max(res,it->second);
+		}
+		return wall.size()-res;
+	}
+	/*556. Next Greater Element III
+	Given a positive 32-bit integer n, you need to find the smallest 32-bit integer which has exactly the same digits existing in
+	the integer n and is greater in value than n. If no such positive 32-bit integer exists, you need to return -1.
+	Example 1:
+	Input: 12
+	Output: 21
+	Example 2:
+	Input: 21
+	Output: -1
+	思路：
+	将n分解为个位数字，放入vector中，然后排序	
+	*/
+	//大牛写的
+	 int nextGreaterElement2(int n) {
         char buf[80];
         sprintf(buf, "%d", n);
         string s = buf;
@@ -3053,41 +3039,45 @@ Expected:
         } while (next_permutation(s.begin(), s.end()));
         return ans <= INT_MAX ? ans : -1;
     }
-int nextGreaterElement(int n)
-{
-    vector<int>digit;
-    vector<int>origin;
-    while(n)
-    {
-        digit.push_back(n%10);
-        n/=10;
-    }
-    origin = digit;//保存原来的
-    sort(digit.begin(),digit.end());
-
-    int i =0;
-
-    for(;i<digit.size();i++)
-    {
-       if(digit[i] >=origin[origin.size()-1])//原来的最高位
-       {
-           break;
-       }
-    }
-      if(i>=digit.size()) return -1;//说明原来的最高位已经是最大 digit 里没有更大的了
-    int zuigaoweiIndex = i;
-    int result = digit[i];
-    for(i =0;i<digit.size();i++)
-    {
-        if(i != zuigaoweiIndex)
-        {
-            result = result*10 + digit[i];
-        }
-    }
-    return result;
-}
-
-
+	 /*leetcode-461-Hamming Distance
+	 The Hamming distance between two integers is the number of positions at
+	 which the corresponding bits are different.
+	 Given two integers x and y, calculate the Hamming distance.
+	 Note:
+	 0 ≤ x, y < 231.
+	 Example:
+	 Input: x = 1, y = 4
+	 Output: 2
+	 Explanation:
+	 1   (0 0 0 1)
+	 4   (0 1 0 0)
+            ↑  ↑
+	 The above arrows point to positions where the corresponding bits are different.*/
+	 int hammingDistance(int x, int y)
+	 {
+		 int res = 0;
+		 while (x && y)
+		 {
+			 int tempx = x & 1;
+			 int tempy = y & 1;
+			 if (tempx != tempy)res++;
+			 x >>= 1;
+			 y >>= 1;
+		 }
+		 while (x)
+		 {
+			 int tempx = x & 1;
+			 x >>= 1;
+			 if (tempx) res++;
+		 }
+		 while (y)
+		 {
+			 int tempy = y & 1;
+			 y >>= 1;
+			 if (tempy) res++;
+		 }
+		 return res;
+	 }
 };
 
 int main()
@@ -3128,7 +3118,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.findPairs(test, -1) << endl;;
+	cout << sl.hammingDistance(1, 4) << endl;;
 	
 	for (int i = 0; i < test.size();i++)
 	{
