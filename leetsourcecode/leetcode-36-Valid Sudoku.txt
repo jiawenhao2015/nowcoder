@@ -1,0 +1,23 @@
+/*leetcode-36-Valid Sudoku
+Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+
+*/
+ bool isValidSudoku(vector<vector<char>>& board)
+ {
+     int rowcheck[9][9] = {0},colcheck[9][9] = {0},subboxcheck[9][9] = {0};
+     for(int i = 0;i<board.size();i++)
+     {
+         for(int j =0 ;j<board[0].size();j++)
+         {
+             if(board[i][j] != '.')
+             {
+                 int num = board[i][j] - '0' - 1,k = i/3 * 3 + j/3;//记录子数独的下标一共3*3个子数独 m*n的数组 (a,b) 一维下标为a*n+b
+                 if(rowcheck[i][num] || colcheck[j][num] || subboxcheck[k][num])return false;
+                 rowcheck[i][num] = colcheck[j][num]  = subboxcheck[k][num] = 1;
+             }
+         }
+     }
+     return true;
+}
