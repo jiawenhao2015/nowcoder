@@ -3011,7 +3011,7 @@ public:
 		}
 		return wall.size()-res;
 	}
-	/*556. Next Greater Element III
+	/*leetcode-556-Next Greater Element III
 	Given a positive 32-bit integer n, you need to find the smallest 32-bit integer which has exactly the same digits existing in
 	the integer n and is greater in value than n. If no such positive 32-bit integer exists, you need to return -1.
 	Example 1:
@@ -3086,7 +3086,6 @@ public:
 	 Note:
 	 You may use one character in the keyboard more than once.
 	 You may assume the input string will only contain letters of alphabet.*/
-	
 	 bool can(string str, vector<unordered_set<char>>& rows)
 	 {		 
 		 int row = 0;
@@ -3115,6 +3114,44 @@ public:
 				 ret.push_back(words[i]);
 			 }
 		 }
+		 return ret;
+	 }
+	 /*leetcode-496-Next Greater Element I
+	 You are given two arrays (without duplicates) nums1 and nums2 where nums1¡¯s elements are subset of nums2. 
+	 Find all the next greater numbers for nums1's elements in the corresponding places of nums2.
+	 The Next Greater Number of a number x in nums1 is the first greater number to its right in nums2.
+	 If it does not exist, output -1 for this number.
+	 Example 1:
+	 Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
+	 Output: [-1,3,-1]
+	 Explanation:
+	 For number 4 in the first array, you cannot find the next greater number for it in the second array, so output -1.
+	 For number 1 in the first array, the next greater number for it in the second array is 3.
+	 For number 2 in the first array, there is no next greater number for it in the second array, so output -1.
+	 Example 2:
+	 Input: nums1 = [2,4], nums2 = [1,2,3,4].
+	 Output: [3,-1]
+	 Explanation:
+	 For number 2 in the first array, the next greater number for it in the second array is 3.
+	 For number 4 in the first array, there is no next greater number for it in the second array, so output -1.
+	 Note:
+	 All elements in nums1 and nums2 are unique.
+	 The length of both nums1 and nums2 would not exceed 1000.*/
+	 vector<int> nextGreaterElement(vector<int>& findNums, vector<int>& nums)
+	 {
+		 stack<int> st;
+		 map<int, int>M;
+		 for (int n : nums)
+		 {
+			 while (!st.empty() && st.top() < n)
+			 {
+				 M[st.top()] = n;
+				 st.pop();
+			 }
+			 st.push(n);
+		 }
+		 vector<int>ret;
+		 for (int n : findNums) ret.push_back(M.count(n) ? M[n] : -1);
 		 return ret;
 	 }
 };
