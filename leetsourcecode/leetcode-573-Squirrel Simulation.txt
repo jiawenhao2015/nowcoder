@@ -1,0 +1,24 @@
+There's a tree, a squirrel, and several nuts. Positions are represented by the cells in a 2D grid.
+ Your goal is to find the minimal distance for the squirrel to collect all the nuts and put them under the tree one by one.
+The squirrel can only take at most one nut at one time and can move in four directions
+ up, down, left and right, to the adjacent cell. The distance is represented by the number of moves.*/
+ int getDis(vector<int>& squirrel,vector<int>& nut)
+ {
+     return abs(squirrel[0] - nut[0]) + abs(squirrel[1] - nut[1]);
+ }
+int minDistance(int height, int width, vector<int>& tree, vector<int>& squirrel, vector<vector<int> >& nuts)
+{
+    //dis = 2*(所有getDis(tree[i],nut[i])) - getDis(tree[i],nut[i])) + getDis(squireel[i],nut[i])
+    int tempdis = 0;
+     int distance = 1000000;
+    for(int i=0;i<nuts.size();i++)
+    {
+         tempdis += 2*getDis(tree,nuts[i]);
+    }
+    for(int i=0;i<nuts.size();i++)
+    {
+         int distanceTemp = tempdis - getDis(tree,nuts[i]) + getDis(squirrel,nuts[i]);
+         if(distance >distanceTemp) distance = distanceTemp;
+    }
+    return distance;
+}
