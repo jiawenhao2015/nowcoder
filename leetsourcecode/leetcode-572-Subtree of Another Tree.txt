@@ -1,0 +1,67 @@
+Given two non-empty binary trees s and t, check whether tree t has
+exactly the same structure and node values with a subtree of s.
+A subtree of s is a tree consists of a node in s and all of this node's descendants.
+The tree s could also be considered as a subtree of itself.
+
+Example 1:
+Given tree s:
+
+     3
+    / \
+   4   5
+  / \
+ 1   2
+Given tree t:
+
+   4 
+  / \
+ 1   2
+Return true, because t has the same structure and node values with a subtree of s.
+
+复制代码
+bool isSameTree(TreeNode* s, TreeNode* t)
+{
+    if(s == NULL &&  t== NULL) return true;
+    if( (s == NULL && t != NULL )|| (s != NULL&&t == NULL) || (s->val !=t->val)) return false;
+    bool left = isSameTree(s->left,t->left);
+    bool right = isSameTree(s->right,t->right);
+    return (left && right);
+}
+bool isSubtree(TreeNode* s, TreeNode* t)
+{
+    bool res = false;
+    if(s!=NULL && t!= NULL)
+    {
+        if(t->val== s->val)      res = isSameTree(s,t);
+        if(!res) res = isSubtree(s->left,t);
+        if(!res) res = isSubtree(s->right,t);
+    }
+    return res;
+}
+复制代码
+ 
+
+ 
+
+Example 2:
+Given tree s:
+
+     3
+    / \
+   4   5
+  / \
+ 1   2
+    /
+   0
+Given tree t:
+
+   4
+  / \
+ 1   2
+Return false.
+
+思路：
+
+首先定义一个函数，用来判断两颗二叉树是否相等。然后判断一颗二叉树t是否是二叉树s的子树，
+
+仅需依次递归判断二叉树s的左子树和右子树是否与t相等即可。
