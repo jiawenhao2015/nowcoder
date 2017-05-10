@@ -3253,27 +3253,51 @@ public:
 	 Explanation:
 	 The minimum absolute difference is 1, which is the difference between 2 and 1 (or between 2 and 3).	 
 	 */
-	 void zhongxubianli(TreeNode* root, vector<int>& tree)
+	 void zhongxubianli(TreeNode* root, int& ret,int& temp)
 	 {
 		 if (root!=NULL)
 		 {
-			 zhongxubianli(root->left, tree);
-			 tree.push_back(root->val);
-			 zhongxubianli(root->right, tree);
+			 zhongxubianli(root->left, ret,temp);
+			 if(temp>=0)ret = min(ret, root->val - temp);
+			 temp = root->val;
+			 zhongxubianli(root->right, ret,temp);
 		 }
 	 }
 	 int getMinimumDifference(TreeNode* root)
 	 {
-		 vector<int>tree;
-		 zhongxubianli(root, tree);
-		 int ret = 100000;
-		 for (int i = 1; i < tree.size();i++)
-		 {
-			 ret = min(ret, tree[i] - tree[i - 1]);
-		 }
+		 int ret = 100000,temp = -1;
+		 zhongxubianli(root, ret,temp);		 
 		 return ret;
 	 }
-
+	 /*leetcode-541-Reverse String II
+	 Given a string and an integer k, you need to reverse the first k characters for every 2k characters
+	 counting from the start of the string. If there are less than k characters left, reverse all of them. 
+	 If there are less than 2k but greater than or equal to k characters, then reverse the first k characters and left the other as original.
+	 Example:
+	 Input: s = "abcdefg", k = 2
+	 Output: "bacdfeg"
+	 Restrictions:
+	 The string consists of lower English letters only.
+	 Length of the given string and k will in the range [1, 10000]*/
+	 string reverseStr(string s, int k)
+	 {
+		 int group = s.size()/(2*k);
+		 int i = 0;
+		 for (; i < group;i++)
+		 {
+			 for (int j = 0; j < k/2;j++)
+			 {
+				 swap(s[i * 2 * k + j], s[i * 2 * k + k-j-1]);
+			 }
+		 }
+		 int remain = s.size() % (2 * k);
+		 int end = (remain >= k) ? k : remain ;
+		 for (int j = 0; j < end/2;j++)
+		 {
+			 swap(s[i * 2 * k + j], s[i * 2 * k + end - j - 1]);
+		 }
+		 return s;
+	 }
 };
 
 int main()
@@ -3314,7 +3338,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.convertToBase7(-7) << endl;;
+	cout << sl.reverseStr("1234567890j",2) << endl;;
 	
 	for (int i = 0; i < test.size();i++)
 	{
