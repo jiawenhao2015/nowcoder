@@ -3191,6 +3191,30 @@ public:
 		 ret += ")";		
 		 return ret;
 	 }
+	 /*leetcode-504-Base 7
+	 Given an integer, return its base 7 string representation.
+	 Example 1:
+	 Input: 100
+	 Output: "202"
+	 Example 2:
+	 Input: -7
+	 Output: "-10"
+	 Note: The input will be in range of [-1e7, 1e7].*/
+	 string convertToBase7(int num)
+	 {
+		 if (num == 0) return "0";
+		 string ret = "";
+		 int temp = num;
+		 if (num < 0) num = -num;		 
+		 while (num)
+		 {
+			 //ret.insert(ret.begin(), num % 7 + '0');
+			 ret = to_string(num % 7) + ret;//to_stringÓÃ·¨
+			 num /= 7;
+		 }
+		 if (temp < 0)ret.insert(ret.begin(), '-');	 
+		 return ret;
+	 }
 };
 
 int main()
@@ -3231,7 +3255,7 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.optimalDivision(test) << endl;;
+	cout << sl.convertToBase7(-7) << endl;;
 	
 	for (int i = 0; i < test.size();i++)
 	{
