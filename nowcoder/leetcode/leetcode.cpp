@@ -3474,8 +3474,30 @@ public:
 		 }
 		 return ret;
 	 }
-
-
+	 /*leetcode-463-Island Perimeter
+	 You are given a map in form of a two-dimensional integer grid 
+	 where 1 represents land and 0 represents water. Grid cells are connected horizontally/vertically (not diagonally). 
+	 The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells).
+	 The island doesn't have "lakes" (water inside that isn't connected to the water around the island). 
+	 One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. 
+	 Determine the perimeter of the island.*/
+	 int islandPerimeter(vector<vector<int>>& grid)
+	 {
+		 int count = 0, repeat = 0;
+		 for (int i = 0; i < grid.size(); i++)
+		 {
+			 for (int j = 0; j < grid[i].size(); j++)
+			 {
+				 if (grid[i][j] == 1)
+				 {
+					 count++;
+					 if (i != 0 && grid[i - 1][j] == 1) repeat++;
+					 if (j != 0 && grid[i][j - 1] == 1) repeat++;
+				 }
+			 }
+		 }
+		 return 4 * count - repeat * 2;
+	 }
 };
 
 int main()
@@ -3483,7 +3505,7 @@ int main()
 	Solution sl;
 	vector<int>test,test1,test2;
 	test.push_back(1);
-	test.push_back(3);
+	test.push_back(0);
 	/*test.push_back(2);
 	test.push_back(5);
 	test.push_back(4);
@@ -3513,11 +3535,11 @@ int main()
 	ListNode* resultNode = &node1;
 	 
 	vector<vector<int>>mat;
-	/*mat.push_back(test);
-	mat.push_back(test1);
+	mat.push_back(test);
+	/*mat.push_back(test1);
 	mat.push_back(test2);*/
 	
-	str = sl.fizzBuzz(3) ;
+	cout << sl.islandPerimeter(mat) << endl;
 	
 	for (int i = 0; i < str.size(); i++)
 	{
