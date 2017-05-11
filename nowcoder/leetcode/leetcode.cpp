@@ -3421,6 +3421,18 @@ public:
 		 }
 		 return strs[0].substr(0, common);
 	 }
+	 /*leetcode-344-Reverse String
+	 Write a function that takes a string as input and returns the string reversed.
+	 Example:
+	 Given s = "hello", return "olleh".*/
+	 string reverseString(string s)
+	 {
+		 for (int i = 0; i < s.size()/2;i++)
+		{
+			 swap(s[i], s[s.size() - i - 1]);
+		}
+		 return s;
+	 }
 
 };
 
@@ -3463,7 +3475,7 @@ int main()
 	mat.push_back(test1);
 	mat.push_back(test2);*/
 	
-	cout << sl.newton(100) << endl;;
+	cout << sl.reverseString("123456789") << endl;;
 	
 	for (int i = 0; i < test.size();i++)
 	{
