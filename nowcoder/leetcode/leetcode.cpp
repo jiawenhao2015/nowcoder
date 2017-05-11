@@ -7,7 +7,7 @@
 #include <queue>
 #include <map>
 #include<string>
-
+#include<sstream>
 using namespace std;
 
 struct ListNode {
@@ -3433,6 +3433,48 @@ public:
 		}
 		 return s;
 	 }
+	 /*leetcode-412-Fizz Buzz
+	 Write a program that outputs the string representation of numbers from 1 to n.
+	 But for multiples of three it should output ¡°Fizz¡± instead of the number and for the
+	 multiples of five output ¡°Buzz¡±. 
+	 For numbers which are multiples of both three and five output ¡°FizzBuzz¡±.
+	 Example:
+	 n = 15,
+	 Return:
+	 [
+	 "1",
+	 "2",
+	 "Fizz",
+	 "4",
+	 "Buzz",
+	 "Fizz",
+	 "7",
+	 "8",
+	 "Fizz",
+	 "Buzz",
+	 "11",
+	 "Fizz",
+	 "13",
+	 "14",
+	 "FizzBuzz"
+	 ]*/
+	 vector<string> fizzBuzz(int n)
+	 {
+		 vector<string>ret;
+		 stringstream ss;
+		 if (n < 1) return ret;
+		 for (int i = 1; i <= n;i++)
+		 {
+			 ss << i;
+			 if (i%3 ==0 && i%5!=0) ret.push_back("Fizz");			
+			 else if (i%5 ==0 && i%3!=0) ret.push_back("Buzz");			 
+			 else if (i%15==0) ret.push_back("FizzBuzz");
+			 else ret.push_back(ss.str());
+			 ss.str("");			 
+		 }
+		 return ret;
+	 }
+
 
 };
 
@@ -3451,10 +3493,10 @@ int main()
 	test2.push_back(0);*/
 	
 	vector<string> str;
-	str.push_back("0");
+	/*str.push_back("0");
 	str.push_back("3");
 	str.push_back("/");
-	/*str.push_back("3");
+	str.push_back("3");
 	str.push_back("*");	*/
 
 	ListNode node1(1), node2(2), node3(3), node4(4), node5(5), node6(6);
@@ -3475,11 +3517,11 @@ int main()
 	mat.push_back(test1);
 	mat.push_back(test2);*/
 	
-	cout << sl.reverseString("123456789") << endl;;
+	str = sl.fizzBuzz(3) ;
 	
-	for (int i = 0; i < test.size();i++)
+	for (int i = 0; i < str.size(); i++)
 	{
-		cout << test[i] << " ";
+		cout << str[i] << " ";
 	}
 	for (int i = 0; i < mat.size();i++)
 	{
