@@ -3324,6 +3324,46 @@ public:
 		 height(root, diameter);
 		 return diameter;
 	 }
+	 /*leetcode-551-Student Attendance Record I
+	 You are given a string representing an attendance record for a student.
+	 The record only contains the following three characters:
+	 'A' : Absent.
+	 'L' : Late.
+	 'P' : Present.
+	 A student could be rewarded if his attendance record doesn't contain more than one 'A' (absent) or more than two continuous 'L' (late).
+	 You need to return whether the student could be rewarded according to his attendance record.
+	 Example 1:
+	 Input: "PPALLP"
+	 Output: True
+	 Example 2:
+	 Input: "PPALLL"
+	 Output: False*/
+	 bool checkRecord(string s)
+	 {
+		 map<char, int>record;
+		 for (int i = 0; i < s.size();i++)
+		 {
+			 record[s[i]]++;
+		 }
+		 if (record['A'] <= 1 && record['L'] <= 2)return true;
+		 else if (record['A'] <= 1 && record['L']>2)
+		 {
+			 for (int i = 2; i < s.size();i++)
+			 {
+				 if (s[i] == s[i - 1] && s[i] == s[i - 2] && s[i] == 'L') return false;				 
+			 }
+			 return true;
+		 }
+		 else return false;
+		 /* int a=0, l=0;
+	for(int i=0;i<s.size();i++) {
+	if(s[i]=='A') a++;
+	if(s[i]=='L') l++;
+	else l=0;
+	if(a>=2||l>2) return false;
+	}
+	return true;*/
+	 }
 };
 
 int main()
