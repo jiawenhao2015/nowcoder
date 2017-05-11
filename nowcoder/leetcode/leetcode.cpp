@@ -3364,6 +3364,37 @@ public:
 	}
 	return true;*/
 	 }
+	 /*leetcode-69-Sqrt(x)
+	 Implement int sqrt(int x).
+	 Compute and return the square root of x.*/
+	 int mySqrt(int x)
+	 {
+		 if (x == 0) return 0;
+		 int left = 1, right = INT_MAX;
+		 while (1)
+		 {
+			 int mid = left + (right - left) / 2;
+			 if (mid * mid > x)
+			 {
+				 right = mid - 1;
+			 }
+			 else
+			 {
+				 if((mid + 1)*(mid+1) > x) return mid;				 
+				 left = mid + 1;
+			 }
+		 }
+	 }
+	 int newton(int x)
+	 {
+		 if (x == 0) return 0;		 
+		 double ans = x;
+		 while (abs(pow(ans, 2) - x) > 0.001)
+		 {
+			 ans = (ans + x / ans) / 2;
+		 }
+		 return ans;
+	 }
 };
 
 int main()
@@ -3404,7 +3435,8 @@ int main()
 	/*mat.push_back(test);
 	mat.push_back(test1);
 	mat.push_back(test2);*/
-	cout << sl.reverseStr("1234567890j",2) << endl;;
+	
+	cout << sl.newton(100) << endl;;
 	
 	for (int i = 0; i < test.size();i++)
 	{
