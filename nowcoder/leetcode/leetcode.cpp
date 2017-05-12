@@ -3516,11 +3516,40 @@ public:
 	 obviously, f(1), f(2), f(3) can make all f(4n + 1), f(4n + 2), f(4n + 3) to be true, only f(4n) will be false then.
 	 so here we go our one line solution:
 	 return (n % 4 != 0);*/
+	 /*leetcode-485-Max Consecutive Ones
+	 Given a binary array, find the maximum number of consecutive 1s in this array.
+	 Example 1:
+	 Input: [1,1,0,1,1,1]
+	 Output: 3
+	 Explanation: The first two digits or the last three digits are consecutive 1s.
+	 The maximum number of consecutive 1s is 3.
+	 Note:
+	 The input array will only contain 0 and 1.
+	 The length of input array is a positive integer and will not exceed 10,000*/
+	 int findMaxConsecutiveOnes(vector<int>& nums)
+	 {
+		 if (nums.size() == 0)return 0;
+		 int one = 0;
+		 int ret = 0;
+		 for (int i = 0; i < nums.size();i++)
+		 {
+			 if (nums[i] == 1) one++;			
+			 else if (nums[i] == 0)
+			 {
+				 ret = max(ret, one);
+				 one = 0;
+			 }
+		 }
+		 ret = max(ret, one);
+		 return ret;
+	 }
 };
 
 int main()
 {
 	Solution sl;
+	
+
 	vector<int>test,test1,test2;
 	test.push_back(1);
 	test.push_back(0);
