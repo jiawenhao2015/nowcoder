@@ -3728,6 +3728,100 @@ public:
 		 int lcs = dp[word1.size()][word2.size()];
 		 return word1.size() - lcs + word2.size() - lcs;
 	 }
+	 /*leetcode-226-Invert Binary Tree
+	 Invert a binary tree.
+	      4
+	    /   \
+	   2     7
+	  / \   / \
+	 1   3 6   9
+	 to
+	      4
+	    /   \
+	   7     2
+	  / \   / \
+	 9   6 3   1
+	 Trivia:
+	 This problem was inspired by this original tweet by Max Howell:
+	 Google: 90% of our engineers use the software you wrote (Homebrew), but you can¡¯t invert a binary tree on a whiteboard so fuck off.*/
+	 void invertCore(TreeNode* root)
+	 {
+		 if (root == NULL) return;
+		 swap(root->left, root->right);
+		 invertCore(root->left);
+		 invertCore(root->right);
+	 }
+	 TreeNode* invertTree(TreeNode* root)
+	 {
+		 invertCore(root);
+		 return root;
+	 }
+	 /*leetcode-283-Move Zeroes
+	 Given an array nums, write a function to move all 0's to the end of it while
+	 maintaining the relative order of the non-zero elements.
+	 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+	 Note:
+	 You must do this in-place without making a copy of the array.
+	 Minimize the total number of operations.*/
+	 void moveZeroes(vector<int>& nums)
+	 {
+		 int zeros = 0;
+		 for (int i = 0; i < nums.size();i++)
+		 {
+			 if (nums[i] == 0) zeros++;
+		 }
+		 int first = 0;
+		 for (int i = 0; i < nums.size();i++)
+		 {
+			 if (nums[i] != 0)
+			 {
+				 nums[first++] = nums[i];
+			 }
+		 }
+		 for (int i =first; i < nums.size();i++)
+		 {
+			 nums[i] = 0;
+		 }
+	 }
+	 /*leetcode-535-Encode and Decode TinyURL
+	 TinyURL is a URL shortening service where you enter a URL such as
+	 https://leetcode.com/problems/design-tinyurl and it returns a short URL such as http://tinyurl.com/4e9iAk.
+	 Design the encode and decode methods for the TinyURL service. 
+	 There is no restriction on how your encode/decode algorithm should work. 
+	 You just need to ensure that a URL can be encoded to a tiny URL and the tiny URL can be decoded to the original URL.*/
+	 
+	 string dict = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	 int id = 0;
+	 unordered_map<string, string>m;
+	 unordered_map<int, string>idm;
+	 // Encodes a URL to a shortened URL.
+	 string encode(string longUrl)
+	 {
+		 if (m.find(longUrl) != m.end())return m[longUrl];
+		 string res = "";
+		 id++;
+		 int count = id;
+		 while (count > 0)
+		 {
+			 res = dict[count % 62] + res;
+			 count /= 62;
+		 }
+		 while (res.size() < 6) res = "0" + res;
+		 m[longUrl] = res;
+		 idm[id] = longUrl;
+		 return res;
+	 }
+	 // Decodes a shortened URL to its original URL.
+	 string decode(string shortUrl)
+	 {
+		 int id = 0;
+		 for (int i = 0; i < shortUrl.size();i++)
+		 {
+			 id = 62 * id + (int)(dict.find(shortUrl[i]));
+		 }
+		 if (idm.find(id) != idm.end())return idm[id];
+		 return "";
+	 }
 };
 
 int main()
@@ -3771,7 +3865,7 @@ int main()
 	/*mat.push_back(test1);
 	mat.push_back(test2);*/
 	
-	cout << sl.minDistance2("a","b") << endl;
+	cout << sl.encode("https://leetcode.com/problems/design-tinyurl") << endl;
 	
 	for (int i = 0; i < str.size(); i++)
 	{
