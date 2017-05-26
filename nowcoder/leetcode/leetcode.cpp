@@ -4148,9 +4148,9 @@ public:
 	 Follow up:
 	 If this function is called many times, how would you optimize it?
 	 Related problem: Reverse Integer*/
-	 uint32_t reverseBits(uint32_t n)
+	 int reverseBits(int n)
 	 {
-		 uint32_t m = 0;
+		 int m = 0;
 		 
 		 for (int i = 0; i < 32;i++)
 		 {
@@ -4159,6 +4159,28 @@ public:
 			 n >>= 1;
 		 }
 		 return m;
+	 }
+	 /*leetcode-20-Valid Parentheses
+	 Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+	 The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.*/
+	 bool isValid(string s)
+	 {
+		 stack<char>st;		
+		 for (int i = 0; i < s.size();i++)
+		 {
+			 switch (s[i])
+			 {
+			 case '(':
+			 case '[':
+			 case '{':st.push(s[i]); break;
+			 case ')':if (st.empty() || st.top() != '(')return false; else st.pop(); break;
+			 case '}': if (st.empty() || st.top() != '{') return false; else st.pop(); break;
+			 case ']': if (st.empty() || st.top() != '[') return false; else st.pop(); break;
+			 default:;
+			 }			  
+		 }
+		 return st.empty();
+		
 	 }
 };
 
