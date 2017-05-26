@@ -4192,6 +4192,32 @@ public:
 		 string I[] = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 		 return M[num / 1000] + C[(num % 1000) / 100] + X[(num % 100) / 10] + I[num % 10];
 	 }
+	 /*leetcode-22-Generate Parentheses
+	 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+	 For example, given n = 3, a solution set is:
+	 [
+	 "((()))",
+	 "(()())",
+	 "(())()",
+	 "()(())",
+	 "()()()"
+	 ]*/
+	 void addParenthesis(vector<string>& res, string str, int open, int close,int n)
+	 {
+		 if (str.length() == n*2)
+		 {
+			 res.push_back(str);
+			 return;
+		 }
+		 if (open<n)addParenthesis(res, str + "(", open + 1, close, n);
+		 if (close < open)addParenthesis(res, str + ")", open, close + 1, n);		 
+	 }
+	 vector<string> generateParenthesis(int n)
+	 {
+		 vector<string>res;
+		 addParenthesis(res, "", 0, 0, n);
+		 return res;
+	 }
 };
 
 int main()
