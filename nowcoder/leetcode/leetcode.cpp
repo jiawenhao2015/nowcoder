@@ -4299,6 +4299,34 @@ public:
 		 }
 		 return spiral;
 	 }
+	 /*leetcode-59-Spiral Matrix II
+	 Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+	 For example,
+	 Given n = 3,
+	 You should return the following matrix:
+	 [
+	 [ 1, 2, 3 ],
+	 [ 8, 9, 4 ],
+	 [ 7, 6, 5 ]
+	 ]*/
+	 vector<vector<int>> generateMatrix(int n)
+	 {
+		 if (n <= 0)return{};		 
+		 vector<vector<int>>matrix(n,vector<int>(n,0));
+		 int up = 0, down = n - 1, left = 0, right = n - 1 ,k =1;
+		 while (1)
+		 {
+			 for (int col = left; col <= right; col++)matrix[up][col] = k++;
+			 if (++up>down)break;
+			 for (int row = up; row <= down; row++)matrix[row][right] = k++;
+			 if (--right < left)break;
+			 for (int col = right; col >= left; col--)matrix[down][col] = k++;
+			 if (--down < up)break;
+			 for (int row = down; row >= up; row--)matrix[row][left] = k++;
+			 if (++left>right)break;
+		 }
+		 return matrix;
+	 }
 };
 
 int main()
