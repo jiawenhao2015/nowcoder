@@ -1,0 +1,55 @@
+/*leetcode-123-Best Time to Buy and Sell Stock III
+	Say you have an array for which the ith element is the price of a given stock on day i.
+	Design an algorithm to find the maximum profit. You may complete at most two transactions.
+	Note:
+	You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).*/
+	int maxProfitnew(vector<int>& prices)
+	{
+		int size = prices.size();
+		if (size == 0 || size == 1) return 0;
+		vector<int>profit(size,0);
+		vector<int>profit1(size);		
+		int local_min = prices[0];
+		int local_max = prices[size - 1];
+		int j = size - 2;
+		int result = 0;
+		profit[0] = 0;
+		profit1[size - 1] = 0;
+		for (int i = 1; i < size + 1 && j >= 0; i++, j--)//扫描一遍，分别计算左边和右边最大的profit
+		{
+			//记录i左边最大profit 利用i-1的信息 只需比较i-1时候的profit 与现在price-local_min即可
+			//如果prices[i] - local_min >profit[i - 1]的话，说明需要更新最大的profit 同理 求右边最大profit也是一个道理
+			profit[i] = max(profit[i - 1], prices[i] - local_min);
+			local_min = min(local_min, prices[i]);
+			profit1[j] = max(profit1[j + 1], local_max - prices[j]);//记录j右边最大profit
+			local_max = max(local_max, prices[j]);
+		}
+		for (int i = 1; i < size; i++)//统计左右两边最大profit之和 取最大
+		{
+			result = max(result, profit[i] + profit1[i]);
+		}
+		return result;
+	}
+	int maxProfitcore(vector<int>& prices,int start,int end)
+	{//从start 到 end期间 最大profit
+		if (start == end|| prices.size()==0) return 0;
+		int tempProfit = 0, maxProfit = 0;
+		for (int i = start+1; i <=end; i++)
+		{
+			tempProfit += prices[i] - prices[i - 1];
+			tempProfit = max(0, tempProfit);
+			maxProfit = max(maxProfit, tempProfit);
+		}
+		return maxProfit;
+	}//超时
+	int maxProfit3(vector<int>& prices)
+	{
+		int profit = 0;
+		for (int i = 1; i < prices.size();i++)
+		{
+			int pro1 = maxProfitcore(prices, 0, i);
+			int pro2 = maxProfitcore(prices, i, prices.size()-1);
+			profit = max(profit,pro1+pro2);
+		}
+		return profit;
+	}

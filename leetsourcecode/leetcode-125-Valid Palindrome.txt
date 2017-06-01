@@ -1,0 +1,43 @@
+/*leetcode-125-Valid Palindrome
+	Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+	For example,
+	"A man, a plan, a canal: Panama" is a palindrome.
+	"race a car" is not a palindrome.*/
+	bool isSameCharacter(char a, char b)
+	{
+		if (abs(a - b) == 0 || abs(a - b) == 32)return true;
+		else return false;
+	}
+	bool isNumOrAlpha(char a)
+	{
+		if ((a >= 48 && a <= 57) || (a >= 65 && a <= 90) || (a >= 97 && a <= 122)) return true;
+		else return false;
+	}
+	char toLower(char a)
+	{
+		if ((a >= 48 && a <= 57) || (a >= 97 && a <= 122))return a;//数字和小写字母不变
+		else return (a + 32);
+	}
+	bool isPalindrome(string s)
+	{
+		if (s.size() == 0) return true;
+		vector<char>newstr;//处理一下原字符串 去除没有必要的
+		for (int i = 0; i < s.size();i++)
+		{
+			if (isNumOrAlpha(s[i]))newstr.push_back(toLower(s[i]));
+		}
+		for (int i = 0, j = newstr.size() - 1; i <= j; i++, j--)
+		{
+			if (!isSameCharacter(newstr[i], newstr[j]))return false;
+		}
+		return true;
+	}
+	/*bool isPalindrome(string s) {//#include <ctype.h>即可
+		int i,j;
+		for(i=0,j=s.length()-1;i<j;++i,--j){
+		while(i<j && !isalnum(s[i])) ++i;
+		while(i<j && !isalnum(s[j])) --j;
+		if (i<j && tolower(s[i])!=tolower(s[j])) return false;
+		}
+		return true;
+		}*/

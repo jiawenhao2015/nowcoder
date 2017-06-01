@@ -1,0 +1,19 @@
+/*leetcode-137-Single Number II
+	Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
+	Note:
+	Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?*/
+	int singleNumber(vector<int>& nums)
+	{
+		int result = 0;
+		for (int i = 0; i < 32;i++)
+		{
+			int count = 0, bit = 1 << i;
+			for (int j = 0; j < nums.size();j++)
+			{
+				if (nums[j] & bit) count++;			
+			}
+			if (count % 3 !=0)
+				result |= bit;			
+		}
+		return result;
+	}

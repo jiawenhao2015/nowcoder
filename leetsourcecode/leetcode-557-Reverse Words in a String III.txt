@@ -1,0 +1,64 @@
+/*leetcode-557-Reverse Words in a String III
+Given a string, you need to reverse the order of characters in each word within a sentence while
+still preserving whitespace and initial word order.
+Example 1:
+Input: "Let's take LeetCode contest"
+Output: "s'teL ekat edoCteeL tsetnoc"
+Note: In the string, each word is separated by single space and there will not be any extra space in the string.
+思路：
+用一个vector<vector<char> >shuzu
+string rev(string x)
+    {
+        reverse(x.begin(), x.end());
+        return x;
+    }
+    string reverseWords(string s) {
+        string t, ans;
+        for(char c: s)
+        {
+            if(c == ' ')
+            {
+                ans += rev(t) + ' ';
+                t = "";
+            }
+            else
+                t += c;
+        }
+        ans += rev(t);
+        return ans;
+    }*/
+string reverseWords(string s)
+{
+    if(s == "")return s;
+    vector<vector<char> >sentence;
+    vector<char>word;
+    int i=0;
+    while(s[i] != '\0')
+    {
+        if(s[i]!=' ')
+        {
+            word.insert(word.begin(),s[i]);
+        }
+        else
+        {
+            sentence.push_back(word);
+            word.clear();
+        }
+        i++;
+    }
+    sentence.push_back(word);
+    char res[10000];//太小 要用100000
+    int ind =0;
+    for(int i=0;i<sentence.size();i++)
+    {
+        for(int j=0;j<sentence[i].size();j++)
+        {
+            res[ind] = sentence[i][j];
+            ind++;
+        }
+         res[ind] = ' ';
+         ind++;
+    }
+     res[ind-1] = '\0';
+    return res;
+}

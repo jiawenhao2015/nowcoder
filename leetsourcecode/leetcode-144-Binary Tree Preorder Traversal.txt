@@ -1,0 +1,33 @@
+/*leetcode-144-Binary Tree Preorder Traversal
+	Given a binary tree, return the preorder traversal of its nodes' values.
+	Given binary tree {1,#,2,3},
+	1
+	\
+	2
+	/
+	3
+	return [1,2,3].
+	Note: Recursive solution is trivial, could you do it iteratively?*/
+	void preorderNonRecursiveTraversal(TreeNode*pRoot, vector<int>& result)
+	{
+		if (pRoot == NULL) return;
+		stack<TreeNode*> st;
+		TreeNode* temp;
+		st.push(pRoot);
+		while (!st.empty())
+		{
+			temp = st.top();
+			result.push_back(temp->val);
+			st.pop();
+			if (temp->right != NULL)st.push(temp->right);//先右 后左
+			if (temp->left != NULL)st.push(temp->left);
+		}
+
+	}
+	vector<int> preorderTraversal(TreeNode* root)
+	{
+		vector<int> result;
+		if (root == NULL) return result;
+		preorderNonRecursiveTraversal(root, result);
+		return result;
+	}

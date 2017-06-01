@@ -1,0 +1,34 @@
+/*leetcode-515-Find Largest Value in Each Tree Row
+     You need to find the largest value in each row of a binary tree.
+     Example:
+     Input:
+         1
+        / \
+       3   2
+      / \   \
+     5   3   9
+     Output: [1, 3, 9]*/
+     vector<int> largestValues(TreeNode* root)
+     {
+         vector<int>result;
+         if (root == NULL)return result;
+         queue<TreeNode*>que;
+         que.push(root);
+         int tempmax = INT_MIN;
+         while (!que.empty())
+         {
+             int levelsize = que.size();
+             TreeNode* temp;
+             for (int i = 0; i < levelsize;i++)
+             {
+                 temp = que.front();
+                 que.pop();
+                 if (temp->left != NULL)que.push(temp->left);
+                 if (temp->right != NULL)que.push(temp->right);
+                 tempmax = max(tempmax, temp->val);
+             }
+             result.push_back(tempmax);
+             tempmax = INT_MIN;
+         }
+         return result;      
+     }

@@ -1,0 +1,34 @@
+bool dfs(vector< vector< char> >& board, string word,int row ,int col ,int start,int m,int n,int length)
+{
+    char curChar = board[row][col];
+    bool res = false;
+
+    if(curChar != word[start]) return false;
+    if(start == length - 1) return true;
+
+    board[row][col] = '*';
+    if(row>0) res = dfs(board,word,row-1,col,start+1,m,n,length);
+    if(!res && row < m-1) res = dfs(board,word,row+1,col,start+1,m,n,length);
+    if(!res && col>0) res = dfs(board,word,row,col-1,start+1,m,n,length);
+    if(!res && col<n-1) res = dfs(board,word,row,col+1,start+1,m,n,length);
+    board[row][col] = curChar;
+
+    return res;
+}
+bool exist(vector< vector< char> >& board, string word)
+{
+    int m = board.size() , n = board[0].size(), length = word.size();
+
+    if( m && n && length)
+    {
+        for(int i = 0;i < m;i++)
+        {
+            for(int j =0;j<n;j++)
+            {
+                if(dfs(board,word,i,j,0,m,n,length))
+                    return true;
+            }
+        }
+    }
+    return false;
+}

@@ -1,0 +1,42 @@
+Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+For example:
+1 -> A
+2 -> B
+3 -> C
+...
+26 -> Z
+27 -> AA
+28 -> AB
+
+思路：
+
+类似于进制转换，但是感觉自己写的太啰嗦了，待优化。
+
+复制代码
+string convertToTitle(int n) 
+ { 
+   if(n<=0) return "";
+   map<int,char>dict;
+   dict[0] = 'Z';
+   for(int i =1;i<=26;i++)
+   {
+     dict[i] ='A' + i -1;
+  }
+  string ret;
+  stringstream ss;  
+  while(n>0)
+  {   
+      ss<<dict[n%26];
+      ret.insert(0, ss.str().c_str());
+      if(n%26 ==0)
+      {
+    n/=26;
+    n--;
+      }
+      else n/=26;
+     ss.str("");
+  }
+  return ret;
+}
+复制代码
+

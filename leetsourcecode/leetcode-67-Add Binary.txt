@@ -1,0 +1,97 @@
+/*leetcode-67-Add Binary
+	Given two binary strings, return their sum (also a binary string).
+	For example,
+	a = "11"
+	b = "1"
+	Return "100".*/
+	string addBinary(string a, string b)
+	{
+		int aIndex = a.size() - 1, bIndex = b.size() - 1;
+		int numa = 0, numb = 0, carry = 0, temp = 0;
+		string c;
+		char tempChar[10];
+		while (aIndex >= 0 || bIndex >= 0 || carry == 1)//简洁一些了
+		{
+			numa = 0, numb = 0;
+			if(aIndex >= 0)numa = a[aIndex--] - '0';
+			if(bIndex >= 0)numb = b[bIndex--] - '0';
+			temp = numa + numb + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else carry = 0;			
+			sprintf(tempChar, "%d", temp);		
+			c.insert(0, tempChar);			
+		}
+		return c;
+	}
+	string addBinary2(string a, string b)
+	{
+		int aIndex = a.size()-1, bIndex = b.size()-1;
+		int numa = 0, numb = 0, carry = 0,temp = 0;		
+		string c;
+		char tempChar[10];
+		while (aIndex>=0 && bIndex>=0)
+		{
+			numa = a[aIndex] - '0';
+			numb = b[bIndex] - '0';
+			temp = numa + numb + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else
+			{
+				carry = 0;
+			}			
+			sprintf(tempChar, "%d", temp);
+			//_itoa(temp, tempChar, 10);
+			c.insert(0,tempChar);
+			aIndex--;
+			bIndex--;
+		}
+		while (aIndex >= 0)
+		{
+			numa = a[aIndex] - '0';			 
+			temp = numa  + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else
+			{
+				carry = 0;
+			}
+			sprintf(tempChar,"%d",temp);
+			//_itoa(temp, tempChar, 10);
+			c.insert(0, tempChar);
+			aIndex--;			
+		}  
+		while (bIndex >= 0)
+		{			
+			numb = b[bIndex] - '0';
+			temp = numb + carry;
+			if (temp > 1)
+			{
+				carry = 1;
+				temp = temp - 2;
+			}
+			else
+			{
+				carry = 0;
+			}
+			sprintf(tempChar, "%d", temp);
+			//_itoa(temp, tempChar, 10);
+			c.insert(0, tempChar);			
+			bIndex--;
+		}
+		if (carry)
+		{
+			c.insert(0, "1");
+		}
+		return c;	
+	}
