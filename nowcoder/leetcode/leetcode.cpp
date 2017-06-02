@@ -4363,22 +4363,39 @@ public:
 	 You are not suppose to use the library's sort function for this problem. */
 	 void sortColors(vector<int>& nums)
 	 {
-		 if (nums.size() <= 1)return;
-		 vector<int>temp = nums;
+		 int n = nums.size();
+		 if (n <= 1)return;
+		 int *temp = new int[n];
+		 //vector<int>temp = nums;
 		 int zero = 0, one = 0, two = 0, index0 = 0, index1 = 0, index2 = 0;
-		 for (int i = 0; i < nums.size();i++)
+		 for (int i = 0; i < n;i++)
 		 {
 			 if (nums[i] == 0)zero++;
 			 if (nums[i] == 1)one++;
-			 if (nums[i] == 2)two++;			 
+			 if (nums[i] == 2)two++;
+			 temp[i] = nums[i];
 		 }
 		 index1 = zero, index2 = zero + one;
-		 for (int i = 0; i < temp.size(); i++)
+		 for (int i = 0; i < n; i++)
 		 {
 			 if (temp[i] == 0)nums[index0++] = 0;
 			 if (temp[i] == 1)nums[index1++] = 1;
 			 if (temp[i] == 2)nums[index2++] = 2;
 		 }
+		 delete[]temp;
+	 }
+	 /*leetcode-76-Minimum Window Substring
+	 Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+	 For example,
+	 S = "ADOBECODEBANC"
+	 T = "ABC"
+	 Minimum window is "BANC".
+	 Note:
+	 If there is no such window in S that covers all characters in T, return the empty string "".
+	 If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.*/
+	 string minWindow(string s, string t)
+	 {
+
 	 }
 };
 
