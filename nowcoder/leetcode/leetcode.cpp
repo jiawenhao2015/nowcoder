@@ -4355,6 +4355,31 @@ public:
 		 }
 		 return false;		 
 	 }
+	 /*leetcode-75-Sort Colors
+	 Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, 
+	 with the colors in the order red, white and blue.
+	 Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+	 Note:
+	 You are not suppose to use the library's sort function for this problem. */
+	 void sortColors(vector<int>& nums)
+	 {
+		 if (nums.size() <= 1)return;
+		 vector<int>temp = nums;
+		 int zero = 0, one = 0, two = 0, index0 = 0, index1 = 0, index2 = 0;
+		 for (int i = 0; i < nums.size();i++)
+		 {
+			 if (nums[i] == 0)zero++;
+			 if (nums[i] == 1)one++;
+			 if (nums[i] == 2)two++;			 
+		 }
+		 index1 = zero, index2 = zero + one;
+		 for (int i = 0; i < temp.size(); i++)
+		 {
+			 if (temp[i] == 0)nums[index0++] = 0;
+			 if (temp[i] == 1)nums[index1++] = 1;
+			 if (temp[i] == 2)nums[index2++] = 2;
+		 }
+	 }
 };
 
 int main()
