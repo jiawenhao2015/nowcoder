@@ -1,0 +1,49 @@
+/* 
+leetcode-49-Group Anagrams
+Given an array of strings, group anagrams together.
+For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"], 
+Return:
+[
+  ["ate", "eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]*/
+vector<vector<string> > groupAnagrams(vector<string>& strs)
+{
+  vector<vector<string> >group;
+  if(strs.size()==0)return group;
+  map<string,set<string> >m;
+  for(int i=0;i<strs.size();i++)
+  {
+    string temp = strs[i];
+    sort(temp.begin(),temp.end());
+    m[temp].insert(strs[i]);
+  }
+  map<string,set<string> >::iterator it;
+  for(it = m.begin();it!=m.end();it++)
+  {
+    vector<string> anagram;
+    set<string>::iterator setit;
+    for(setit = it->second.begin();setit!=it->second.end();setit++)
+    {
+      anagram.push_back(*setit);
+    }
+    group.push_back(anagram);
+  }
+  return group;  
+}
+
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, multiset<string>> mp;
+        for (string s : strs) {
+            string t = s; 
+            sort(t.begin(), t.end());
+            mp[t].insert(s);
+        }
+        vector<vector<string>> anagrams;
+        for (auto m : mp) { 
+            vector<string> anagram(m.second.begin(), m.second.end());
+            anagrams.push_back(anagram);
+        }
+        return anagrams;
+    }
