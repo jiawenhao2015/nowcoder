@@ -32,3 +32,22 @@
 		dfs(result,temp,nums,0);
 		return result;
 	}
+
+void backtracking(vector<vector<int>>& subs,vector<int>& sub,vector<int>& nums,int start)
+{
+  subs.push_back(sub);
+  for(int i = start;i<nums.size();i++)
+  {
+    sub.push_back(nums[i]);
+    backtracking(subs,sub,nums,i+1);
+    sub.pop_back();
+  }
+}
+vector<vector<int>> subsets(vector<int>& nums)
+{
+  sort(nums.begin(),nums.end());
+  vector<vector<int>> subs;
+   vector<int>sub;
+   backtracking(subs,sub,nums,0);   
+  return subs;
+}
