@@ -1,0 +1,26 @@
+void pre(TreeNode* t,string& str)
+{
+  if(t!=NULL)
+  {
+    str+=to_string(t->val);  
+    if(t->left!=NULL || t->right!=NULL)
+    {
+      str+="(";
+      pre(t->left,str);
+      str+=")";
+      if(t->right!=NULL)
+      {
+     str+="(";
+      pre(t->right,str);
+      str+=")";
+      }      
+    }    
+  } 
+}
+string tree2str(TreeNode* t)
+{
+  string str="";
+  if(t==NULL) return str;
+  pre(t,str);
+  return str;
+}
