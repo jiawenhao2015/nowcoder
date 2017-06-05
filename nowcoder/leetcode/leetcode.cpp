@@ -4514,6 +4514,33 @@ public:
 		 solveNQueens(ret, nQueens, 0, n);
 		 return ret;
 	 }
+	 /*leetcode-52-N-Queens II
+	 Follow up for N-Queens problem.
+	 Now, instead outputting board configurations, return the total number of distinct solutions.*/
+	 void totalNQueens(int& n, int row, vector<string>& nQueens, int& total)
+	 {
+		 if (row == n)
+		 {
+			 total += 1;
+			 return;
+		 }
+		 for (int col = 0; col < n;col++)
+		 {
+			 if (isValid(nQueens, row, col, n))
+			 {
+				 nQueens[row][col] = 'Q';
+				 totalNQueens(n, row + 1, nQueens, total);
+				 nQueens[row][col] = '.';
+			 }
+		 }
+	 }
+	 int totalNQueens(int n)
+	 {
+		 vector<string> nQueens(n, string(n, '.'));
+		 int total = 0;
+		 totalNQueens(n, 0, nQueens, total);
+		 return total;
+	 }
 };
 
 int main()

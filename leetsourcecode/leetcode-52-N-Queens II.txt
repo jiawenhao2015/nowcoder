@@ -1,0 +1,43 @@
+/*leetcode-52-N-Queens II
+     Follow up for N-Queens problem.
+     Now, instead outputting board configurations, return the total number of distinct solutions.*/
+      bool isValid(vector<string>& nQueens, int row, int col, int &n)
+     {
+         for (int i = 0; i < row;i++)
+         {
+             if (nQueens[i][col] == 'Q')return false;
+         }
+         for (int i = row - 1, j = col - 1; i >= 0&&j >= 0;i--,j--)
+         {
+             if (nQueens[i][j] == 'Q')return false;
+         }
+         for (int i = row - 1, j = col + 1; i >= 0&&j < n;i--,j++)
+         {
+             if (nQueens[i][j] == 'Q')return false;
+         }
+         return true;
+     }
+     void totalNQueens(int& n, int row, vector<string>& nQueens, int& total)
+     {
+         if (row == n)
+         {
+             total += 1;
+             return;
+         }
+         for (int col = 0; col < n;col++)
+         {
+             if (isValid(nQueens, row, col, n))
+             {
+                 nQueens[row][col] = 'Q';
+                 totalNQueens(n, row + 1, nQueens, total);
+                 nQueens[row][col] = '.';
+             }
+         }
+     }
+     int totalNQueens(int n)
+     {
+         vector<string> nQueens(n, string(n, '.'));
+         int total = 0;
+         totalNQueens(n, 0, nQueens, total);
+         return total;
+     }
