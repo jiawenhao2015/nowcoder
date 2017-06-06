@@ -4541,6 +4541,41 @@ public:
 		 totalNQueens(n, 0, nQueens, total);
 		 return total;
 	 }
+	 /*leetcode-5-Longest Palindromic Substring
+	 Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+	 Example:
+	 Input: "babad"
+	 Output: "bab"
+	 Note: "aba" is also a valid answer.
+	 Example:
+	 Input: "cbbd"
+	 Output: "bb"*/
+	 string longestPalindrome(string s)
+	 {
+		
+	 }
+	 /*leetcode-17-Letter Combinations of a Phone Number*/
+	 vector<string> letterCombinations(string digits)
+	 {
+		 vector<string>res;
+		 if (digits.size() == 0)return res;
+		 string charmap[10] = { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+		 res.push_back("");
+		 for (int i = 0; i < digits.size();i++)
+		 {
+			 vector<string>tempres;
+			 string chars = charmap[digits[i]-'0'];
+			 for (int c = 0; c < chars.size();c++)
+			 {
+				 for (int j = 0; j < res.size();j++)
+				 {
+					 tempres.push_back(res[j] + chars[c]);
+				 }
+			 }
+			 res = tempres;
+		 }
+		 return res;
+	 }
 };
 
 int main()
