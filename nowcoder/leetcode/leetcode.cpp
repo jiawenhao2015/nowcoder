@@ -4638,6 +4638,17 @@ public:
 		 }
 		 return ret;
 	 }
+	 int minMoves(vector<int>& nums)
+	 {
+		 int sum = 0;
+		 for (int i = 0; i < nums.size(); i++)
+		 {
+			 sum += nums[i];
+		 }
+		 if (nums.size()==0 || sum / nums.size() = nums[0] )
+		 {
+		 }
+	 }
 };
 
 int main()
