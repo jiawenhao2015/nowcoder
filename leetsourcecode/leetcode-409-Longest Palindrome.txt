@@ -1,0 +1,43 @@
+Given a string which consists of lowercase or uppercase letters, find the length of the longest palindromes that can be built with those letters.
+
+This is case sensitive, for example "Aa" is not considered a palindrome here.
+
+Note:
+Assume the length of given string will not exceed 1,010.
+
+Example:
+
+Input:
+"abccccdd"
+
+Output:
+7
+
+Explanation:
+One longest palindrome that can be built is "dccaccd", whose length is 7.
+思路：
+
+用一个map记录每一个字符出现的次数，偶数次可以直接用来形成回文串，奇数次需要减去1，然后再最后结果上加上1个字符能够形成最长的回文串。
+
+复制代码
+int longestPalindrome(string s) 
+{
+  if(s.size()<=1)return s.size();
+  map<char,int>mp;
+  for(char ch : s)
+  {
+    mp[ch]++;
+  }
+  int length = 0,odd = 0;
+  for(auto it = mp.begin();it!=mp.end();it++)
+  {
+    if(it->second %2 ==1)
+    {
+      odd = 1;
+      length+= it->second -1
+    }
+    else length+= it->second ;
+  }
+  length +=odd;
+  return length;
+}
