@@ -1,0 +1,21 @@
+/*leetcode-447-Number of Boomerangs*/
+     int numberOfBoomerangs(vector<pair<int, int>>& points)
+     {
+         int ret = 0;
+         for (int i = 0; i < points.size();i++)
+         {
+             map<int, int>mp;
+             for (int j = 0; j < points.size();j++)
+             {
+                 if (i == j)continue;
+                 int dx = points[i].first - points[j].first;
+                 int dy = points[i].second - points[j].second;
+                 mp[dx*dx + dy*dy]++;
+             }
+             for (auto it = mp.begin(); it != mp.end();it++)
+             {
+                 ret += it->second *(it->second - 1);
+             }
+         }
+         return ret;
+     }

@@ -4617,7 +4617,7 @@ public:
 	 You may assume that each input would have exactly one solution and you may not use the same element twice.
 	 Input: numbers={2, 7, 11, 15}, target=9
 	 Output: index1=1, index2=2*/
-	 vector<int> twoSum(vector<int>& numbers, int target)
+	 vector<int> twoSum2(vector<int>& numbers, int target)
 	 {
 		 vector<int>ret;
 		// unordered_map<int,int>mp;//map hash方法不行 不能处理重复数据情况
@@ -4721,6 +4721,27 @@ public:
 			 }
 		 }
 		 return circle;
+	 }
+	 /*leetcode-447-Number of Boomerangs*/
+	 int numberOfBoomerangs(vector<pair<int, int>>& points)
+	 {
+		 int ret = 0;
+		 for (int i = 0; i < points.size();i++)
+		 {
+			 map<int, int>mp;
+			 for (int j = 0; j < points.size();j++)
+			 {
+				 if (i == j)continue;
+				 int dx = points[i].first - points[j].first;
+				 int dy = points[i].second - points[j].second;
+				 mp[dx*dx + dy*dy]++;
+			 }
+			 for (auto it = mp.begin(); it != mp.end();it++)
+			 {
+				 ret += it->second *(it->second - 1);
+			 }
+		 }
+		 return ret;
 	 }
 };
 
