@@ -4743,6 +4743,22 @@ public:
 		 }
 		 return ret;
 	 }
+	 /*leetcode-434-Number of Segments in a String
+	 */
+	 int countSegments(string s)
+	 {
+		 int seg = 0;
+		 int len = s.length();
+		 for (int i = 0; i < len;)
+		 {
+			 while (i < len && s[i] == ' ')i++;//È¥µô¿Õ¸ñ
+			 if (i>=len) break;			  
+			 while (i < len && s[i] != ' ')i++;
+			 seg++;			
+		 }
+
+		 return seg;
+	 }
 };
 
 int main()
