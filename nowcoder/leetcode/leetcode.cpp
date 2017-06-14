@@ -4789,7 +4789,7 @@ public:
 		 for (int i = begin; i < candidates.size();i++)
 		 {
 			 //if (candidates[i]>target)return;
-			 if (i && candidates[i]==candidates[i-1]&& i>begin) continue;			 
+			 if (i && candidates[i]==candidates[i-1]&& i>begin) continue;//避免重复元素
 			 cantemp.push_back(candidates[i]);
 			 combine(res, candidates, cantemp, i + 1, target - candidates[i]);
 			 cantemp.pop_back();			 
@@ -4802,6 +4802,41 @@ public:
 		 sort(candidates.begin(), candidates.end());
 		 vector<int> cantemp;
 		 combine(res, candidates, cantemp, 0, target);
+		 return res;
+	 }
+	 /*leetcode-131-Palindrome Partitioning*/
+	 bool isPali(string s)
+	 {
+		 int len = s.length();		
+		 for (int i = 0; i <= s.length()/2;i++)
+		 {
+			 if (s[i] != s[len - i - 1])return false;
+		 }
+		 return true;
+	 }
+	 void parti(vector<vector<string>>& res, vector<string>& pal,string s,int begin)
+	 {
+		 if (begin>=s.length())
+		 {
+			 res.push_back(pal);
+			 return;
+		 }
+		 for (int i = begin; i < s.length();i++)
+		 {
+			 if (isPali(s.substr(begin,i-begin+1)))
+			 {
+				 pal.push_back(s.substr(begin, i - begin + 1));// pal.push_back(s.substr(i, i - begin + 1));这样不对
+				 parti(res, pal, s, i + 1);
+				 pal.pop_back();
+			 }
+		 }
+	 }
+	 vector<vector<string>> partition(string s)
+	 {
+		 vector<vector<string>> res;
+		 if (s.empty())return res;
+		 vector<string> pal;
+		 parti(res, pal, s, 0);
 		 return res;
 	 }
 };
