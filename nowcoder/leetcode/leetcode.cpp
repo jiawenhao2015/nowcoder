@@ -4775,6 +4775,35 @@ public:
 		 }
 		 return res;
 	 }
+	 
+	 /*leetcode-40-Combination Sum II*/
+	 void combine(vector<vector<int>>& res, vector<int>& candidates, vector<int>& cantemp,int begin, int target)
+	 {
+		 if (target < 0) return;
+		 
+		 if ( target == 0)
+		 {
+			 res.push_back(cantemp);
+			 return;
+		 }
+		 for (int i = begin; i < candidates.size();i++)
+		 {
+			 //if (candidates[i]>target)return;
+			 if (i && candidates[i]==candidates[i-1]&& i>begin) continue;			 
+			 cantemp.push_back(candidates[i]);
+			 combine(res, candidates, cantemp, i + 1, target - candidates[i]);
+			 cantemp.pop_back();			 
+		 }
+	 }
+	 vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+	 {		
+		 vector<vector<int>> res;
+		 if (candidates.size() == 0)return res;
+		 sort(candidates.begin(), candidates.end());
+		 vector<int> cantemp;
+		 combine(res, candidates, cantemp, 0, target);
+		 return res;
+	 }
 };
 
 int main()
