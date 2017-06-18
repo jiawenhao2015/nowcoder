@@ -1,0 +1,55 @@
+[leetcode-625-Minimum Factorization]
+
+Given a positive integer a, find the smallest positive integer b whose multiplication of each digit equals to a.
+
+If there is no answer or the answer is not fit in 32-bit signed integer, then return 0.
+
+Example 1
+Input:
+
+48 
+Output:
+68
+ 
+
+Example 2
+Input:
+
+15
+Output:
+35
+ 
+
+思路：
+
+For a given n, following are the two cases to be considered.
+Case 1: n < 10 When n is smaller than n, the output is always n+10. For example for n = 7, output is 17. For n = 9, output is 19.
+
+Case 2: n >= 10 Find all factors of n which are between 2 and 9 (both inclusive). The idea is to start searching from 9 so that the number of digits in result are minimized. For example 9 is preferred over 33 and 8 is preferred over 24.
+Store all found factors in an array. The array would contain digits in non-increasing order, so finally print the array in reverse order.
+
+Following is the implementation of above concept.
+
+复制代码
+ int smallestFactorization(int a) {
+              if(a<10)return a;
+      vector<int> tmp;
+      for(int i=9;i>1;i--)
+      {
+    while(a%i==0)
+    {
+      a = a/ i;
+      tmp.push_back(i);
+    }
+      }
+      if(a>10)return  0;
+       long long ret =0;
+       for(int i =tmp.size()-1;i>=0;i--)
+       {
+     ret = ret*10+tmp[i];
+     if(ret>2147483647) return 0;
+      }
+      
+      return ret;
+    }
+复制代码
