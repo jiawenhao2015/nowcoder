@@ -1,0 +1,43 @@
+Given m arrays, and each array is sorted in ascending order. Now you can pick up two integers from two different arrays (each array picks one) and calculate the distance. We define the distance between two integers a and b to be their absolute difference |a-b|. Your task is to find the maximum distance.
+
+Example 1:
+
+Input: 
+[[1,2,3],
+ [4,5],
+ [1,2,3]]
+Output: 4
+Explanation: 
+One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.
+ 
+
+Note:
+
+Each given array will have at least 1 number. There will be at least two non-empty arrays.
+The total number of the integers in all the m arrays will be in the range of [2, 10000].
+The integers in the m arrays will be in the range of [-10000, 10000].
+思路：
+
+将本组的最小与其他组最大依次做差，再将本组最大与其他组最小依次做差。 另外发现i不能写成i<n 要写成i<n-1
+
+否则超时，很蹊跷。。
+
+复制代码
+  int maxDistance(vector<vector<int> >& arrays)
+    {
+       int n = arrays.size();
+       int ret = 0;
+       for(int i=0;i<n-1;i++)
+       {
+     int isize = arrays[i].size();
+     for(int j =i+1;j<n;j++)
+     {
+       int jsize = arrays[j].size();
+       
+      ret = max(ret,abs(arrays[i][0] -arrays[jsize-1]);
+      ret= max(ret,abs(arrays[j][0] - arrays[isize-1]);
+     }
+       }
+       return ret;
+    }
+复制代码
