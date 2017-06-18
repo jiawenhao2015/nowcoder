@@ -1,0 +1,48 @@
+    TreeNode* addOneRow(TreeNode* root, int v, int d)
+    {       
+      if( d == 1)  
+      {           
+	TreeNode* t = new TreeNode( v ); 
+	          t->left = root;  
+		  root =t;  
+		  return t; 
+      }  
+	queue< TreeNode* > qu;  
+	qu.push( root );  
+	int num1 = 1;  
+	for( int i = 2; i < d; i++ )   
+	{           
+	  int num2 = 0;
+	  while( num1-- > 0 )  
+	  {                
+	    TreeNode* p = qu.front(); 
+	    qu.pop(); 
+	    if( p->left != NULL )
+	    {                 
+	      num2++;   
+	      qu.push( p->left );   
+	      
+	    }                
+	    if( p->right != NULL )   
+	    {                   
+	      num2++;  
+	      qu.push( p->right );	      
+	    }              
+	    
+	  }  
+	  num1 = num2; 	  
+	}                
+	int n = qu.size(); 
+	for( int i = 0; i < n ;i++ ) 
+	{          
+	  TreeNode* p = qu.front();  
+	  qu.pop();         
+	  TreeNode* q1 = new TreeNode( v );    
+	  TreeNode* q2 = new TreeNode( v );   
+	  q1->left = p->left;       
+	  q2->right = p->right;         
+	  p->left = q1;        
+	  p->right = q2; 	  
+	}     
+	  return root;        
+    }
