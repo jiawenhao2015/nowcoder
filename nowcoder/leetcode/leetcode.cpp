@@ -4839,6 +4839,49 @@ public:
 		 parti(res, pal, s, 0);
 		 return res;
 	 }
+	 /*132. Palindrome Partitioning II*/
+	 int minCut(string s)
+	 {
+		 vector<vector<string>> res;
+		 if (s.empty())return 0;
+		 vector<string> pal;
+		 parti(res, pal, s, 0);
+		 int ret = INT_MAX;
+		 for (int i = 0;i<res.size();i++)
+		 {
+			 ret = min(ret, (int)res[i].size());
+		 }
+		 return ret-1;
+	 }
+	 /*212. Word Search II	 */
+	 vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
+	 {
+		 vector<string> ret;
+
+		 return ret;
+	 }
+	 /*leetcode-523-Continuous Subarray Sum*/
+	 bool checkSubarraySum(vector<int>& nums, int k)
+	 {
+		 int len = nums.size();
+		// vector<vector<int>> dp(len, vector<int>(len, 0));
+		 long long cur = 0, pre = 0;
+		 for (int i = 0; i < len;i++)
+		 {
+			 for (int j = i; j < len;j++)
+			 {
+				 if (j == i)cur = nums[i];
+				 else
+				 {
+					 cur = pre + nums[j];
+					 if (k != 0 && cur % k == 0)return true;
+					 else if (k == 0 && cur == 0) return true;					  
+				 }
+				 pre = cur;
+			 }
+		 }
+		 return false;
+	 }
 };
 
 int main()

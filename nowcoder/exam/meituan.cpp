@@ -12,6 +12,58 @@
 using namespace std;
 
 
+void abstr(string& ret, vector<int>&a, vector<int>&b,int begin,int n,bool &flag,stack<int>& index)
+{
+	if ( begin == n-1)
+	{ 
+		flag = true;
+		return;
+	}
+	if ( begin > n-1 || begin < 0) return;
+	
+	
+	for (int i = begin; !flag && i < n ;)
+	{	
+		cout << ret << " " << begin << endl;		
+		
+		if (a[i]!=0 &&i+a[i]<n && i+a[i]>=0)
+		{
+			ret.push_back('a');
+			index.push(i);
+			abstr(ret, a, b, i + a[i], n, flag, index);
+			ret.pop_back();
+			i = index.top();
+			index.pop();
+		}						
+		else
+		{
+			
+		}
+
+		if (b[i] != 0 && i + b[i] < n && i + b[i] >= 0)
+		{
+			ret.push_back('b');
+			index.push(i);
+			abstr(ret, a, b, i + b[i], n, flag, index);
+			ret.pop_back();
+			i = index.top();
+			index.pop();
+		}
+		else
+		{
+			
+		}
+		
+	}
+}
+string abstr(vector<int>&a, vector<int>&b,int n)
+{
+	string str = "";
+	bool flag = false;
+	stack<int> index;
+	abstr(str, a, b, 0, n, flag,index);
+	return str;
+}
 
 int topdigit(int x)
 {
@@ -146,25 +198,22 @@ int difference(vector<int>& pitch1, int n, vector<int>& pitch2, int m)
 int main()
 {
 	int n, m,temp;
-	//vector<int> pitch1, pitch2;
-	//
-	//cin >> n;	
-	//for (int i = 0; i < n;i++)
-	//{
-	//	cin >> temp;
-	//	pitch1.push_back(temp);
-	//}
-	//cin >> m;
-	//for (int i = 0; i < m; i++)
-	//{
-	//	cin >> temp;
-	//	pitch2.push_back(temp);
-	//}
-	//cout << difference(pitch1, n, pitch2, m) << endl;
-	//cout << maxSurvival(pitch1,n) << endl;
+	vector<int> a = { 5, -3, 6, 5, -5, -1, 6 }, b = { -6, 1 ,4 ,- 2, 0, - 2, 0};
 
-	cin >> n>>m;
-	getFactor(n, m);
+	/*cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> temp;
+		a.push_back(temp);
+	}	
+	for (int i = 0; i < n; i++)
+	{
+		cin >> temp;
+		b.push_back(temp);
+	}*/
+	
+	cout << abstr(a, b, 7);
+	
 	system("PAUSE");
 	return 0;
 }
