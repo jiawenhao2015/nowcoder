@@ -1,0 +1,22 @@
+/*leetcode-486-Predict the Winner*/
+	 bool PredictTheWinner(vector<int>& nums)
+	 {
+		 int n = nums.size();
+		 vector<vector<int>>dp(n, vector<int>(n));
+		 vector<int>sum(n);
+		 sum[0] = nums[0];
+		 dp[0][0] = nums[0];
+		 for (int i = 1; i < n;i++)
+		 {
+			 sum[i] += sum[i - 1] + nums[i];
+			 dp[i][i] = nums[i];
+		 }
+		 for (int i = 1; i < n;i++)
+		 {
+			 for (int j = 0; i + j < n;j++)
+			 {
+				 dp[j][i + j] = max(sum[i+j]-sum[j]+nums[j] -dp[j+1][i+j],sum[i+j]-sum[j]+nums[j]-dp[j][i+j-1]);
+			 }
+		 }
+		 return 2 * dp[0][n - 1] >= sum[n - 1];
+	 }
