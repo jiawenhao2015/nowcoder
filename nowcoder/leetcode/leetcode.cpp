@@ -4919,6 +4919,42 @@ public:
 		 }
 		 return 2 * dp[0][n - 1] >= sum[n - 1];
 	 }
+	 /*leetcode-416-Partition Equal Subset Sum*/
+	 void Par(bool& flag, vector<int>&nums, int target,int& temp,int begin)
+	 {
+		 if (temp == target)
+		 {
+			 flag = true;
+			 return;
+		 }
+		 for (int i = begin; i < nums.size(); i++)
+		 {
+			 if (!flag)
+			 {
+				 temp += nums[i];
+				 if(temp<=target)Par(flag, nums, target, temp, i + 1);
+				 temp -= nums[i];
+			 }			 
+		 }
+	 }
+	 bool canPartition(vector<int>& nums)
+	 {		 
+		 int sum = 0;
+		 if (nums.size() == 1)return false;
+		 for (int n : nums)sum += n;
+		 if (sum & 1)return false;
+		 sum = sum >> 1;//除以2
+		 vector<int> dp(sum + 1,0);//dp[i]代表和为i的可能输
+		 dp[0] = 1;
+		 for (int i = 0; i < nums.size();i++)
+		 {
+			 for (int j = sum; j >= i;j--)
+			 {
+				 dp[j] = dp[j] || dp[j - nums[i]];
+			 }
+		 }
+		 return dp[sum];
+	 }
 };
 
 int main()
