@@ -1,0 +1,16 @@
+/*leetcode-392-Is Subsequence*/
+	 bool isSubsequence(string s, string t)
+	 {
+		 int  lens = s.length(), lent = t.length(), indexS = 0, indexT = 0;
+		 if (lens == 0)return true;
+		 while (indexT < lent)
+		 {
+			 if (t[indexT]==s[indexS])
+			 {
+				 indexS++;
+				 if (indexS == lens)return true;
+			 }
+			 indexT++;
+		 }
+		 return false;
+	 }

@@ -4239,10 +4239,7 @@ public:
 	 1 <= length of the array <= 20.
 	 Any scores in the given array are non-negative integers and will not exceed 10,000,000.
 	 If the scores of both players are equal, then player 1 is still the winner.*/
-	 bool PredictTheWinner(vector<int>& nums)
-	 {
-
-	 }
+	 
 	 /*leetcode-374-Guess Number Higher or Lower
 	 We are playing the Guess Game. The game is as follows:
 	 I pick a number from 1 to n. You have to guess which number I picked.
@@ -5007,69 +5004,77 @@ public:
 		 return 3 * integerBreak(n - 3);
 		 
 	 }
-
+	 /*leetcode-392-Is Subsequence*/
+	 bool isSubsequence(string s, string t)
+	 {
+		 int  lens = s.length(), lent = t.length(), indexS = 0, indexT = 0;
+		 if (lens == 0)return true;
+		 while (indexT < lent)
+		 {
+			 if (t[indexT]==s[indexS])
+			 {
+				 indexS++;
+				 if (indexS == lens)return true;
+			 }
+			 indexT++;
+		 }
+		 return false;
+	 }
+	 /*5个数分成2个一组3个一组*/
+	 void divide(vector<vector<int>>&ret2, vector<vector<int>>&ret3,vector<bool>&index, vector<int>&temp, vector<int>&nums, int begin)
+	 {
+		 if (temp.size() == 2)
+		 {
+			 ret2.push_back(temp);
+			 vector<int> temp3;
+			 for (int i = 0; i < index.size();i++)
+			 {
+				 if (index[i] == false)temp3.push_back(nums[i]);
+			 }
+			 ret3.push_back(temp3);
+			 return;
+		 }
+		 for (int i = begin; i < nums.size();i++)
+		 {
+			 temp.push_back(nums[i]);
+			 index[i]=true;
+			 divide(ret2,ret3,index,temp, nums, i + 1);
+			 temp.pop_back();
+			 index[i] = false;
+		 }
+	 }
 };
 
 int main()
 {
-	Solution sl;
-	
+	Solution sl;	
 
-	vector<int>test,test1,test2;
+	vector<int>test,test1;
+	vector<bool>index(5,false);
 	test.push_back(1);
-	test.push_back(0);
-	/*test.push_back(2);
-	test.push_back(5);
+	test.push_back(2);
+	test.push_back(3);
 	test.push_back(4);
-	test.push_back(-4);
-	test2.push_back(0);
-	test2.push_back(0);
-	test2.push_back(0);*/
-	
-	vector<string> str;
-	/*str.push_back("0");
-	str.push_back("3");
-	str.push_back("/");
-	str.push_back("3");
-	str.push_back("*");	*/
-
-	ListNode node1(1), node2(2), node3(3), node4(4), node5(5), node6(6);
-	
-	node1.next = &node2;
-	node2.next = &node3;
-	node3.next = &node4;
-	node4.next = &node5;
-	node5.next = &node6;
-	
-	TreeNode treenode(1);
-	TreeNode treenode2(2);
-	treenode.left = &treenode2;
-	ListNode* resultNode = &node1;
+	test.push_back(5);
 	 
-	vector<vector<int>>mat;
-	mat.push_back(test);
-	/*mat.push_back(test1);
-	mat.push_back(test2);*/
+	vector<vector<int>>mat2;
+	vector<vector<int>>mat3;
+	sl.divide(mat2, mat3, index,test1, test, 0);
 	
-	cout << sl.encode("https://leetcode.com/problems/design-tinyurl") << endl;
-	
-	for (int i = 0; i < str.size(); i++)
+	for (int i = 0; i < mat2.size();i++)
 	{
-		cout << str[i] << " ";
-	}
-	for (int i = 0; i < mat.size();i++)
-	{
-		for (int j = 0; j < mat[i].size(); j++)
+		for (int j = 0; j < mat2[i].size(); j++)
 		{
-			cout << mat[i][j] << " ";
+			cout << mat2[i][j] << " ";
+		}
+		cout << "---------" ;
+		for (int j = 0; j < mat3[i].size(); j++)
+		{
+			cout << mat3[i][j] << " ";
 		}
 		cout << endl;
 	}
-	while (resultNode != NULL)
-	{
-		//cout << resultNode->val << " ";
-		resultNode = resultNode->next;
-	}
+	
 		
 	getchar();
 	return 0;
