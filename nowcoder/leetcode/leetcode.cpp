@@ -4980,6 +4980,22 @@ public:
 		 }
 		 return dp[m][n];
 	 }
+	 /*leetcode-357-Count Numbers with Unique Digits*/
+	 int countNumbersWithUniqueDigits(int n)
+	 {   
+		 if (n == 0)return 1;
+		 if (n == 1)return 10;
+		 vector<int>dp(n+1,9);
+		 n = min(n,10);
+		 int cnt = 10;
+		 for (int i = 2; i <= n;i++)
+		 {
+			 int j = 11 - i;
+			 dp[i] = dp[i - 1] * j;
+			 cnt += dp[i];
+		 }
+		 return cnt;
+	 }
 };
 
 int main()
