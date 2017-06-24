@@ -5043,6 +5043,34 @@ public:
 			 index[i] = false;
 		 }
 	 }
+
+	 /*leetcode-216-Combination Sum III*/
+	 void combinationSum3(vector<vector<int>>&ret, vector<int>&comb, int k, int n,int &sum, int begin)
+	 {
+		 if (sum > n)return;
+		 if (comb.size() == k && sum != n)return;		 
+		 else if (comb.size() == k && sum == n) 
+		 {
+			 ret.push_back(comb);
+			 return;
+		 }
+		 for (int i = begin; i <= 9;i++)
+		 {
+			 comb.push_back(i);
+			 sum += i;
+			 combinationSum3(ret, comb, k, n, sum, i + 1);
+			 sum -= i;
+			 comb.pop_back();
+		 }
+	 }
+	 vector<vector<int>> combinationSum3(int k, int n)
+	 {
+		 vector<vector<int>> ret;
+		 vector<int> comb;
+		 int sum = 0;
+		 combinationSum3(ret, comb, k, n, sum, 1);
+		 return ret;
+	 }
 };
 
 int main()
@@ -5059,8 +5087,9 @@ int main()
 	 
 	vector<vector<int>>mat2;
 	vector<vector<int>>mat3;
-	sl.divide(mat2, mat3, index,test1, test, 0);
+	//sl.divide(mat2, mat3, index,test1, test, 0);
 	
+
 	for (int i = 0; i < mat2.size();i++)
 	{
 		for (int j = 0; j < mat2[i].size(); j++)

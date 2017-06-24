@@ -1,0 +1,27 @@
+	 /*leetcode-216-Combination Sum III*/
+	 void combinationSum3(vector<vector<int>>&ret, vector<int>&comb, int k, int n,int &sum, int begin)
+	 {
+		 if (sum > n)return;
+		 if (comb.size() == k && sum != n)return;		 
+		 else if (comb.size() == k && sum == n) 
+		 {
+			 ret.push_back(comb);
+			 return;
+		 }
+		 for (int i = begin; i <= 9;i++)
+		 {
+			 comb.push_back(i);
+			 sum += i;
+			 combinationSum3(ret, comb, k, n, sum, i + 1);
+			 sum -= i;
+			 comb.pop_back();
+		 }
+	 }
+	 vector<vector<int>> combinationSum3(int k, int n)
+	 {
+		 vector<vector<int>> ret;
+		 vector<int> comb;
+		 int sum = 0;
+		 combinationSum3(ret, comb, k, n, sum, 1);
+		 return ret;
+	 }
