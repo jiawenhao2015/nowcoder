@@ -5071,6 +5071,27 @@ public:
 		 combinationSum3(ret, comb, k, n, sum, 1);
 		 return ret;
 	 }
+	 /*leetcode-377-Combination Sum IV*/
+	 int combinationSum4(vector<int>& nums, int target)
+	 {
+		 sort(nums.begin(), nums.end());
+		 vector<int>dp(target+1,0);
+		 dp[0] = 1;
+		 for (int i = 1; i <= target;i++)
+		 {
+			 for (int a : nums)
+			 {
+				 if (i<a)break;//a排序后只能越来越大 i>=a才有意义 否则提前结束内部循环
+				 dp[i] += dp[i - a];
+			 }
+		 }
+		 return dp[target];
+	 }
+	 /*leetcode-322-Coin Change*/
+	 int coinChange(vector<int>& coins, int amount)
+	 {
+
+	 }
 };
 
 int main()
