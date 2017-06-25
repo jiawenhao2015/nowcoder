@@ -1,0 +1,67 @@
+Given an integer array, find three numbers whose product is maximum and output the maximum product.
+
+Example 1:
+
+Input: [1,2,3]
+Output: 6
+ 
+
+Example 2:
+
+Input: [1,2,3,4]
+Output: 24
+ 
+
+Note:
+
+The length of the given array will be in range [3,104] and all elements are in the range [-1000, 1000].
+Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
+思路：
+
+首先排序，然后分别判断数组元素最大值是正是负情况。
+
+复制代码
+  int maximumProduct(vector<int>& nums)
+  {
+
+    sort(nums.begin(),nums.end());
+    int len = nums.size();
+    
+    int a,b,c;
+    c = nums[len-1];
+    b = nums[len-2];
+    a = nums[len-3];
+    if(a>0)return  max(nums[0]*nums[1]*c,a*b*c);
+    else if( a ==0 )
+    {
+      if(len==3)return 0;
+      if(len>=5)return nums[len-5]*nums[len-4]*c;//l两个负数
+      else return a*b*c;
+    }
+    else if(a<0)
+    {
+      if(c<0 )return a*b*c;
+      if(c>=0 &&b<0 )return nums[0]*nums[1]*c;
+      if(c>=0 && b>0 &&len>=4)return nums[0]*nums[1]*c;
+      if(c>=0 && b>0 &&len==3)return a*b*c;
+    }
+    
+    return 0;
+  }
+  
+复制代码
+感觉写出来 超级啰嗦 惨不忍睹，于是看到了如下代码，
+
+醍醐灌顶，五体投地。 排序过后，依次讨论前三个，后三个，以及后两个跟第一个，前两个跟最后一个。
+
+复制代码
+ public int maximumProduct(int[] nums) {
+            Arrays.sort(nums);
+            int n = nums.length;
+            int s = nums[n-1] * nums[n-2] * nums[n-3];
+            s = Math.max(s, nums[n-1] * nums[n-2] * nums[0]);
+            s = Math.max(s, nums[n-1] * nums[1] * nums[0]);
+            s = Math.max(s, nums[2] * nums[1] * nums[0]);
+            return s;
+        }
+复制代码
