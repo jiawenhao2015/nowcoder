@@ -5144,6 +5144,33 @@ public:
 		 }
 		 return dp[n];
 	 }
+
+	 /*leetcode-376-Wiggle Subsequence*/
+	 int wiggleMaxLength(vector<int>& nums)
+	 {
+		 int n = nums.size(),maxup=0,maxdown =0;
+		 vector<int>up(n + 1,0);
+		 vector<int>down(n + 1, 0);
+		 for (int i = 0; i <n;i++)
+		 {
+			 up[i] = 1;
+			 down[i] = 1;
+			 for (int j = 0; j < i;j++)
+			 {
+				 if (nums[i]>nums[j])
+				 {
+					 up[i] = max(up[i], down[j] + 1);
+				 }
+				 if (nums[i]<nums[j])
+				 {
+					 down[i] = max(down[i], up[j] + 1);
+				 }
+			 }
+			// maxup = max(maxup, up[i]);
+			// maxdown = max(maxdown, down[i]);
+		 }
+		 return max(up.back(), down.back());
+	 }
 };
 
 int main()
