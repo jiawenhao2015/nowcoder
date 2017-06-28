@@ -5164,11 +5164,34 @@ public:
 			 return a.first > b.first || (a.first == b.first && a.second < b.second);
 		 });
 		 vector<pair<int, int>> ret;
-		 for (auto a:people)
+		 for (auto a : people)
 		 {
 			 ret.insert(ret.begin() + a.second, a);
 		 }
-		 return ret;	
+		 return ret;
+	 }
+	 
+	 /*leetcode-455-Assign Cookies*/
+	 int findContentChildren(vector<int>& g, vector<int>& s)
+	 {
+		 int people = g.size(),cookie = s.size();
+		 sort(g.begin(), g.end());
+		 sort(s.begin(), s.end());
+		 int content = 0;
+		 int curindex = 0;//代表饼干的索引
+		 for (int i = 0; i < people;i++)
+		 {
+			 for (int j = curindex; j < cookie; j++)
+			 {
+				 if (s[j]>=g[i])
+				 {
+					 content++;
+					 curindex = j + 1;//j已经被分出去了 得从下一个开始
+					 break;
+				 }
+			 }
+		 }
+		 return content;
 	 }
 };
 
