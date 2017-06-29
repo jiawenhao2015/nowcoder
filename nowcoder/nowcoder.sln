@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "leetcode", "leetcode\leetco
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exam", "exam\exam.vcxproj", "{2228F061-8472-4C19-954A-1CDB2436570A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "actualcombat", "actualcombat\actualcombat.vcxproj", "{796D59F3-5D59-4F5D-9609-4D4D925C308C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{2228F061-8472-4C19-954A-1CDB2436570A}.Debug|Win32.Build.0 = Debug|Win32
 		{2228F061-8472-4C19-954A-1CDB2436570A}.Release|Win32.ActiveCfg = Release|Win32
 		{2228F061-8472-4C19-954A-1CDB2436570A}.Release|Win32.Build.0 = Release|Win32
+		{796D59F3-5D59-4F5D-9609-4D4D925C308C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{796D59F3-5D59-4F5D-9609-4D4D925C308C}.Debug|Win32.Build.0 = Debug|Win32
+		{796D59F3-5D59-4F5D-9609-4D4D925C308C}.Release|Win32.ActiveCfg = Release|Win32
+		{796D59F3-5D59-4F5D-9609-4D4D925C308C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

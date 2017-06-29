@@ -3921,21 +3921,7 @@ public:
 		 }
 		 return sum;
 	 }
-	 /* leetcode-406-Queue Reconstruction by Height
-	 Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k),
-	 where h is the height of the person and k is the number of people in front of this person who have a height greater
-	 than or equal to h. Write an algorithm to reconstruct the queue.
-	 Note:
-	 The number of people is less than 1,100.
-	 Example
-	 Input:
-	 [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
-	 Output:
-	 [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]*/
-	 vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people)
-	 {
 
-	 }
 	 /*leetcode-526-Beautiful Arrangement
 	 Suppose you have N integers from 1 to N. We define a beautiful arrangement as an array that is constructed by these N numbers successfully
 	 if one of the following is true for the ith position (1 ≤ i ≤ N) in this array:
@@ -5091,6 +5077,121 @@ public:
 	 int coinChange(vector<int>& coins, int amount)
 	 {
 
+	 }
+	 /*leetcode-312-Burst Balloons*/
+	 int maxCoins(vector<int>& nums)
+	 {
+		 int n = nums.size();
+		 nums.insert(nums.end(), 1);
+		 nums.insert(nums.begin(), 1);
+
+		 vector<vector<int>>dp(n+2,vector<int>(n+2,0));
+		 for (int len = 1; len <= n;len++)
+		 {
+			 for (int left = 1; left <= n - len + 1;left++)
+			 {
+				 int right = left + len - 1;
+				 for (int k = left; k <= right;k++)
+				 {
+					 dp[left][right] = max(dp[left][right], dp[left][k-1]+dp[k+1][right]+ nums[left-1]*nums[k]*nums[right+1]);
+				 }
+			 }
+		 }
+		 return dp[1][n];
+	 }
+	 /*leetcode-300-Longest Increasing Subsequence*/
+	 int lengthOfLIS(vector<int>& nums)
+	 {
+		 int n = nums.size(),ret = 0;
+		 if (n == 0) return 0;
+		 vector<int>dp(n, 1);
+		 for (int i = 0; i < n;i++)
+		 {
+			 for (int j = 0; j < i; j++)
+			 {
+				 if(nums[i]>nums[j])dp[i] = max(dp[i], dp[j] + 1);				 
+			 }
+			 ret = max(ret, dp[i]);
+		 }
+		 return ret;		 
+	 }
+
+	 /*leetcode-279-Perfect Squares*/
+	 int numSquares(int n)
+	 {
+		 vector<int>dp(n + 1);
+		 for (int i = 0; i <= n;i++)
+		 {
+			 dp[i] = i;
+			 for (int j = 1; j*j <= i;j++)
+			 {
+				 dp[i] = min(dp[i], dp[i - j*j] + 1);
+			 }
+		 }
+		 return dp[n];
+	 }
+
+	 /*leetcode-376-Wiggle Subsequence*/
+	 int wiggleMaxLength(vector<int>& nums)
+	 {
+		 int n = nums.size(),maxup=0,maxdown =0;
+		 vector<int>up(n + 1,0);
+		 vector<int>down(n + 1, 0);
+		 for (int i = 0; i <n;i++)
+		 {
+			 up[i] = 1;
+			 down[i] = 1;
+			 for (int j = 0; j < i;j++)
+			 {
+				 if (nums[i]>nums[j])
+				 {
+					 up[i] = max(up[i], down[j] + 1);
+				 }
+				 if (nums[i]<nums[j])
+				 {
+					 down[i] = max(down[i], up[j] + 1);
+				 }
+			 }
+			// maxup = max(maxup, up[i]);
+			// maxdown = max(maxdown, down[i]);
+		 }
+		 return max(up.back(), down.back());
+	 }
+	 /*leetcode-406-Queue Reconstruction by Height*/
+	 vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people)
+	 {
+		 sort(people.begin(), people.end(), [](const pair<int, int>& a, const pair<int, int>& b){
+			 return a.first > b.first || (a.first == b.first && a.second < b.second);
+		 });
+		 vector<pair<int, int>> ret;
+		 for (auto a : people)
+		 {
+			 ret.insert(ret.begin() + a.second, a);
+		 }
+		 return ret;
+	 }
+	 
+	 /*leetcode-455-Assign Cookies*/
+	 int findContentChildren(vector<int>& g, vector<int>& s)
+	 {
+		 int people = g.size(),cookie = s.size();
+		 sort(g.begin(), g.end());
+		 sort(s.begin(), s.end());
+		 int content = 0;
+		 int curindex = 0;//代表饼干的索引
+		 for (int i = 0; i < people;i++)
+		 {
+			 for (int j = curindex; j < cookie; j++)
+			 {
+				 if (s[j]>=g[i])
+				 {
+					 content++;
+					 curindex = j + 1;//j已经被分出去了 得从下一个开始
+					 break;
+				 }
+			 }
+		 }
+		 return content;
 	 }
 };
 
