@@ -35,3 +35,22 @@ public class Solution {
         return sb.toString();
     }
 }
+
+string removeKdigits(string num, int k) 
+ { 
+   if(k==0)
+   {
+     if(num == ""||num.length() == 0) return "0";
+    // if( num[0]!='0')return num;
+     int i =0;
+     while(num[i]=='0')i++;
+     if(i >= num.length())return "0";
+     return num.substr(i);
+  }
+  int index =0;
+  while(index+1<num.length() && num[index]<=num[index+1] )index++;//找到最大的
+  string left = num.substr(0,index);
+  string right ;
+  if(index+1<num.length()) right = num.substr(index+1);
+  else right ="";
+  return removeKdigits(left+right,k-1);
