@@ -1,0 +1,42 @@
+Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a2 + b2 = c.
+
+Example 1:
+
+Input: 5
+Output: True
+Explanation: 1 * 1 + 2 * 2 = 5
+ 
+
+Example 2:
+
+Input: 3
+Output: False
+思路：
+
+类似于二分查找。
+
+从0 和sqrt(n)两端分别查找。
+
+复制代码
+bool judgeSquareSum(int c)
+{
+  if(c==0)return true;
+ 
+  int qq = sqrt( (double)c );
+    for( int ii= 0, pp = qq; ii<= qq && pp >= ii; )
+    {
+        int sum = ii * ii + pp * pp;
+        if( sum < c )
+            ii++;
+        else if( sum > c )
+            pp--;
+        else
+            return true;
+      }
+  
+  return false;
+}
+复制代码
+ 
+
+
