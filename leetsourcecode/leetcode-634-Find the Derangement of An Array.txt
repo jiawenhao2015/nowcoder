@@ -1,0 +1,98 @@
+In combinatorial mathematics, a derangement is a permutation of the elements of a set, such that no element appears in its original position.
+
+There's originally an array consisting of n integers from 1 to n in ascending order, you need to find the number of derangement it can generate.
+
+Also, since the answer may be very large, you should return the output mod 109 + 7.
+
+Example 1:
+
+Input: 3
+Output: 2
+Explanation: The original array is [1,2,3]. The two derangements are [2,3,1] and [3,1,2].
+ 
+
+Note:
+n is in the range of [1, 106].
+
+思路：
+
+第一反应是挨个求全排列，判断是否符合，结果果断超时，当n=12的时候就已经极限了。
+
+ 
+
+复制代码
+bool isOrder(vector<int>& a,int n)
+{  
+  for(int i =0;i<n;i++)
+  {
+    if(a[i]== (i+1))return false;
+  }
+  return true;
+}
+
+ int findDerangement2(int n)
+ {
+   if(n==1)return 0;
+   if(n==2)return 1;
+   //if(n==3)return 2;
+   vector<int> ori(n,0);
+   
+   for(int i =0;i<n;i++)ori[i]=i+1;
+   
+   long long ret=0;
+   while(next_permutation(ori.begin(),ori.end()))
+   {
+     if( isOrder(ori,n) ) ret++;
+   }
+  return ret %1000000007;
+}
+复制代码
+结果想，这么做肯定不多，就想到了用动态规划。
+
+仔细观察，
+
+3的结果为： 2 3 1 与 3 1 2，
+
+求4的结果的时候，将数字4分别与 3的结果每一位进行交换肯定满足题意，即将4与2 3 1和3 1 2每一位交换，得到
+
+4 3 1 2
+
+2 4 1 3
+
+2 3 4 1
+
+4 1 2 3
+
+3 4 2 1
+
+3 1 4 2
+
+一共6个即 dp[3]*3.
+
+还有一种情况就是 3个排列比如
+
+1 X X
+
+X 2 X
+
+X X 3
+
+其中X X是2的排列，将数字 1 2 3分别与4交换，肯定也满足题意 即 d[2]*3
+
+综上就得到 dp[4]= dp[3]*3+d[2]*3;
+
+dp[n] = ((i-1)*dp[i-1]+(i-1)*dp[i-2] )%1000000007;
+
+但是程序不能这么写。。因为((i-1)*dp[i-1]+(i-1)*dp[i-2] )亲测溢出。。。。
+
+改写成dp[n]=(i-1)*(dp[i-1]+dp[i-2])%1000000007;
+
+复制代码
+vector<long long> dp(n+1,0);
+   dp[1]=0,dp[2]=1,dp[3]=2;
+   for(int i =4;i<=n;i++)
+   {
+    dp[i] = (i-1)*(dp[i-1]+dp[i-2])%1000000007;   
+  }
+  return dp[n];
+复制代码
