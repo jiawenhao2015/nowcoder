@@ -5203,6 +5203,64 @@ public:
 		 }
 		 return vector<int>(ret.begin(), ret.end());
 	 }
+	 
+	 /*leetcode-635-Design Log Storage System*/
+	 map<string, vector<int>>mp;
+	 map<string, int>idmap;
+	 map<string, int>mapping;
+	 Solution()
+	 {
+		 mapping["Year"] = 0;
+		 mapping["Month"] = 1;
+		 mapping["Day"] = 2;
+		 mapping["Hour"] = 3;
+		 mapping["Minute"] = 4;
+		 mapping["Second"] = 5;
+	 }
+	 vector<int> convert(string s)
+	 {
+		 for (int i = 0; i < s.size();i++)if (s[i] == ':')s[i] = ' ';
+		 stringstream ss(s);
+		 int x;
+		 vector<int>a;
+		 while (ss >> x)a.push_back(x);
+		 return a;		 
+	 }
+	
+	 void put(int id, string timestamp) 
+	 {
+		 idmap[timestamp] = id;
+		 mp[timestamp] = convert(timestamp);
+	 }
+	 vector<int> retrieve(string s, string e, string gra)
+	 {
+		 vector<int>result;
+		 vector<int>from = convert(s), to = convert(e);
+		 for (int i = mapping[gra] + 1; i < 6;i++)
+		 {
+			 from[i] = 0;
+			 to[i] = 99;
+		 }
+		 for (auto &it : mp)
+		 {
+			 if (it.second >= from && it.second <= to)
+			 {
+				 result.push_back(idmap[it.first]);
+			 }
+		 }
+		 return result;
+	 }
+	 /*leetcode-453-Minimum Moves to Equal Array Elements*/
+	 int minMoves(vector<int>& nums)
+	 {
+		 int ret = 0;
+		 int smallest = *min_element(nums.begin(), nums.end());
+		 for (auto a:nums)
+		 {
+			 ret += (a - smallest);
+		 }
+		 return ret;
+	 }
 };
 
 int main()
@@ -5210,7 +5268,7 @@ int main()
 	Solution sl;	
 
 	vector<int>test,test1;
-	vector<bool>index(5,false);
+	
 	test.push_back(1);
 	test.push_back(2);
 	test.push_back(3);
@@ -5220,7 +5278,21 @@ int main()
 	vector<vector<int>>mat2;
 	vector<vector<int>>mat3;
 	//sl.divide(mat2, mat3, index,test1, test, 0);
+	sl.put(1, "2017:01:01:23:59:59");
+	sl.put(2, "2017:01:01:22:59:59");
+	sl.put(3, "2016:01:01:00:00:00");
+	test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Year");
 	
+	for (int i = 0; i < test1.size();i++)
+	{
+		cout << test1[i] << endl;
+	}
+	test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Hour");
+
+	for (int i = 0; i < test1.size(); i++)
+	{
+		cout << test1[i] << endl;
+	}
 
 	for (int i = 0; i < mat2.size();i++)
 	{

@@ -1,0 +1,10 @@
+int minMoves(vector<int>& nums)
+	 {
+		 int ret = 0;
+		 int smallest = *min_element(nums.begin(), nums.end());
+		 for (auto a:nums)
+		 {
+			 ret += (a - smallest);
+		 }
+		 return ret;
+	 }

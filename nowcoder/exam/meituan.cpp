@@ -195,24 +195,60 @@ int difference(vector<int>& pitch1, int n, vector<int>& pitch2, int m)
 	return diff;
 }
 
+bool isPrime(int n)
+{
+	if (n == 2 || n == 3)return true;
+	if (n % 2 == 0)return false;
+	for (int i = 3; i <= sqrt(n);i+=2)
+	{
+		if (n%i == 0)return false;
+	}
+	return true;
+}
+void primepair()
+{
+	int n;
+	cin >> n;
+	int res = 0;
+	for (int i = 2; i <= n / 2;i++)
+	{
+		if (isPrime(i) && isPrime(n - i))res++;
+	}
+	cout << res << endl;
+}
+
+void geohash()
+{
+	int n;
+	cin >> n;
+	int step = 0;
+	int left = -90, right = 90;
+	string code = "";
+	while (step < 6)
+	{
+		step++;
+		int  mid = (left + right)/2;
+		if (mid <= n)
+		{
+			left = mid;
+			code += '1';
+
+		}
+		else if (mid>n)
+		{
+			right = mid;
+			code += '0';
+		}
+	}
+	cout << code << endl;
+}
 int main()
 {
 	int n, m,temp;
 	vector<int> a = { 5, -3, 6, 5, -5, -1, 6 }, b = { -6, 1 ,4 ,- 2, 0, - 2, 0};
 
-	/*cin >> n;
-	for (int i = 0; i < n; i++)
-	{
-		cin >> temp;
-		a.push_back(temp);
-	}	
-	for (int i = 0; i < n; i++)
-	{
-		cin >> temp;
-		b.push_back(temp);
-	}*/
-	
-	cout << abstr(a, b, 7);
+		
+	geohash();
 	
 	system("PAUSE");
 	return 0;
