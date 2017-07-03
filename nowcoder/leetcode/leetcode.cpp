@@ -5261,6 +5261,18 @@ public:
 		 }
 		 return ret;
 	 }
+	 /*leetcode-383-Ransom Note*/
+	 bool canConstruct(string ransomNote, string magazine)
+	 {
+		 map<char, int>mpmag;
+		 for (auto ch : magazine)mpmag[ch]++;
+		 for (auto ch : ransomNote)
+		 {
+			 mpmag[ch]--;
+			 if (mpmag[ch] < 0)return false;			 
+		 }
+		 return true;		 
+	 }
 };
 
 int main()
