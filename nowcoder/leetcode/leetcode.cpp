@@ -5273,6 +5273,21 @@ public:
 		 }
 		 return true;		 
 	 }
+	 /*leetcode-404-Sum of Left Leaves*/
+	 void tr(TreeNode* root, int& sum)
+	 {
+		 if (root == NULL)return;
+		 if (root->left != NULL && root->left->left == NULL && root->left->right == NULL)sum += root->left->val;
+		 tr(root->left, sum);
+		 tr(root->right, sum);
+	 }
+	 int sumOfLeftLeaves(TreeNode* root)
+	 {
+		 if (root == NULL)return 0;
+		 int sum = 0;
+		 tr(root, sum);
+		 return sum;
+	 }
 };
 
 int main()
