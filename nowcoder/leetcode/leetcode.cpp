@@ -5288,6 +5288,22 @@ public:
 		 tr(root, sum);
 		 return sum;
 	 }
+
+	 /*leetcode-171-Excel Sheet Column Number*/
+	 int titleToNumber(string s)
+	 {
+		 int n = s.length();
+		 int num = 0;
+		 int cur = 0;
+		 for (int i = n-1; i >=0;i--)
+		 {
+			 cur = (s[i] - 'A' + 1)*pow(26, n-1-i);
+			 num+=cur;
+			 cur = 0;
+		 }
+
+		 return num;
+	 }
 };
 
 int main()
@@ -5308,8 +5324,10 @@ int main()
 	sl.put(1, "2017:01:01:23:59:59");
 	sl.put(2, "2017:01:01:22:59:59");
 	sl.put(3, "2016:01:01:00:00:00");
-	test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Year");
+	//test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Year");
 	
+	cout << sl.titleToNumber("BA") << endl;;
+
 	for (int i = 0; i < test1.size();i++)
 	{
 		cout << test1[i] << endl;
