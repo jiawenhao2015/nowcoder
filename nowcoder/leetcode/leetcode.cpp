@@ -5304,6 +5304,27 @@ public:
 
 		 return num;
 	 }
+	 /*leetcode-168-Excel Sheet Column Title*/
+	 string convertToTitle(int n)
+	 {
+		 string s;
+		 bool flag = false;
+		 while (n > 0)
+		 {
+			 if (n % 26 == 0)
+			 {
+				 s += 'Z';				
+				 flag = true;
+			 }
+			 else  s += ('A' - 1 + n % 26);
+			 n /= 26;
+			 if (flag) n -= 1;
+			 
+		 }
+		 reverse(s.begin(),s.end());
+		 return s;
+		 //return n == 0 ? "" : convertToTitle(n / 26) + (char) (--n % 26 + 'A');
+	 }
 };
 
 int main()
@@ -5326,7 +5347,7 @@ int main()
 	sl.put(3, "2016:01:01:00:00:00");
 	//test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Year");
 	
-	cout << sl.titleToNumber("BA") << endl;;
+	cout << sl.convertToTitle(28) << endl;;
 
 	for (int i = 0; i < test1.size();i++)
 	{
