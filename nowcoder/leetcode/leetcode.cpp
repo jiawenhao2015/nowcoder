@@ -5325,6 +5325,16 @@ public:
 		 return s;
 		 //return n == 0 ? "" : convertToTitle(n / 26) + (char) (--n % 26 + 'A');
 	 }
+	 /*leetcode-268-Missing Number*/
+	 int missingNumber(vector<int>& nums)
+	 {
+		 int ret = nums.size();
+		 for (int i = 0; i < nums.size();i++)
+		 {
+			 ret = ret ^ i ^ nums[i];
+		 }
+		 return ret;
+	 }
 };
 
 int main()
