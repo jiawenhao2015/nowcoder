@@ -1,0 +1,35 @@
+ string addStrings(string num1, string num2)
+	 {
+		 int n1 = num1.length()-1, n2 = num2.length()-1;
+		 string ret="";
+		 int digit = 0;
+		 int carry = 0;
+		 int sum = 0;
+		 while (n1 >= 0 && n2 >= 0)
+		 {
+			 sum = carry + num1[n1--] + num2[n2--] - '0' - '0';
+			 digit = sum %10;
+			 carry = (sum >= 10) ? 1 : 0;
+			 ret += (digit+'0');
+		 }
+		
+		 while (n1 >= 0)
+		 {
+			 sum = carry + num1[n1--] - '0';
+			 digit = sum % 10;
+			 carry = (sum >= 10) ? 1 : 0;
+			 ret += (digit + '0');
+		 }		
+		 
+		 while (n2 >= 0)
+		 {
+			 sum = carry + num2[n2--] - '0';
+			 digit = sum % 10;
+			 carry = (sum >= 10) ? 1 : 0;
+			 ret += (digit + '0');
+		 }		
+		 
+		if (carry) ret += '1';
+		 reverse(ret.begin(), ret.end());
+		 return ret;		 
+	 }
