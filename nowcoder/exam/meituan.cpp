@@ -307,6 +307,154 @@ void code()
 	cout << index;
 	
 }
+/*
+给你六种面额 1、5、10、20、50、100 元的纸币，假设每种币值的数量都足够多，编写程序求组成N元（N为0~10000的非负整数）的不同组合的个数。
+#include<iostream>
+using namespace std;
+  
+int main(){
+    int N = 0;
+    cin >> N;
+    long long * F = new long long[N + 1]();
+    int c[6] = { 1, 5, 10, 20, 50, 100 };
+  
+    F[0] = 1;
+    for (int i = 0; i < 6; i++)
+        for (int v = c[i]; v <= N; v++){
+            F[v] = F[v] + F[v - c[i]];
+        }
+    cout << F[N]<<endl;
+    return 0;
+}
+
+
+*/
+
+
+/*动态规划 填表dp[h][n+1],h代表有h种硬币coins[]={1,5,10,20,50,100} ，
+           n+1代表要拼目标为0-n
+  递推公式 :dp[i][j]=dp[i][j]+dp[i-1][j-k*coins[i]],其中k[0,n/coins[i]].
+        解释：使用前i种钱币拼凑面值为j的方法数dp[i][j]= 
+        使用前i-1种钱币，使用k个第i种钱币，拼凑面值为j的方法数，
+        即使用前i-1种钱币拼凑面值为j的方法数dp[i-1][j-k*coins[i]]
+初始化：
+上表的第一行dp[0]均为1，表示任意目标，只由面值为1的硬币拼凑，拼凑方法为1；
+*/
+
+import java.util.Scanner;
+import java.util.Arrays;
+public class Main{
+    public static long count(int n){
+    int coins[]={1,5,10,20,50,100};
+    int h=coins.length;
+    long dp[][]=new long[h][n+1];
+    Arrays.fill(dp[0], 1);//基础 该数字都由1组成 方法数是1
+    for(int i=1;i<h;i++){
+        for(int j=1;j<=n;j++){
+            int m=j/coins[i];
+        for(int k=0;k<=m;k++){
+            dp[i][j]=dp[i][j]+dp[i-1][j-k*coins[i]];
+            }
+        }
+        }
+    return dp[h-1][n];
+    }
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        while(sc.hasNext()){
+          int n=sc.nextInt();
+          long res=count(n);
+          System.out.println(res);
+        }
+    }
+}
+
+
+/*
+给定一组非负整数组成的数组h，代表一组柱状图的高度，其中每个柱子的宽度都为1。
+在这组柱状图中找到能组成的最大矩形的面积（如图所示）。 入参h为一个整型数组，代表每个柱子的高度，返回面积的值。
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <stack>
+ 
+std::vector<int> getFirstSmallValue(std::vector<int> height) {
+    std::vector<int> ans;
+    std::stack<int> stack_;
+    int len = height.size();
+    for (int i = 0; i < len; i++) {
+        while (!stack_.empty()) {
+            if (height[i] > height[stack_.top()]) {
+                ans.push_back(i - stack_.top() - 1);
+                stack_.push(i);
+                break;
+            }
+            else {
+                stack_.pop();
+            }
+        }
+        if (stack_.empty()) {
+            stack_.push(i);
+            ans.push_back(i);
+        }
+    }
+    return ans;
+}
+int main() {
+    using namespace std;
+    int n;
+    while (cin >> n) {
+        vector<int> arr(n);
+        for (int i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
+        vector<int> left(getFirstSmallValue(arr));//右侧第一个比i点高度低的位置
+        reverse(arr.begin(), arr.end());
+        vector<int> right(getFirstSmallValue(arr));//左侧第一个比i点高度低的位置
+        reverse(right.begin(), right.end());
+        reverse(arr.begin(), arr.end());
+        long long ans = 0;
+        for (int i = 0; i < n; i++) {
+            long long temp = (left[i] + right[i] + 1) * arr[i];
+            if (ans < temp) {
+                ans = temp;
+            }
+        }
+        cout << ans << endl;
+    }
+    return 0;
+}
+*/
+
+/*给出两个字符串（可能包含空格）,找出其中最长的公共连续子串,输出其长度。
+#include<iostream>
+#include<string>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main(){
+    string s1, s2;
+    while (getline(cin, s1), getline(cin, s2)){
+        int l1 = s1.size();
+        int l2 = s2.size();
+        vector<vector<int>> dp(l1 + 1, vector<int>(l2 + 1, 0));
+        int result = 0;
+        for (int i = 1; i <= l1; i++){
+            for (int j = 1; j <= l2; j++){
+                if (s1[i - 1] == s2[j - 1]){
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    result = max(dp[i][j], result);
+                }
+                else{
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        cout << result << endl;
+    }
+    return 0;
+}*/
 int main()
 {
 	int n, m,temp;
