@@ -1,0 +1,48 @@
+Given a list of 24-hour clock time points in "Hour:Minutes" format, find the minimum minutes difference between any two time points in the list.
+
+Example 1:
+
+Input: ["23:59","00:00"]
+Output: 1
+ 
+
+Note:
+
+The number of time points in the given list is at least 2 and won't exceed 20000.
+The input time is legal and ranges from 00:00 to 23:59.
+思路：
+
+将字符串时间转换成唯一的分钟数，映射到0-1439的区间上去。
+
+为了只需要遍历一次，将当前时间t和t+1440都存到map里，这样只需要比较临近的两个时间即可，
+
+比如00:00保存为0和1440，那么23:59保存为1439和1439+1440，当比较到1439和1440的时候，得到最小分钟数为1.
+
+复制代码
+//转换成分钟数
+int timeToMinu(string time)
+{
+    time[2] =' ';
+    stringstream ss(time);
+    int hour,minute;
+    ss>>hour>>minute;
+    return hour*60+minute;    
+}
+int findMinDifference(vector<string>& timePoints)
+{
+  if(timePoints.size()>1440)return 0;//24小时最大分钟数
+  map<int,int>mp;
+  for(int i =0;i<timePoints.size();i++)
+  {
+    if(mp.count( timeToMinu(timePoints[i]) )) return 0;
+    mp[timeToMinu(timePoints[i])]++;
+    mp[timeToMinu(timePoints[i])+1440]++;
+  }
+  int ret = 1440;
+  auto it1 = mp.begin(),it2 = ++mp.begin();
+  for(;it2!=mp.end();it1++,it2++)
+  {
+    ret = min(ret,it2->first - it1->first);
+  }
+  return ret;
+}
