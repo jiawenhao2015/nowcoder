@@ -1,0 +1,14 @@
+/*leetcode-264-Ugly Number II*/
+	 int nthUglyNumber(int n)
+	 {
+		 vector<int>ret(n, 1);
+		 int index2 = 0, index3 = 0, index5 = 0;
+		 for (int i = 1; i < n; i++)
+		 {
+			 ret[i] = min(ret[index2]*2,min(ret[index3]*3,ret[index5]*5));
+			 if (ret[i] == ret[index2] * 2)index2++;
+			 if (ret[i] == ret[index3] * 3)index3++;
+			 if (ret[i] == ret[index5] * 5)index5++;
+		 }
+		 return ret[n - 1];
+	 }
