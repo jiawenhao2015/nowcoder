@@ -5437,16 +5437,21 @@ public:
 
 		 return dp[1][n];
 	 }
-	 void a()
+	 /*leetcode-350-Intersection of Two Arrays II*/
+	 vector<int> intersect(vector<int>& nums1, vector<int>& nums2)
 	 {
-		 for (int i = 1; i <= 9;i++)
+		 vector<int>ret;
+		 map<int, int>mp;
+		 for (auto a : nums1)mp[a]++;
+		 for (auto a:nums2)
 		 {
-			 for (int j = 1; j <= i;j++)
+			 if (mp[a] > 0)
 			 {
-				 cout << i << " X " << j << " = " << i*j << "   ";
+				 mp[a]--;
+				 ret.push_back(a);
 			 }
-			 cout << endl;
 		 }
+		 return ret;
 	 }
 };
 

@@ -1,0 +1,16 @@
+/*leetcode-350-Intersection of Two Arrays II*/
+	 vector<int> intersect(vector<int>& nums1, vector<int>& nums2)
+	 {
+		 vector<int>ret;
+		 map<int, int>mp;
+		 for (auto a : nums1)mp[a]++;
+		 for (auto a:nums2)
+		 {
+			 if (mp[a] > 0)
+			 {
+				 mp[a]--;
+				 ret.push_back(a);
+			 }
+		 }
+		 return ret;
+	 }
