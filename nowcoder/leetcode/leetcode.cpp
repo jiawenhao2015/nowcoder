@@ -5427,6 +5427,27 @@ public:
 		 }
 		 return ret[n - 1];
 	 }
+
+	 int findSubstringInWraproundString(string p)
+	 {
+		 int n = p.length();
+		 vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+
+		
+
+		 return dp[1][n];
+	 }
+	 void a()
+	 {
+		 for (int i = 1; i <= 9;i++)
+		 {
+			 for (int j = 1; j <= i;j++)
+			 {
+				 cout << i << " X " << j << " = " << i*j << "   ";
+			 }
+			 cout << endl;
+		 }
+	 }
 };
 
 int main()
@@ -5451,6 +5472,7 @@ int main()
 	
 	cout << sl.convertToTitle(28) << endl;;
 
+	sl.a();
 	for (int i = 0; i < test1.size();i++)
 	{
 		cout << test1[i] << endl;
