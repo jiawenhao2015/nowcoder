@@ -1,0 +1,87 @@
+class Solution {
+public:
+   void fenlix(string& left, vector<int>&xleft,vector<int>&numleft)
+{
+  stringstream ss,tempss;
+  string temp;
+    for(int i=0;i<left.length();i++)
+  {
+    if(left[i]=='+')left[i]=' ';
+    if(left[i]=='-')
+    {
+      left.insert(left.begin()+i,' ');
+    i++;
+    }
+  }
+   
+  ss.str("");
+  ss<<left;
+int a = 1;
+  while(ss>>temp)
+  {
+    int n = temp.length();
+    if(temp[n-1]=='x')
+    {
+      temp[temp.length()-1]='\0';      //这个也要占1位
+      if(temp.length()==1)//x只有1位  ????? 
+      { 
+	xleft.push_back(1);
+      }
+      else
+      {
+	  tempss.str("");
+          tempss.clear();
+	tempss<<temp;
+	tempss>>a;
+	xleft.push_back(a);
+      }
+    }
+    else
+    { 
+       tempss.str("");
+       tempss.clear();
+	 if(temp[0]=='-'&&temp[1]=='\0')xleft.push_back(-1);
+	else
+	{tempss<<temp;
+	tempss>>a;
+	xleft.push_back(a);}
+    }
+  }
+  
+}
+string solveEquation(string equation)
+{
+  string ret ="";
+ 
+  for(int i =0;i<equation.length();i++)if(equation[i] == '=')equation[i] = '  ';
+   stringstream ss(equation),tempss;
+  string left ,right,temp;
+  ss>>left>>right;
+  
+  vector<int>xleft;
+  vector<int> numleft;
+  vector<int> xright;
+  vector<int> numright;
+
+  fenlix(left,xleft,numleft);
+  fenlix(right,xright,numright);
+  
+  int xl = 0,xr =0,nl =0,nr =0;
+  for(int i=0;i<xleft.size();i++)xl+=xleft[i];  
+  for(int i=0;i<numleft.size();i++)nl+=numleft[i];
+  for(int i=0;i<xright.size();i++)xr+=xright[i];  
+  for(int i=0;i<numright.size();i++)nr+=numright[i];
+  
+     int sumx = xl -xr;
+  int sumn = nr - nl;
+ // cout<<xl<<" "<<xr<<" "<<nl<<" "<<nr<<endl;
+ //cout<<sumx<<" "<<sumn<<endl;
+  if(sumx==0&&sumn==0) return "Infinite solutions";
+  if(sumx==0&&sumn!=0)  return "No solution";
+  ss.clear();
+  ss.str("");
+  ss<<"x="<<sumn/sumx;
+  ret = ss.str();
+  return ret;
+}
+};
