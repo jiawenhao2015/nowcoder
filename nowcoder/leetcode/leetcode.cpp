@@ -5372,6 +5372,87 @@ public:
 		 reverse(ret.begin(), ret.end());
 		 return ret;		 
 	 }
+	 /*leetcode-451-Sort Characters By Frequency*/
+	 string frequencySort(string str)
+	 {
+		 vector<int>mp(256,0);
+		 for (auto c:str)
+		 {
+			 mp[c]++;
+		 }
+		 string s="";
+		 int most = 0;
+		 int index = 0;
+		 for (int i = 0; i < 256;i++)
+		 {
+			 if (mp[i] == 0)continue;
+
+			 for (int j = 0; j < 256;j++)
+			 {
+				 if (mp[j] == 0)continue;
+				 if (most < mp[j])
+				 {
+					 most = mp[j];
+					 index = j;
+				 }
+			 }
+			 s.append(most, char(index));
+			 /* for (int i = 0; i < most;i++)
+			  {
+			  s.push_back(char(index));
+			  }*/
+			 mp[index] = 0;
+			 most = 0;
+		 }
+		 return s;
+	 }
+	 
+	 /*leetcode-368-Largest Divisible Subset*/
+	
+	 vector<int> largestDivisibleSubset(vector<int>& nums)
+	 {
+
+	 }
+	 /*leetcode-264-Ugly Number II*/
+	 int nthUglyNumber(int n)
+	 {
+		 vector<int>ret(n, 1);
+		 int index2 = 0, index3 = 0, index5 = 0;
+		 for (int i = 1; i < n; i++)
+		 {
+			 ret[i] = min(ret[index2]*2,min(ret[index3]*3,ret[index5]*5));
+			 if (ret[i] == ret[index2] * 2)index2++;
+			 if (ret[i] == ret[index3] * 3)index3++;
+			 if (ret[i] == ret[index5] * 5)index5++;
+		 }
+		 return ret[n - 1];
+	 }
+
+	 int findSubstringInWraproundString(string p)
+	 {
+		 int n = p.length();
+		 vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+
+		
+
+		 return dp[1][n];
+	 }
+	 /*leetcode-350-Intersection of Two Arrays II*/
+	 vector<int> intersect(vector<int>& nums1, vector<int>& nums2)
+	 {
+		 vector<int>ret;
+		 map<int, int>mp;
+		 for (auto a : nums1)mp[a]++;
+		 for (auto a:nums2)
+		 {
+			 if (mp[a] > 0)
+			 {
+				 mp[a]--;
+				 ret.push_back(a);
+			 }
+		 }
+		 return ret;
+	 }
 };
 
 int main()
@@ -5396,6 +5477,7 @@ int main()
 	
 	cout << sl.convertToTitle(28) << endl;;
 
+	sl.a();
 	for (int i = 0; i < test1.size();i++)
 	{
 		cout << test1[i] << endl;

@@ -339,7 +339,6 @@ int main(){
         即使用前i-1种钱币拼凑面值为j的方法数dp[i-1][j-k*coins[i]]
 初始化：
 上表的第一行dp[0]均为1，表示任意目标，只由面值为1的硬币拼凑，拼凑方法为1；
-*/
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -368,6 +367,7 @@ public class Main{
         }
     }
 }
+*/
 
 
 /*
