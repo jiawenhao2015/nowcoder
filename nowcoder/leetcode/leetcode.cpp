@@ -5453,6 +5453,22 @@ public:
 		 }
 		 return ret;
 	 }
+	 /*leetcode-405-Convert a Number to Hexadecimal*/
+	 string toHex(int num)
+	 {
+		 string s;
+		 int digital;
+		 char c[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+		 if (num == 0)return "0";
+		 int count = 0;
+		 while (num > 0 && count++<8)
+		 {
+			 digital = num & 0xf;
+			 s  = c[digital] + s;
+			 num >>4;
+		 }
+		 return s;
+	 }
 };
 
 int main()
