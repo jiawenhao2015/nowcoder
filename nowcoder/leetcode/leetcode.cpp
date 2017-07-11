@@ -5485,6 +5485,37 @@ public:
 		 }
 		 return ret;
 	 }
+
+	 /*leetcode-419-Battleships in a Board*/
+	 void dfsbattle(vector<vector<char>>& board,vector<vector<bool>>& visited,int i,int j)
+	 {
+		 int m = board.size(), n = board[0].size();
+		 if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || board[i][j] == '.')return;
+		 visited[i][j] = true;
+		 dfsbattle(board, visited, i + 1, j);
+		 dfsbattle(board, visited, i - 1, j);
+		 dfsbattle(board, visited, i , j+1);
+		 dfsbattle(board, visited, i , j-1);
+	 }
+	 int countBattleships(vector<vector<char>>& board)
+	 {
+		 if (board.empty())return 0;
+		 int m = board.size(), n = board[0].size();
+		 vector<vector<bool>>visited(m, vector<bool>(n, false));
+		 int ret = 0;
+		 for (int i = 0; i < m;i++)
+		 {
+			 for (int j = 0; j < n;j++)
+			 {
+				 if (board[i][j]=='X'&& !visited[i][j])
+				 {
+					 dfsbattle(board, visited, i,j);
+					 ret++;
+				 }
+			 }
+		 }
+		 return ret;
+	 }
 };
 
 int main()
@@ -5501,26 +5532,16 @@ int main()
 	 
 	vector<vector<int>>mat2;
 	vector<vector<int>>mat3;
-	//sl.divide(mat2, mat3, index,test1, test, 0);
-	sl.put(1, "2017:01:01:23:59:59");
-	sl.put(2, "2017:01:01:22:59:59");
-	sl.put(3, "2016:01:01:00:00:00");
-	//test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Year");
+	 
 	
-	cout << sl.convertToTitle(28) << endl;;
-
-	sl.a();
-	for (int i = 0; i < test1.size();i++)
-	{
-		cout << test1[i] << endl;
-	}
-	test1 = sl.retrieve("2016:01:01:01:01:01", "2017:01:01:23:00:00", "Hour");
-
-	for (int i = 0; i < test1.size(); i++)
-	{
-		cout << test1[i] << endl;
-	}
-
+	string a = "abc";
+	string b;
+	cin >> b;
+	if (a.compare(b)==0)cout << "yes" << endl;
+	else cout << "no" << endl;;
+	
+	 
+	getchar();
 	for (int i = 0; i < mat2.size();i++)
 	{
 		for (int j = 0; j < mat2[i].size(); j++)
