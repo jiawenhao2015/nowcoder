@@ -6,10 +6,10 @@ getline(cin, str);
 
 
 
-
+*******	DFS BFS******
 /*
 经典题目：
-[LeetCode]419 --- Battleships in a Board 平板上的战船   *******	DFS BFS
+[LeetCode]419 --- Battleships in a Board 平板上的战船   
  
 
 Given an 2D board, count how many different battleships are in it. The battleships are represented with 'X's, 
@@ -139,4 +139,55 @@ public:
         return res;
     }
 };
+/*leetcode-200-Number of Islands
+Given a 2d grid map of '1's (land) and '0's (water), 
+count the number of islands. An island is surrounded by water
+ and is formed by connecting adjacent lands horizontally or vertically.
+ You may assume all four edges of the grid are all surrounded by water.
 
+Example 1:
+
+11110
+11010
+11000
+00000
+Answer: 1
+
+Example 2:
+
+11000
+11000
+00100
+00011
+Answer: 3
+*/ 
+
+	 void dfsisland(vector<vector<char>>& grid, vector<vector<bool>>& visited,int i,int j)
+	 {
+		 int m = grid.size(), n = grid[0].size();
+		 if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || grid[i][j] == '0')return;
+		 visited[i][j] = true;
+		 dfsisland(grid, visited, i + 1, j);
+		 dfsisland(grid, visited, i - 1, j);
+		 dfsisland(grid, visited, i, j + 1);
+		 dfsisland(grid, visited, i, j - 1);
+	 }
+	 int numIslands(vector<vector<char>>& grid)
+	 {
+		 if (grid.empty())return 0;
+		 int m = grid.size(), n = grid[0].size();
+		 vector<vector<bool>>visited(m, vector<bool>(n, false));
+		 int ret = 0;
+		 for (int i = 0; i < m;i++)
+		 {
+			 for (int j = 0; j < n;j++)
+			 {
+				 if (grid[i][j] == '1' && !visited[i][j])
+				 {
+					 dfsisland(grid, visited,i,j);
+					 ret++;
+				 }
+			 }
+		 }
+		 return ret;
+	 }

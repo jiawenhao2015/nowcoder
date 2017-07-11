@@ -5516,6 +5516,36 @@ public:
 		 }
 		 return ret;
 	 }
+	 /*leetcode-200-Number of Islands*/
+	 void dfsisland(vector<vector<char>>& grid, vector<vector<bool>>& visited,int i,int j)
+	 {
+		 int m = grid.size(), n = grid[0].size();
+		 if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || grid[i][j] == '0')return;
+		 visited[i][j] = true;
+		 dfsisland(grid, visited, i + 1, j);
+		 dfsisland(grid, visited, i - 1, j);
+		 dfsisland(grid, visited, i, j + 1);
+		 dfsisland(grid, visited, i, j - 1);
+	 }
+	 int numIslands(vector<vector<char>>& grid)
+	 {
+		 if (grid.empty())return 0;
+		 int m = grid.size(), n = grid[0].size();
+		 vector<vector<bool>>visited(m, vector<bool>(n, false));
+		 int ret = 0;
+		 for (int i = 0; i < m;i++)
+		 {
+			 for (int j = 0; j < n;j++)
+			 {
+				 if (grid[i][j] == '1' && !visited[i][j])
+				 {
+					 dfsisland(grid, visited,i,j);
+					 ret++;
+				 }
+			 }
+		 }
+		 return ret;
+	 }
 };
 
 int main()
