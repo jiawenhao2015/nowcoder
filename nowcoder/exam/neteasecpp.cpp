@@ -99,7 +99,36 @@ GGBBG
 输出例子1:
 2
 */
-
+//70%  BGBGBGBGGGBBGBGBGG 应该33 输出47
+void adjustque()
+{
+	string s;
+	cin >> s;
+	int n = s.length();
+	int ret = 0,ret2=0;
+	string temp = s,s2;
+	sort(s.begin(), s.end());//首先排序 bbggg 与原始ggbbg依次做比较
+	
+	int i =0,j=0;
+	while (i < n && j < n)
+	{
+		while (j< n  && temp[j] != s[i])j++;
+		ret += (j - i);
+		i++;
+		j++;
+	}
+	s2 = s;
+	reverse(s2.begin(), s2.end());//逆序比一下
+	i = 0, j = 0;
+	while (i < n && j < n)
+	{
+		while (j < n  && temp[j] != s2[i])j++;
+		ret2 += (j - i);
+		i++;
+		j++;
+	}
+	cout << min(ret, ret2) << endl;
+}
 /*
 小易有一个长度为n序列，小易想移除掉里面的重复元素，但是小易想是对于每种元素保留最后出现的那个。小易遇到了困难,希望你来帮助他。
 输入描述:
@@ -138,7 +167,7 @@ void delRep()
 	cout << ret[0];
 	for (int i = 1; i < ret.size();i++)
 	{
-		cout << " " << ret[i] << endl;
+		cout << " " << ret[i];
 	}
 
 }
@@ -164,7 +193,7 @@ void delRep()
 输出例子1:
 8 9 7
 */
-
+//60% 复杂度太高
 void magic()
 {
 	int n;
@@ -355,7 +384,7 @@ strawberry orange grapefruit watermelon
 
 int main()
 {
-	magic();
+	adjustque();
 	getchar();
 	system("PAUSE");
 	return 0;

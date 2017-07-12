@@ -5546,6 +5546,29 @@ public:
 		 }
 		 return ret;
 	 }
+	 /*leetcode-347-Top K Frequent Elements*/
+	 vector<int> topKFrequent(vector<int>& nums, int k)
+	 {
+		 if (nums.empty())return{};
+		 map<int, int>mp;
+		 vector<vector<int>>bucket(nums.size() + 1);
+		 for (auto a:nums)mp[a]++;
+		 for (auto it : mp)bucket[it.second].push_back(it.first);
+		 vector<int>ret;
+		 for (int i = nums.size(); i >= 0 && k>0;i--)
+		 {
+			 if (!bucket[i].empty())
+			 {
+				 for (int j = 0; j < bucket[i].size() && k>0; j++)
+				 {
+					 ret.push_back(bucket[i][j]);
+					 k--;
+				 }
+			 }
+		 }
+		  
+		 return ret;
+	 }
 };
 
 int main()
