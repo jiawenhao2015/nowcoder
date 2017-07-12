@@ -191,3 +191,60 @@ Answer: 3
 		 }
 		 return ret;
 	 }
+/*HASH  桶排序
+
+Given a non-empty array of integers, return the k most frequent elements.
+
+For example,
+Given [1,1,1,2,2,3] and k = 2, return [1,2].
+
+Note: 
+
+You may assume k is always valid, 1 ? k ? number of unique elements.
+Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+思路：
+
+首先用map统计数字出现的次数，然后再将出现的次数作为关键词，使用桶排序，然后从后遍历，返回关键字即可。
+后来又看到有人用优先队列存储，感觉更方便了。*/
+	vector<int> topKFrequent(vector<int>& nums, int k)
+    {
+         if (nums.empty())return{};
+         map<int, int>mp;
+         vector<vector<int>>bucket(nums.size() + 1);
+         for (auto a:nums)mp[a]++;
+         for (auto it : mp)bucket[it.second].push_back(it.first);
+         vector<int>ret;
+         for (int i = nums.size(); i >= 0 && k>0;i--)
+         {
+             if (!bucket[i].empty())
+             {
+                 for (int j = 0; j < bucket[i].size() && k>0; j++)
+                 {
+                     ret.push_back(bucket[i][j]);
+                     k--;
+                 }
+             }
+         }
+          
+         return ret;
+    }
+	 
+	 vector<int> topKFrequent(vector<int>& nums, int k)
+	 {
+        unordered_map<int,int> map;
+        for(int num : nums){
+            map[num]++;
+        }
+        
+        vector<int> res;
+        // pair<first, second>: first is frequency,  second is number
+        priority_queue<pair<int,int>> pq; 
+        for(auto it = map.begin(); it != map.end(); it++){
+            pq.push(make_pair(it->second, it->first));
+            if(pq.size() > (int)map.size() - k){
+                res.push_back(pq.top().second);
+                pq.pop();
+            }
+        }
+        return res;
+    }
