@@ -269,6 +269,48 @@ Input:
 ["root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"]
 Output:  
 [["root/a/2.txt","root/c/d/4.txt","root/4.txt"],["root/a/1.txt","root/c/3.txt"]]*/
+void parse(string orign,string& fileName,string& content)
+	 {
+		 int index = orign.find_first_of('(');
+		 fileName = orign.substr(0, index);
+		 content = orign.substr(index + 1,orign.length()-index-2);
+	 }
+	void getFullPath(string p,vector<string>&path,vector<string>&conVec)
+	 {
+		 stringstream ss(p);
+		 string pathPrefix;
+		 ss >> pathPrefix;
+		 string file;
+		 while (ss >> file)
+		 {
+			 string fileName, content;
+			 parse(file,fileName, content);
+			 path.push_back(pathPrefix + "/"+fileName);
+			 conVec.push_back(content);
+		 }
+	 }
+	vector<vector<string>> findDuplicate(vector<string>& paths)
+	 {		
+		 vector<string>pathVec, conVec;
+		 for (auto p:paths)
+		 {
+			 getFullPath(p,pathVec,conVec);			 
+		 }
+		 map<string, set<string>>mp2;
+		 for (int i = 0; i < pathVec.size();i++)
+		 {
+			 mp2[conVec[i]].insert(pathVec[i]);
+			// cout << pathVec[i] << " " << conVec[i] << endl;
+		 }
+		 vector<vector<string>>ret;
+		 for (auto it :mp2)
+		 {
+			 if (it.second.size() == 1)continue;
+			 vector<string> temp(it.second.begin(),it.second.end());
+			 ret.push_back(temp);
+		 }
+		 return ret;
+	 }
 	vector<vector<string>> findDuplicate(vector<string>& paths)
 	{
     unordered_map<string, vector<string>> files;
