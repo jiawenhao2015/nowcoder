@@ -5569,6 +5569,52 @@ public:
 		  
 		 return ret;
 	 }
+
+	 /*leetcode-609-Find Duplicate File in System*/
+	 
+	 void parse(string orign,string& fileName,string& content)
+	 {
+		 int index = orign.find_first_of('(');
+		 fileName = orign.substr(0, index);
+		 content = orign.substr(index + 1,orign.length()-index-2);
+	 }
+	void getFullPath(string p,vector<string>&path,vector<string>&conVec)
+	 {
+		 stringstream ss(p);
+		 string pathPrefix;
+		 ss >> pathPrefix;
+		 string file;
+		 while (ss >> file)
+		 {
+			 string fileName, content;
+			 parse(file,fileName, content);
+			 path.push_back(pathPrefix + "/"+fileName);
+			 conVec.push_back(content);
+		 }
+	 }
+	vector<vector<string>> findDuplicate(vector<string>& paths)
+	 {
+		 map<string, string>mp;
+		 vector<string>pathVec, conVec;
+		 for (auto p:paths)
+		 {
+			 getFullPath(p,pathVec,conVec);			 
+		 }
+		 map<string, set<string>>mp2;
+		 for (int i = 0; i < pathVec.size();i++)
+		 {
+			 mp2[conVec[i]].insert(pathVec[i]);
+			// cout << pathVec[i] << " " << conVec[i] << endl;
+		 }
+		 vector<vector<string>>ret;
+		 for (auto it :mp2)
+		 {
+			 if (it.second.size() == 1)continue;
+			 vector<string> temp(it.second.begin(),it.second.end());
+			 ret.push_back(temp);
+		 }
+		 return ret;
+	 }
 };
 
 int main()
@@ -5585,27 +5631,18 @@ int main()
 	 
 	vector<vector<int>>mat2;
 	vector<vector<int>>mat3;
+	vector<string> paht = { "root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)" };
+	
+	vector<vector<string>> ret = sl.findDuplicate(paht);
 	 
 	
-	string a = "abc";
-	string b;
-	cin >> b;
-	if (a.compare(b)==0)cout << "yes" << endl;
-	else cout << "no" << endl;;
-	
-	 
-	getchar();
-	for (int i = 0; i < mat2.size();i++)
+	for (int i = 0; i < ret.size();i++)
 	{
-		for (int j = 0; j < mat2[i].size(); j++)
+		for (int j = 0; j < ret[i].size(); j++)
 		{
-			cout << mat2[i][j] << " ";
+			cout << ret[i][j] << " ";
 		}
-		cout << "---------" ;
-		for (int j = 0; j < mat3[i].size(); j++)
-		{
-			cout << mat3[i][j] << " ";
-		}
+		cout << "---------" ;		
 		cout << endl;
 	}
 	
