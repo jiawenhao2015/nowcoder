@@ -6,8 +6,8 @@ getline(cin, str);
 
 
 
-*******	DFS BFS******
-/*
+
+/********	----------------------------------------------------------------------------DFS BFS******
 经典题目：
 [LeetCode]419 --- Battleships in a Board 平板上的战船   
  
@@ -191,7 +191,7 @@ Answer: 3
 		 }
 		 return ret;
 	 }
-/*HASH  桶排序
+/*-------------------------------------------------------------------------------------HASH  桶排序
 
 Given a non-empty array of integers, return the k most frequent elements.
 
@@ -248,3 +248,48 @@ Your algorithm's time complexity must be better than O(n log n), where n is the 
         }
         return res;
     }
+	
+	
+	/*  字符串  stringstream 的应用 以及查找字符的find函数
+	
+A group of duplicate files consists of at least two files that have exactly the same content.
+
+A single directory info string in the input list has the following format:
+
+"root/d1/d2/.../dm f1.txt(f1_content) f2.txt(f2_content) ... fn.txt(fn_content)"
+
+It means there are n files (f1.txt, f2.txt ... fn.txt with content f1_content, f2_content ... fn_content, respectively) in directory root/d1/d2/.../dm. Note that n >= 1 and m >= 0. If m = 0, it means the directory is just the root directory.
+
+The output is a list of group of duplicate file paths. For each group, it contains all the file paths of the files that have the same content. A file path is a string that has the following format:
+
+"directory_path/file_name.txt"
+
+Example 1:
+Input:
+["root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"]
+Output:  
+[["root/a/2.txt","root/c/d/4.txt","root/4.txt"],["root/a/1.txt","root/c/3.txt"]]*/
+	vector<vector<string>> findDuplicate(vector<string>& paths)
+	{
+    unordered_map<string, vector<string>> files;
+    vector<vector<string>> result;
+
+    for (auto path : paths) {
+	    stringstream ss(path);
+	    string root;
+	    string s;
+	    getline(ss, root, ' ');
+	    while (getline(ss, s, ' ')) {
+		    string fileName = root + '/' + s.substr(0, s.find('('));
+		    string fileContent = s.substr(s.find('(') + 1, s.find(')') - s.find('(') - 1);
+		    files[fileContent].push_back(fileName);
+	    }
+    }
+
+    for (auto file : files) {
+	    if (file.second.size() > 1)
+		    result.push_back(file.second);
+    }
+
+    return result;
+}
