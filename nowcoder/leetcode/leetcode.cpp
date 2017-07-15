@@ -5593,8 +5593,7 @@ public:
 		 }
 	 }
 	vector<vector<string>> findDuplicate(vector<string>& paths)
-	 {
-		 map<string, string>mp;
+	 {		
 		 vector<string>pathVec, conVec;
 		 for (auto p:paths)
 		 {
@@ -5645,7 +5644,8 @@ int main()
 		cout << "---------" ;		
 		cout << endl;
 	}
-	
+	int cat = (17,250);
+	cout << cat << endl;
 		
 	getchar();
 	return 0;
