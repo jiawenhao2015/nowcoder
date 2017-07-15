@@ -5614,6 +5614,22 @@ public:
 		 }
 		 return ret;
 	 }
+	
+	/*leetcode-525-Contiguous Array*/
+	int findMaxLength(vector<int>& nums)
+	{
+		for (auto& a:nums) if (a == 0)a = -1;
+		map<int, int>mp;
+		mp[0] = -1;
+		int sum = 0,ret =0;
+		for (int i = 0; i < nums.size();i++)
+		{
+			sum += nums[i];
+			if (mp.count(sum))ret = max(ret, i - mp[sum]);
+			else mp[sum] = i;
+		}
+		return ret;		 
+	}
 };
 
 int main()
