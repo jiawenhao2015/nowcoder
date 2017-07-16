@@ -1,0 +1,10 @@
+/*leetcode-643-Maximum Average Subarray I*/
+	double findMaxAverage(vector<int>& nums, int k)
+	{
+		int s = accumulate(nums.begin(), nums.begin() + k, 0), mx = s;
+		for (int i = k; i < nums.size(); i++) {
+			s += nums[i] - nums[i - k];
+			mx = max(mx, s);
+		}
+		return double(mx) / k;
+	}

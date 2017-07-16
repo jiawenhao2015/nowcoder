@@ -9,6 +9,7 @@
 #include<string>
 #include<sstream>
 #include <set>
+#include <numeric>
 using namespace std;
 struct Interval{
 	int start;
@@ -5630,6 +5631,19 @@ public:
 		}
 		return ret;		 
 	}
+	/*leetcode-643-Maximum Average Subarray I*/
+	double findMaxAverage(vector<int>& nums, int k)
+	{
+		int s = accumulate(nums.begin(), nums.begin() + k, 0), mx = s;
+		for (int i = k; i < nums.size(); i++) {
+			s += nums[i] - nums[i - k];
+			mx = max(mx, s);
+		}
+		return double(mx) / k;
+	}
+
+
+ 
 };
 
 int main()
@@ -5638,28 +5652,19 @@ int main()
 
 	vector<int>test,test1;
 	
-	test.push_back(1);
-	test.push_back(2);
-	test.push_back(3);
+	test.push_back(0);
 	test.push_back(4);
-	test.push_back(5);
+	test.push_back(0);
+	test.push_back(3);
+	test.push_back(2);
 	 
 	vector<vector<int>>mat2;
 	vector<vector<int>>mat3;
 	vector<string> paht = { "root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)" };
 	
-	vector<vector<string>> ret = sl.findDuplicate(paht);
+	cout << sl.findMaxAverage(test,1);
 	 
-	
-	for (int i = 0; i < ret.size();i++)
-	{
-		for (int j = 0; j < ret[i].size(); j++)
-		{
-			cout << ret[i][j] << " ";
-		}
-		cout << "---------" ;		
-		cout << endl;
-	}
+	 
 	int cat = (17,250);
 	cout << cat << endl;
 		
