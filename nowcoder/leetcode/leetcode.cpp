@@ -5659,30 +5659,57 @@ public:
 		}
 		return ret;
 	}
- 
+	
+	/*leetcode-636-Exclusive Time of Functions*/
+	vector<int> exclusiveTime(int n, vector<string>& logs) 
+	{
+		vector<int>ret(n), sta;
+		int id, time, last;
+		for (auto log:logs)
+		{
+			for (auto& c : log) if (c == ':')c = ' ';
+			stringstream ss(log);
+			
+			char s[9];
+			ss >> id >> s >> time;
+
+			//sscanf(log.c_str(), "%d:%[^:]:%d", &id, s, &time);
+			//cout << id << " " << s << " " << time<<endl;
+			if (s[0]=='s')
+			{
+				if (sta.size() > 0)ret[sta.back()] += time - last;
+				sta.push_back(id);				
+			}
+			else
+			{
+				ret[sta.back()] += ++time - last;
+				sta.pop_back();
+			}
+			last = time;
+		}
+		return ret;
+	}
 };
 
 int main()
 {
-	Solution sl;	
+	Solution sl;
 
-	vector<int>test,test1;
-	
+	vector<int>test, test1;
+
 	test.push_back(0);
 	test.push_back(4);
 	test.push_back(0);
 	test.push_back(3);
 	test.push_back(2);
-	 
+
 	vector<vector<int>>mat2;
 	vector<vector<int>>mat3;
-	vector<string> paht = { "root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)" };
+	vector<string> logs = {"0:start:0", "1:start:2", "1:end:5", "0:end:6"};
 	
-	cout << sl.findMaxAverage(test,1);
+  test1 = sl.exclusiveTime(2,logs);	 
 	 
-	 
-	int cat = (17,250);
-	cout << cat << endl;
+	
 		
 	getchar();
 	return 0;

@@ -1,0 +1,29 @@
+/*leetcode-636-Exclusive Time of Functions*/
+	vector<int> exclusiveTime(int n, vector<string>& logs) 
+	{
+		vector<int>ret(n), sta;
+		int id, time, last;
+		for (auto log:logs)
+		{
+			for (auto& c : log) if (c == ':')c = ' ';
+			stringstream ss(log);
+			
+			char s[9];
+			ss >> id >> s >> time;
+
+			//sscanf(log.c_str(), "%d:%[^:]:%d", &id, s, &time);
+			//cout << id << " " << s << " " << time<<endl;
+			if (s[0]=='s')
+			{
+				if (sta.size() > 0)ret[sta.back()] += time - last;
+				sta.push_back(id);				
+			}
+			else
+			{
+				ret[sta.back()] += ++time - last;
+				sta.pop_back();
+			}
+			last = time;
+		}
+		return ret;
+	}
