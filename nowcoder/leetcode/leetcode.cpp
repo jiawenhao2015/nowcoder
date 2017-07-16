@@ -5642,7 +5642,23 @@ public:
 		return double(mx) / k;
 	}
 
-
+	/*leetcode-644-Maximum Average Subarray II*/
+	double findMaxAverage1(vector<int>& nums, int k)
+	{
+		int n = nums.size();
+		vector<double>sum(n + 1,0);
+		for (int i = 0; i < n; i++)sum[i + 1] = sum[i] + nums[i];
+		double ret = -1e4;
+		for (int i = 0; i <= n - k;i++)
+		{
+			for (int window = k; window + i <= n;window++)
+			{
+				//ret = max(ret,(sum[i+window]-sum[i])/window);//³¬Ê±¡£¡£¡£
+				if (ret*window < (sum[i + window] - sum[i]))ret = (sum[i + window] - sum[i])/window;
+			}
+		}
+		return ret;
+	}
  
 };
 
