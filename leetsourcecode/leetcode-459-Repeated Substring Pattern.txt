@@ -1,0 +1,15 @@
+bool repeatedSubstringPattern(string s)
+{
+  int n = s.length();
+  if(n<=1)return false;
+  for(int i =1;i<=n/2;i++)
+  {
+    if(n%i==0)
+    {
+      string reps ="",sub = s.substr(0,i);
+      for(int rep =0;rep<n/i;rep++)reps += sub;
+      if(reps == s)return true;      
+    }
+  }
+    return false;    
+}
