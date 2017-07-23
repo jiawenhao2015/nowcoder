@@ -5689,7 +5689,23 @@ public:
 		}
 		return ret;
 	}
+	/**/
+	vector<int> findErrorNums(vector<int>& nums)
+	{
+		vector<int> ret;
+		vector<bool>flag(nums.size()+1,false);
 
+		for (int i = 0; i < nums.size();i++)
+		{
+			 if (flag[nums[i]] == true)ret.push_back(nums[i]);			 
+			 flag[nums[i]] = true;			 	 
+		}
+		for (int i = 1; i < flag.size(); i++)
+		{
+			if (flag[i] == false)ret.push_back(i);			 
+		}
+		return ret;
+	}
 };
 
 int main()
