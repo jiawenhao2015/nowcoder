@@ -5689,7 +5689,7 @@ public:
 		}
 		return ret;
 	}
-	/**/
+	/*645. Set Mismatch*/
 	vector<int> findErrorNums(vector<int>& nums)
 	{
 		vector<int> ret;
@@ -5705,6 +5705,26 @@ public:
 			if (flag[i] == false)ret.push_back(i);			 
 		}
 		return ret;
+	}
+	/*leetcode-646-Maximum Length of Pair Chain*/
+	 
+	int findLongestChain(vector<vector<int>>& pairs)
+	{
+		sort(pairs.begin(), pairs.end(), [](const vector<int>&a, const vector<int>&b){return a[0] < b[0]; });
+		 
+		vector<int> dp(pairs.size(), 1);
+		for (int i = 1; i < pairs.size(); i++)
+		{
+			for (int j = 0; j<i;j++)
+			{
+				if (pairs[i][0]>pairs[j][1])
+				{
+					dp[i] = max(dp[i],dp[j]+1);					
+				}
+			}
+			
+		}
+		return *max_element(dp.begin(), dp.end());
 	}
 };
 
