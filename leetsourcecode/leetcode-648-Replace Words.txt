@@ -1,0 +1,24 @@
+/*leetcode-648-Replace Words*/
+	string replaceWords(vector<string>& dict, string sentence)
+	{
+		map<string, string>mpdic;
+		for (auto s : dict)mpdic[s] = s;
+		vector<string>word;
+		stringstream ss(sentence);
+		string tmp;
+		while (ss >> tmp)word.push_back(tmp);
+		for (auto &str : word)
+		{
+			for (int i = 1; i < str.length();i++)
+			{
+				if (mpdic.count(str.substr(0,i)))
+				{
+					str = str.substr(0, i);
+					break;
+				}
+			}
+		}
+		string ret = word[0];
+		for (int i = 1; i < word.size();i++)ret += " " + word[i];
+		return ret;		
+	}

@@ -5689,7 +5689,7 @@ public:
 		}
 		return ret;
 	}
-	/*645. Set Mismatch*/
+	/*leetcode-645-Set Mismatch*/
 	vector<int> findErrorNums(vector<int>& nums)
 	{
 		vector<int> ret;
@@ -5706,8 +5706,7 @@ public:
 		}
 		return ret;
 	}
-	/*leetcode-646-Maximum Length of Pair Chain*/
-	 
+	/*leetcode-646-Maximum Length of Pair Chain*/	 
 	int findLongestChain(vector<vector<int>>& pairs)
 	{
 		sort(pairs.begin(), pairs.end(), [](const vector<int>&a, const vector<int>&b){return a[0] < b[0]; });
@@ -5725,6 +5724,51 @@ public:
 			
 		}
 		return *max_element(dp.begin(), dp.end());
+	}
+	/*leetcode-647-Palindromic Substrings*/
+	void ifsub(string& s,int l,int r,int& cnt)
+	{
+		while (l >= 0 && r < s.length() && s[l] == s[r])
+		{
+			cnt++;
+			l--;
+			r++;
+		}
+	}
+	int countSubstrings(string s)
+	{
+		if (s.length() == 0)return 0;
+		int cnt = 0;
+		for (int i = 0; i < s.length();i++)
+		{
+			ifsub(s, i, i, cnt);
+			ifsub(s, i, i+1, cnt);
+		}
+		return cnt;
+	}
+	/*leetcode-648-Replace Words*/
+	string replaceWords(vector<string>& dict, string sentence)
+	{
+		map<string, string>mpdic;
+		for (auto s : dict)mpdic[s] = s;
+		vector<string>word;
+		stringstream ss(sentence);
+		string tmp;
+		while (ss >> tmp)word.push_back(tmp);
+		for (auto &str : word)
+		{
+			for (int i = 1; i < str.length();i++)
+			{
+				if (mpdic.count(str.substr(0,i)))
+				{
+					str = str.substr(0, i);
+					break;
+				}
+			}
+		}
+		string ret = word[0];
+		for (int i = 1; i < word.size();i++)ret += " " + word[i];
+		return ret;		
 	}
 };
 
