@@ -1,0 +1,33 @@
+/*leetcode-213-House Robber II*/
+	int rob2(vector<int>& nums,int start,int end)
+	{
+		int n = nums.size();
+		vector<int>dp(n);
+		if (start == end)return nums[start];
+		if (start + 1 == end)return max(nums[start], nums[end]);		 
+
+		dp[start] = nums[start];
+		dp[start + 1] = max(nums[start], nums[start+1]);
+
+		for (int i = start+2; i <= end;i++)
+		{
+			dp[i] = max(dp[i-2]+nums[i],dp[i-1]);
+		}
+
+		return dp[end];
+	}
+	int rob2(vector<int>& nums)
+	{
+		int n = nums.size();
+		if (nums.empty())return 0;
+		if (n == 1)return nums[0];
+		if (n == 2)return max(nums[0],nums[1]);
+		if (n == 3)return max(nums[0], max(nums[1],nums[2]));
+
+		//int r1 = nums[0] + rob2(nums,2,n-2);
+		//int r2 = nums[1] + rob2(nums, 3, n - 1);//不对
+		
+		int r1 = rob2(nums, 1, n - 1);
+		int r2 = rob2(nums, 0, n - 2); 
+		return max(r1, r2);
+	}
