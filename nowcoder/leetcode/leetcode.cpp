@@ -1016,8 +1016,7 @@ public:
 		{
 			money[i] = max(money[i-2]+nums[i],money[i-1]);
 		}
-		return money.back();
-		
+		return money.back();		
 	}
 	/*leetcode-120-Triangle
 	Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
@@ -5802,6 +5801,22 @@ public:
 		int r1 = rob2(nums, 1, n - 1);
 		int r2 = rob2(nums, 0, n - 2); 
 		return max(r1, r2);
+	}
+	/*leetcode-337-House Robber III
+	l表示下一层左子树的值，r表示下一层右子树的值
+	*/
+	int rob3(TreeNode* root, int& l, int& r)
+	{
+		if (root == NULL)return 0;
+		int ll = 0, lr = 0, rl = 0, rr = 0;
+		l = rob3(root->left, ll, lr);
+		r = rob3(root->right, rl, rr);
+		return max(l + r, root->val + ll + lr + rl + rr);
+	}
+	int rob3(TreeNode* root)
+	{
+		int l, r;
+		return rob3(root, l, r);
 	}
 };
 

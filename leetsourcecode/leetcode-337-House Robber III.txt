@@ -1,0 +1,16 @@
+/*leetcode-337-House Robber III
+	l表示下一层左子树的值，r表示下一层右子树的值
+	*/
+	int rob3(TreeNode* root, int& l, int& r)
+	{
+		if (root == NULL)return 0;
+		int ll = 0, lr = 0, rl = 0, rr = 0;
+		l = rob3(root->left, ll, lr);
+		r = rob3(root->right, rl, rr);
+		return max(l + r, root->val + ll + lr + rl + rr);
+	}
+	int rob3(TreeNode* root)
+	{
+		int l, r;
+		return rob3(root, l, r);
+	}
