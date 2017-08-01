@@ -3,7 +3,7 @@ auto 关键字 用于 iterator等处 方便
 getline()读取一行字符串
 string str;  包含#inclue<string>即可
 getline(cin, str);
-
+getline(cin, str,':');//mao hao fen ge fu
 
 
 
@@ -413,3 +413,106 @@ int findLongestChain(vector<vector<int>>& pairs)
         }
         return *max_element(dp.begin(), dp.end());
     }
+/*
+[leetcode-650-2 Keys Keyboard]
+
+Initially on a notepad only one character 'A' is present. You can perform two operations on this notepad for each step:
+
+Copy All: You can copy all the characters present on the notepad (partial copy is not allowed).
+Paste: You can paste the characters which are copied last time.
+ 
+
+Given a number n. You have to get exactly n 'A' on the notepad by performing the minimum number of steps permitted. Output the minimum number of steps to get n 'A'.
+
+Example 1:
+
+Input: 3
+Output: 3
+Explanation:
+Intitally, we have one character 'A'.
+In step 1, we use Copy All operation.
+In step 2, we use Paste operation to get 'AA'.
+In step 3, we use Paste operation to get 'AAA'.
+ 
+
+Note:
+
+The n will be in the range [1, 1000].
+思路：
+
+如果知道了i的结果，那么2×i的步骤只需在i的结果上加上2即可，一次复制，一次粘贴。同理3×i的结果为一次复制，两次粘贴，i的结果加上3。
+
+*/
+int minSteps(int n)
+{
+  int step[1010];
+  for(int i=0;i<1010;++i)step[i]= 1010;
+  step[1] = 0;
+  for(int i=1;i<=1000;i++)
+  {
+    int k =2;
+    for(int j=i*2;j<=1000;j+=i)
+    {
+      step[j] = min(step[j],step[i]+k);
+      k++;
+    }
+  }
+  return step[n];  
+ }
+
+/*
+[leetcode-651-4 Keys Keyboard]
+
+Imagine you have a special keyboard with the following keys:
+
+Key 1: (A): Prints one 'A' on screen.
+
+Key 2: (Ctrl-A): Select the whole screen.
+
+Key 3: (Ctrl-C): Copy selection to buffer.
+
+Key 4: (Ctrl-V): Print buffer on screen appending it after what has already been printed.
+
+Now, you can only press the keyboard for N times (with the above four keys), find out the maximum numbers of 'A' you can print on screen.
+
+Example 1:
+Input: N = 3
+Output: 3
+Explanation: 
+We can at most get 3 A's on screen by pressing following key sequence:
+A, A, A 
+
+Example 2:
+
+Input: N = 7
+Output: 9
+Explanation: 
+We can at most get 9 A's on screen by pressing following key sequence:
+A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V 
+
+Note:
+
+1 <= N <= 50
+Answers will be in the range of 32-bit signed integer.
+思路：
+
+要想N步生成最多个A，可在N-2步的时候，Ctrl A，N-1步的时候，Ctrl C，第N步的时候Ctrl V，这样就能将N-3步生成的A的个数，翻倍。
+
+如何确定在第几步Ctrl A，然后再Ctrl C、Ctrl V呢，需要依次判断第i-3步之前的步骤。
+
+得到递推公式 dp[i] = max(dp[i],dp[i-j-1]);dp[i]表示第i步生成的最多的A的个数。
+*/
+
+int maxA(int N)
+ {
+   vector<int>dp(N+1);
+   for(int i=0;i<=N;i++)
+   {
+     dp[i] = i;
+     for(int j=0;j<=i-3;j++)
+     {
+       dp[i] = max(dp[i],dp[j]*(i-j-2+1));
+    }
+  }
+  return dp[N];
+} 
