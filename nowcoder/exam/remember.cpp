@@ -705,4 +705,98 @@ int main(){
     getchar();
     return 0;
 }
+/*
+某餐馆有n张桌子，每张桌子有一个参数：a 可容纳的最大人数； 有m批客人，每批客人有两个参数:b人数，c预计消费金额。 在不允许拼桌的情况下，请实现一个算法选择其中一部分客人，使得总预计消费金额最大 
 
+输入描述:
+
+输入包括m+2行。
+第一行两个整数n(1 <= n <= 50000),m(1 <= m <= 50000)
+第二行为n个参数a,即每个桌子可容纳的最大人数,以空格分隔,范围均在32位int范围内。
+接下来m行，每行两个参数b,c。分别表示第i批客人的人数和预计消费金额,以空格分隔,范围均在32位int范围内。
+输出描述:
+
+输出一个整数,表示最大的总预计消费金额
+示例1
+输入
+
+3 5
+2 4 2
+1 3
+3 5
+3 7
+5 9
+1 10
+输出
+
+20
+思路：
+
+使用优先队列，将金额大的客户排在前面。将桌子容量排序，这样寻找合适桌子的时候可以使用lower_bound()函数查找，比遍历查找要省时间。否则TLE
+*/
+#include <iostream>
+#include<vector>
+#include<string>
+#include<map>
+#include<set>
+#include<algorithm>
+#include <cmath>
+#include<sstream>
+#include<queue>
+#include<stack>
+#include <unordered_map>
+#include<stdio.h>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+struct client
+{
+  int x,y;
+  client(int a,int b):x(a),y(b){}
+};
+struct cmp
+{
+  bool operator() (client a,client b)
+  {
+    if(a.y == b.y) return a.x < b.x;
+    return a.y < b.y;
+  }
+};
+void canguan()
+{
+  int n,m;
+  cin>>n>>m;
+  vector<int>table(n);
+  for(int i=0;i<n;i++)cin>>table[i];
+  sort(table.begin(),table.end()); 
+  int x,y;
+  priority_queue<client,vector<client>,cmp>q;//金额大的排在前面
+  for(int i =0;i<m;i++)
+  {
+    cin>>x>>y;
+    if(x>table[n-1])continue;//超过餐桌最大人数
+    q.push(client(x,y));
+  }
+  long long  cnt  =0,sum = 0;
+  vector<bool>visited(n,false);
+  while(!q.empty() && cnt<n)
+  {
+    client c = q.top();
+    q.pop();
+    int i = lower_bound(table.begin(),table.end(),c.x) - table.begin();
+    while(i<n && visited[i])i++;    
+     if(i<n)
+      {
+    visited[i] = true;
+    sum+=c.y;
+    cnt++; 
+      }   
+  }
+  cout<<sum<<endl; 
+}
+  int main()
+  {
+    canguan();    
+    return 0;
+  }
