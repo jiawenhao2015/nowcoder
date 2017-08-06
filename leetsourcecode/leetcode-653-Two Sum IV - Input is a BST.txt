@@ -1,0 +1,57 @@
+Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to the given target.
+
+Example 1:
+
+Input: 
+    5
+   / \
+  3   6
+ / \   \
+2   4   7
+
+Target = 9
+
+Output: True
+ 
+
+Example 2:
+
+Input: 
+    5
+   / \
+  3   6
+ / \   \
+2   4   7
+
+Target = 28
+
+Output: False
+思路：
+
+中序遍历二叉树，将节点值保存在数组里面。然后用从头和尾部遍历刚刚得到的有序数组。
+
+复制代码
+void middle( TreeNode* root, vector< int >& a )
+{
+    if( root == NULL )  return;
+    middle( root->left, a );
+    a.push_back( root->val );
+    middle( root->right, a );
+}
+bool findTarget(TreeNode* root, int k)
+{
+    vector< int > a;
+    middle( root, a );
+    
+    int n = a.size();
+    for( int i = 0, j = n-1; i < j;  )
+    {
+        if( a[i] + a[j] < k )
+            i++;
+        else if( a[i] + a[j] > k )
+            j--;
+        else
+            return true;
+    }
+    return false;
+}
