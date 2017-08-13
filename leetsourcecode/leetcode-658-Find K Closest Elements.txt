@@ -1,0 +1,33 @@
+vector<int> findClosestElements(vector<int>& arr, int k, int x)
+{
+    vector< int > ret;
+    vector< int > cur;
+    auto it = lower_bound( arr.begin(), arr.end(), x );//低
+    //cout << *it << endl;
+
+    long long sum = 0;
+    long long min_val = 0xc0c0c0c0;
+    auto it_start = ( it - k < arr.begin() ) ? arr.begin() : it-k;
+    auto it_end = ( it > arr.end() - k ) ? arr.end() - k : it;
+
+    //cout << *it_start << endl;
+    //cout << *it_end << endl;
+
+    for( auto it_cur = it_start; it_cur <= it_end; it_cur++ )
+    {
+        sum = 0;
+        cur.clear();
+        for( int i = 0; i < k; i++ )
+        {
+            cur.push_back( *(it_cur+i) );
+            sum += abs( ( *(it_cur+i) - x ) );
+        }
+        if( sum < min_val )
+        {
+            min_val = sum;
+            swap( ret, cur );
+        }
+    }
+
+    return ret;
+}
