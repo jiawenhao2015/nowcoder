@@ -1,0 +1,22 @@
+int sumTree(TreeNode* root)
+{
+  if(root==NULL)return 0;
+  int left = sumTree(root->left);  
+  int right = sumTree(root->right);
+  return root->val+left+right;
+}
+
+bool bianli(TreeNode* root,int sum)
+{
+  if(root==NULL)return false;
+  if(sumTree(root->left)*2==sum)return true;  
+  if(sumTree(root->right)*2==sum)return true;
+  return (bianli(root->left,sum) ||  bianli(root->right,sum));
+}
+ bool checkEqualTree(TreeNode* root)
+ {
+   if(root==NULL ||(root->left==NULL && root->right==NULL))return false;
+    int sum = sumTree(root);
+    if(sum%2==1)return false;
+     return bianli(root,sum);        
+  }
