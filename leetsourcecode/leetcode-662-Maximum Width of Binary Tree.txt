@@ -1,0 +1,43 @@
+int widthOfBinaryTree(TreeNode* root)
+{
+    if( root == NULL ) return 0;
+    queue< TreeNode*  > qu;
+    map< TreeNode*, int > mp;
+
+    qu.push( root );
+    int maxW = 0xc0c0c0c0;
+
+    int numL = -1, numR = -1;
+
+    while( !qu.empty() )
+    {
+        int n = qu.size();
+
+        for( int i = 0; i < n; i++ )
+        {
+            TreeNode* tmp = qu.front();
+            qu.pop();
+            if( i == 0 )
+            {
+                numL = mp[tmp];
+            }
+            if( i == n-1 )
+            {
+                numR = mp[tmp];
+            }
+
+            if( tmp->left != NULL )
+            {
+                qu.push( tmp->left );
+                mp[tmp->left] = mp[tmp] * 2;
+            }
+            if( tmp->right != NULL )
+            {
+                qu.push( tmp->right );
+                mp[tmp->right] = mp[tmp] * 2 + 1;
+            }
+        }
+        maxW = max( maxW, numR - numL + 1 );
+    }
+    return maxW;
+}
