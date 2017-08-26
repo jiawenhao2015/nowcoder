@@ -1,0 +1,25 @@
+int partion (vector<int>& nums,int begin,int end)
+    {
+        int pivot = nums[begin];
+        while(begin<end)
+        {
+            while(nums[end]>=pivot && begin<end)end--;
+            nums[begin] = nums[end];            
+            while(nums[begin]<=pivot && begin<end)begin++;
+            nums[end] = nums[begin];
+        }
+        nums[begin] = pivot;
+        return begin;
+    }
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        int begin =0,end = nums.size()-1,n =nums.size();
+        while(begin<end)
+        {
+            int j = partion(nums,begin,end);
+            if(j==n-k)break;
+            else if(j<n-k)begin = j+1;
+            else end = j-1;            
+        }
+        return nums[n-k];
+    }
