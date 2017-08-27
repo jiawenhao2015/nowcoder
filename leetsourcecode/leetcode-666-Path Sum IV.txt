@@ -1,0 +1,22 @@
+void getsum(int level, int pos, map<int, int>& mp, map<int, bool>& flag, int pathsum, int& ret)
+{
+	if (level >= 5 || !flag[level * 10 + pos])return ;//结点不存在
+	pathsum += mp[level * 10 + pos];//当前路径和
+	if (!flag[(level + 1) * 10 + pos * 2] && !flag[(level + 1) * 10 + pos * 2 - 1])ret += pathsum ;//到了叶节点
+	
+	getsum(level+1,pos*2-1,mp,flag,pathsum,ret);
+	getsum(level+1,pos*2,mp,flag,pathsum,ret);
+}
+int pathSum(vector<int>& nums)
+{
+	map<int, int>mp;
+	map<int, bool>flag;
+	int ret=0;
+	if (nums.size() == 0) return 0;
+	if (nums.size() == 1)return nums[0] % 10;
+	
+	for (auto n : nums){ mp[n / 10] = n % 10; flag[n / 10] = true; }
+	 
+	getsum(1, 1, mp, flag, 0, ret);
+	return ret;
+}
