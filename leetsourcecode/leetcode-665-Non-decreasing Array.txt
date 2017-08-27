@@ -1,0 +1,22 @@
+bool checkPossibility(vector<int>& nums)
+{
+	if (nums.size() <=2)return true;
+	int  cnt = 0,index =0;
+	for (int i = 0; i < nums.size()-1;i++)
+	{
+		if (nums[i]>nums[i + 1])
+		{
+			cnt++;
+			index = i;//逆序发生位置
+		}
+	}	
+	if (cnt == 0)return true;
+	if (cnt == 1)
+	{
+		if (index == 0 || index == nums.size() - 1)return true;
+		if (nums[index] <= nums[index + 2])return true;
+		if (nums[index - 1] <= nums[index + 1])return true;
+		return false;
+	}	
+	return false;
+}
