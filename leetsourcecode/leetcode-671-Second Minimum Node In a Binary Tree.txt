@@ -1,0 +1,17 @@
+void pret(TreeNode*root, set<int>&s)
+{
+    if (root == NULL)return;
+    s.insert(root->val);
+    pret(root->left, s);
+    pret(root->right, s);    
+}
+int findSecondMinimumValue(TreeNode* root)
+{
+    if (root == NULL)return -1;
+    set<int>s;
+    pret(root, s);
+    if (s.size() < 2)return -1;
+    auto it = s.begin();
+    it++;
+    return *it;
+}
