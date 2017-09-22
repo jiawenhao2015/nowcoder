@@ -1,0 +1,20 @@
+string getHint(string secret, string guess)
+{
+    if (secret.size() != guess.size() || guess.size() == 0)return "0A0B";
+    int correct = 0, wrong = 0;
+    map<char, int>se, gu;
+    for (int i = 0; i < secret.size();i++)
+    {
+        if (secret[i] == guess[i])correct++;
+        else
+        {
+            se[secret[i]]++;
+            gu[guess[i]]++;
+        }
+    }
+    for (char i = '0'; i <= '9'; i++)
+    {
+        wrong += min(se[i],wrong[i]);
+    }
+    return to_string(correct) + 'A' + to_string(wrong) + 'B';
+}
