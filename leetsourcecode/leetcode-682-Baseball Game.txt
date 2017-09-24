@@ -1,0 +1,21 @@
+int calPoints(vector<string>& ops) 
+{
+  if(ops.size()==0)return 0;
+  vector<int>score;
+  for(auto s:ops)
+  {
+    if(s == "C")score.pop_back();
+    else  if(s == "D")score.push_back(score.back()*2);
+    else  if(s == "+")score.push_back(score[score.size()-1]+score[score.size()-2]);
+    else 
+    {
+      int temp;
+      stringstream ss(s);
+      ss>>temp;
+      score.push_back(temp);
+    }
+  }
+  int sum = 0;
+  for(auto a:score)cout<<a<<" ",sum+=a;
+  return sum;  
+}
