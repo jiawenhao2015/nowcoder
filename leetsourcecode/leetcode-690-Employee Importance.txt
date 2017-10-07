@@ -1,0 +1,34 @@
+// Employee info
+class Employee {
+public:
+// It's the unique ID of each node.
+// unique id of this employee
+int id;
+// the importance value of this employee
+int importance;
+// the id of direct subordinates
+vector<int> subordinates;
+};
+
+
+void DFS(int id,map<int,vector<int>>&mp,map<int,int>&mp2,int& sum)
+{
+     sum += mp2[id];    
+    for(int i =0;i<mp[id].size();i++)
+    {
+      DFS(mp[id][i],mp,mp2,sum);
+    }
+}
+int getImportance(vector<Employee*> employees, int id)
+{
+     map<int,vector<int>>mp;
+     map<int,int>mp2;//importance
+     for(int i =0;i<employees.size();i++)
+     {
+       mp2[employees[i]->id] = employees[i]->importance;
+       mp[employees[i]->id] = employees[i]->subordinates;
+    }
+    int sum = 0;
+    DFS(id,mp,mp2,sum);
+    return sum;
+ }
