@@ -1,0 +1,16 @@
+ int longPath(TreeNode* root,int pre)
+ {
+   if(root == NULL ||  root->val != pre) return 0;
+   int left = longPath(root->left,root->val);
+   int right = longPath(root->right,root->val);
+   return 1+max(left,right);  	
+}
+ int longestUnivaluePath(TreeNode* root)
+ {
+        int ret = 0;
+	if(root == NULL) return 0;
+	int left = longestUnivaluePath(root ->left);
+	int right = longestUnivaluePath(root->right);
+	ret = max(max(left,right),longPath(root->left,root->val)+longPath(root->right,root->val));
+	return ret;
+ }
