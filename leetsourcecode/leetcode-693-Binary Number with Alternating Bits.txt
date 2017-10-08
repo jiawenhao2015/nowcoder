@@ -1,0 +1,15 @@
+ bool hasAlternatingBits(int n) 
+ {
+        vector<int>bit;
+	while(n>0)
+	{
+	  bit.push_back(n%2);
+	  n/=2;
+	}
+	for(int i=1;i<bit.size();i++)
+	{
+	  if(bit[i]==bit[i-1])return false;
+	}
+	return true;
+ }
+ 
