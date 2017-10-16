@@ -1,0 +1,22 @@
+bool wordPattern(string pattern, string str)
+{
+    stringstream ss(str);
+    map<string, char>s2ch;
+    map<char, string>ch2s;
+    vector<string>s;
+    string temp;
+    while (ss >> temp) s.push_back(temp);     
+    if (s.size() != pattern.length())return false;
+
+    for (int i = 0; i < s.size();i++)
+    {
+        if (s2ch[s[i]] == 0 && ch2s[pattern[i]] == "")
+        {
+            s2ch[s[i]] = pattern[i];
+            ch2s[pattern[i]] = s[i];
+            continue;
+        }
+        if (s2ch[s[i]] != pattern[i]) return false;
+    }
+    return true;
+}
