@@ -1,0 +1,17 @@
+vector<int> selfDividingNumbers(int left, int right)
+{
+    vector<int> ret;
+    for (int i = left; i <= right; i++)
+    {
+        int j = i;
+        bool yes = true;
+        while (j)
+        {
+            int d = j % 10;
+            if (d == 0 || i%d == 0)yes = false;
+            j /= 10;
+        }
+        if (yes)ret.push_back(i);
+    }
+    return ret;
+}
