@@ -1,0 +1,17 @@
+void fill(vector<vector<int>>& image,int m,int n,int r,int c,int color,int newcolor)
+{
+	if(r < 0 || r >= m || c < 0 || c>= n || image[r][c] != color)return;
+	image[r][c] = newcolor;
+	fill(image,m,n,r+1,c,color,newcolor);
+	fill(image,m,n,r-1,c,color,newcolor);
+	fill(image,m,n,r,c+1,color,newcolor);
+	fill(image,m,n,r,c-1,color,newcolor);
+}
+vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor)
+{
+	int m = image.size(),n = image[0].size();
+
+	if(image[sr][sc] != newColor)fill(image,m,n,sr,sc,image[sr][sc],newColor);
+	
+	return image;        
+}
