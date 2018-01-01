@@ -1,0 +1,21 @@
+ int dominantIndex(vector<int>& nums)
+ {
+	int len = nums.size();
+	int biggest = 0,second = 0,index = 0;
+    
+	for(int i=0;i<len;i++)
+	{
+		if(nums[i]>biggest)
+		{
+			second = biggest;
+			biggest = nums[i];
+			index = i;
+		}
+		else if(nums[i]>second)
+		{
+			second = nums[i];
+		}
+	}
+	if(biggest>=second*2)return index;
+	else return -1;		
+ }
