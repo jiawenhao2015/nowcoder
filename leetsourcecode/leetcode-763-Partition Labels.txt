@@ -1,0 +1,17 @@
+vector<int> partitionLabels(string S)
+ {
+	vector<int> ret;
+	map<char,int>mp;
+	for(int i=0;i<S.size();i++)mp[S[i]] = i;
+	int last = 0,start = -1;
+	for(int i=0;i<S.size();i++)
+	{
+		last = max(last,mp[S[i]]);
+		if(last == i)
+		{
+			ret.push_back(last - start);
+			start = last;
+		}
+	}
+	return ret;	
+ }
