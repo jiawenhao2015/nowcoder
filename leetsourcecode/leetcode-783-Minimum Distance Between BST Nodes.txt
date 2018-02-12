@@ -1,0 +1,19 @@
+void preorderTree(TreeNode* root,vector<int>& vc)
+{
+  if(root ==NULL) return ;
+  vc.push_back(root->val);
+  preorderTree(root->left,vc);
+  preorderTree(root->right,vc);
+}
+ int minDiffInBST(TreeNode* root)
+ {
+   vector<int>vc;
+   preorderTree(root,vc);
+   sort(vc.begin(),vc.end());
+   int t =INT_MAX;
+   for(int i=0;i<vc.size()-1;i++)
+   {
+     t = min(t,vc[i+1] - vc[i]);     
+   }
+   return t;        
+ }
