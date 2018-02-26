@@ -1,0 +1,26 @@
+map<int,int>mp;
+bool isgood(int n)
+{
+    int temp = n;
+    int t = 0,newnum = 0;    
+    //if  vailid
+    int power = 0;
+    while(n > 0)
+    {
+        t = n % 10;
+        n /= 10;        
+        if( t == 3 || t == 4 || t == 7)return false;
+        t = mp[t];
+        newnum += t * pow(10,power);
+        power++;
+    }    
+    if(temp != newnum)return true;
+    return false;
+}
+int rotatedDigits(int N)
+{mp[0] = 0,mp[1] = 1,mp[8] = 8,mp[2] = 5,mp[5] = 2,mp[6] = 9,mp[9] = 6;
+    int cnt = 0;
+    for(int i = 1;i <= N;i++)
+    if(isgood(i))cnt++;
+    return cnt;
+}
