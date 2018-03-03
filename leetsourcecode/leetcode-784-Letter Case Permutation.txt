@@ -1,0 +1,25 @@
+void dfs (vector<string>& ret,string S,int i)
+{
+	if(i >= S.length())
+	{
+		ret.push_back(S);
+		return;
+	}
+	
+	if(isalpha(S[i]))
+	{
+		S[i] = tolower(S[i]);
+		dfs(ret,S,i+1);
+		
+		S[i] = toupper(S[i]);
+		dfs(ret,S,i+1);
+	}
+	else dfs(ret,S,i+1);
+	
+}
+vector<string> letterCasePermutation(string S)
+{
+	vector<string> ret;
+	dfs(ret,S,0);	
+	return ret;
+}
