@@ -1,0 +1,15 @@
+vector<string> uncommonFromSentences(string A, string B)
+{
+    vector<string>wordA;
+    stringstream ss(A + " " + B);
+    string t;
+    while(ss>>t){wordA.push_back(t);}
+    map<string,int>mp;
+    for(auto t : wordA){mp[t]++;}    
+    vector<string>ret;
+    for(auto it = mp.begin(); it != mp.end(); it++)
+    {
+        if(it->second ==1)ret.push_back(it->first);
+    }
+    return ret;  
+}
