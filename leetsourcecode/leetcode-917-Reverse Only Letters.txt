@@ -1,0 +1,18 @@
+bool isLetter(char ch)
+{
+    return ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'));
+}
+string reverseOnlyLetters(string S)
+{
+    string ret = S;
+    int n = S.length();
+    int start = 0;
+    int end = n - 1;
+    while(start <= n-1 && end >= 0)
+    {
+        if(!isLetter(S[end])){end--;continue;}
+        if(!isLetter(ret[start])){start++;continue;}
+        ret[start++] = S[end--];
+    } 
+    return ret;       
+}
