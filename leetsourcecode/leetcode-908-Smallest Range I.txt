@@ -1,0 +1,10 @@
+int smallestRangeI(vector<int>& A, int K)
+{
+    int minV = A[0], maxV = A[0];
+    for(int i = 0; i < A.size(); i++)
+    {
+        minV = min(minV, A[i]);
+        maxV = max(maxV, A[i]);
+    }
+    return max(((maxV - minV) - 2 * K),0);
+}
