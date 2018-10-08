@@ -1,0 +1,20 @@
+void inOrder(TreeNode* root,vector<TreeNode*>& t)
+{
+    if(root == NULL) return;
+    inOrder(root->left, t);
+    t.push_back(root);
+    inOrder(root->right, t);
+}
+
+TreeNode* increasingBST(TreeNode* root)
+{
+   vector<TreeNode*> t;
+   inOrder(root,t);
+   for(int i = 0; i < t.size(); i++)
+   {
+       t[i]->left = NULL;
+       if(i != t.size() -1){t[i]->right = t[i+1];}
+       else{t[i]->right = NULL;}     
+   }
+   return t[0];
+}
